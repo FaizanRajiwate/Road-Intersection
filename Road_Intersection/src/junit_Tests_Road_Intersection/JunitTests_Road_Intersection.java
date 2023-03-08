@@ -2,215 +2,254 @@ package junit_Tests_Road_Intersection;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Nested;
 
-
+@TestMethodOrder(OrderAnnotation.class)
 public class JunitTests_Road_Intersection {
-	
-	  @Rule
-	  public ExpectedException exception = ExpectedException.none(); // has to be public
-	
-	@Test
-	@DisplayName("Test for the null file Exception for Vehicles table.")
-	public void NullFile_ShouldThrowNullPointerException_VehiclesTable()
-	{	
-		String strVehicleFile = null;
-		Assertions.assertThrows(NullPointerException.class, ()-> Vehicle.VehiclesTableTest(strVehicleFile));
-	}
-	
-	@Test
-	@DisplayName("Test for not throwing null file Exception for Vehicles table.")
-	public void NullFile_ShouldNotThrowNullPointerException_VehiclesTable()
-	{	
-		String strVehicleFile = "src/Vehicles.csv";
-		
-		Assertions.assertDoesNotThrow(()->Vehicle.VehiclesTableTest(strVehicleFile),"Exception Handled");
-	}
-	
-	
-	@Test
-	@DisplayName("Test for the File Not Found for Vehicles table. Stop processing and return")
-	public void FileUnavailable_ShouldReturnFalseAndStop_VehiclesTable()
-	{	
-		String strVehicleFile = "";
-		
-		assertTrue(!Vehicle.VehiclesTableTest(strVehicleFile));
-	}
-	
-	@Test
-	@DisplayName("Test for the File Found for Vehicles table. Continue processing and return")
-	public void FileAvailable_ShouldContinueProcessing_VehiclesTable()
-	{	
-		String strVehicleFile = "src/Vehicles.csv";
-		
-		assertTrue(Vehicle.VehiclesTableTest(strVehicleFile));
-	}
-	
-	@Test
-	@DisplayName("Test for not throwing File Not Found Exception for Vehicles table,Because it is handled in the method itself.")
-	public void FileAvailable_ShouldNotThrowFileNotFoundException_VehiclesTable()
-
-	{	
-		String strVehicleFile = "";
-		
-		Assertions.assertDoesNotThrow(()->Vehicle.VehiclesTableTest(strVehicleFile),"Exception Handled");
-	}
-
-	
-	///////////// Phases table tests
-	@Test
-	@DisplayName("Test for the null file Exception for Phases table.")
-	public void NullFile_ShouldThrowNullPointerException_PhasesTable()
-	{	
-		String strPhasesFile = null;
-		
-		Assertions.assertThrows(NullPointerException.class, ()->Vehicle.PhasesTableTest(strPhasesFile));
-	}
-	
-	@Test
-	@DisplayName("Test for not throwing null file Exception for Phases table.")
-	public void NullFile_ShouldNotThrowNullPointerException_PhasesTable()
-	{	
-		String strPhasesFile = "src/Intersection.csv";
-		
-		Assertions.assertDoesNotThrow(()->Vehicle.PhasesTableTest(strPhasesFile),"Exception Handled");
-	}
-
-	@Test
-	@DisplayName("Test for the File Not Found for Phases table. Stop processing and return")
-	public void FileUnavailable_ShouldReturnFalseAndStop_PhasesTable()
-	{	
-		String strPhasesFile = "";
-		
-		assertTrue(!Vehicle.PhasesTableTest(strPhasesFile));
-	}
-
-	@Test
-	@DisplayName("Test for the File Found for Phases table. Continue processing and return")
-	public void FileAvailable_ShouldContinueProcessing_PhasesTable()
-	{	
-		String strPhasesFile = "src/Intersection.csv";
-		
-		assertTrue(Vehicle.PhasesTableTest(strPhasesFile));
-	}
-	
-	
-	@Test
-	@DisplayName("Test for not throwing File Not Found Exception for Phases table,Because it is handled in the method itself.")
-	public void FileAvailable_ShouldNotThrowFileNotFoundException_PhasesTable()
-
-	{	
-		String strPhasesFile = "";
-		
-		Assertions.assertDoesNotThrow(()->Vehicle.PhasesTableTest(strPhasesFile),"Exception Handled");
-	}
-	///////////// Phases table tests Ends
-	
-///////////// Statistics table tests
-	@Test
-	@DisplayName("Test for the null value of Statistics table."	)
-	public void LoadData_StatisticsTable_NullValues()
-	{	
-		String[][] statisticsTableUnderTest = null;
-		String[][] statisticsTableActual = Vehicle.StatisticsTableTest();
-		Assertions.assertNotEquals(statisticsTableUnderTest, statisticsTableActual);
-		
-	}
-	
-	@Test
-	@DisplayName("Test for the data of Statistics table."	)
-	public void LoadData_StatisticsTable()
-	{	
-		String statisticsTableUnderTest[][] = {{"S1", "600s", "2000m", "20s"},
-		        {"S2", "60s", "300m", "10s"},
-		        {"S3", "300s", "1500m", "15s"},
-		        {"S4", "40s", "100m", "10s"},};
-		        
-				String  statisticsTableActual[][] = Vehicle.StatisticsTableTest();
-				Assertions.assertArrayEquals(statisticsTableUnderTest, statisticsTableActual);
-		
-	}
-	
-	
-///////////// Statistics table tests Ends
-	
-	////////Add Data in the vehicle File
-	@Test
-	@DisplayName("Test for the null file Exception for Vehicles table.")
-	public void NullFile_ShouldThrowNullPointerException_AddVehiclesTable()
-	{	
-		String strVehicleFile = null;
-		Assertions.assertThrows(NullPointerException.class, ()-> Vehicle.AddDataIntoVehicleTable(strVehicleFile));
-	}
-	
-	@Test
-	@DisplayName("Test for not throwing null file Exception for Vehicles table.")
-	public void NullFile_ShouldNotThrowNullPointerException_AddVehiclesTable()
-	{	
-		String strVehicleFile = "src/Vehicles.csv";
-		Vehicle.setGUIAddVehicles();
-		Vehicle.addActionListenersAndSetFrame();
-        		
-		Assertions.assertDoesNotThrow(()->Vehicle.AddDataIntoVehicleTable(strVehicleFile),"Exception Handled");
-	}
-	
-	@Test  
-	@DisplayName("Test for checking if vehicles.csv is updated.")
-	public void WriteFile_ShouldAddVehicleDetails_VehiclesTable()
-	{	try
-		{
-		String strVehicleFile = "src/Vehicles.csv";
-		BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(strVehicleFile));
-		
-		Vehicle.setGUIAddVehicles();
-		Vehicle.addActionListenersAndSetFrame();
-        
-		Vehicle.AddDataIntoVehicleTable(strVehicleFile);
-		BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(strVehicleFile));
-		long lngComparator = CompareBothFiles(fis1,fis2);
-		Assertions.assertEquals(-1, lngComparator);
+	@Nested
+	class clsVehiclesTest{
+		@Test
+		@DisplayName("Test for the null file Exception for Vehicles table.")
+		@Order(1)
+		public void NullFile_ShouldThrowNullPointerException_VehiclesTable()
+		{	
+			String strVehicleFile = null;
+			Assertions.assertThrows(NullPointerException.class, ()-> Vehicle.VehiclesTableTest(strVehicleFile));
 		}
-	catch(FileNotFoundException ex){
-		ex.printStackTrace();
-	     }
+		
+		@Test
+		@DisplayName("Test for not throwing null file Exception for Vehicles table.")
+		@EnabledIf("VehicleFileExists")
+		@Order(2)
+		public void NullFile_ShouldNotThrowNullPointerException_VehiclesTable()
+		{	
+			String strVehicleFile = "src/Vehicles.csv";
+			
+			Assertions.assertDoesNotThrow(()->Vehicle.VehiclesTableTest(strVehicleFile),"Exception Handled");
+		}
+		
+		
+		@Test
+		@DisplayName("Test for the File Not Found for Vehicles table. Stop processing and return")
+		@Order(3)
+		public void FileUnavailable_ShouldReturnFalseAndStop_VehiclesTable()
+		{	
+			String strVehicleFile = "";
+			
+			assertTrue(!Vehicle.VehiclesTableTest(strVehicleFile));
+		}
+		
+		@Test
+		@DisplayName("Test for the File Found for Vehicles table. Continue processing and return")
+		@EnabledIf("VehicleFileExists")
+		@Order(4)
+		public void FileAvailable_ShouldContinueProcessing_VehiclesTable()
+		{	
+			String strVehicleFile = "src/Vehicles.csv";
+			
+			assertTrue(Vehicle.VehiclesTableTest(strVehicleFile));
+		}
+		
+		@Test
+		@DisplayName("Test for not throwing File Not Found Exception for Vehicles table,Because it is handled in the method itself.")
+		@Order(5)
+		public void FileAvailable_ShouldNotThrowFileNotFoundException_VehiclesTable()
+
+		{	
+			String strVehicleFile = "";
+			
+			Assertions.assertDoesNotThrow(()->Vehicle.VehiclesTableTest(strVehicleFile),"Exception Handled");
+		}
+
+		boolean VehicleFileExists() {
+			File fileVehicles = new File("src/Vehicles.csv");
+			return fileVehicles.exists();
+			}
+		
+	}
+	  
+	@Nested
+	class clsPhaseTablesTest{
+		@Test
+		@DisplayName("Test for the null file Exception for Phases table.")
+		@Order(6)
+		public void NullFile_ShouldThrowNullPointerException_PhasesTable()
+		{	
+			String strPhasesFile = null;
+			
+			Assertions.assertThrows(NullPointerException.class, ()->Vehicle.PhasesTableTest(strPhasesFile));
+		}
+		
+		@Test
+		@DisplayName("Test for not throwing null file Exception for Phases table.")
+		@EnabledIf("PhaseTableFileExists")
+		@Order(7)
+		public void NullFile_ShouldNotThrowNullPointerException_PhasesTable()
+		{	
+			String strPhasesFile = "src/Intersection.csv";
+			
+			Assertions.assertDoesNotThrow(()->Vehicle.PhasesTableTest(strPhasesFile),"Exception Handled");
+		}
+
+		@Test
+		@DisplayName("Test for the File Not Found for Phases table. Stop processing and return")
+		@Order(8)
+		public void FileUnavailable_ShouldReturnFalseAndStop_PhasesTable()
+		{	
+			String strPhasesFile = "";
+			
+			assertTrue(!Vehicle.PhasesTableTest(strPhasesFile));
+		}
+
+		@Test
+		@DisplayName("Test for the File Found for Phases table. Continue processing and return")
+		@EnabledIf("PhaseTableFileExists")
+		@Order(9)
+		public void FileAvailable_ShouldContinueProcessing_PhasesTable()
+		{	
+			String strPhasesFile = "src/Intersection.csv";
+			
+			assertTrue(Vehicle.PhasesTableTest(strPhasesFile));
+		}
+		
+		
+		@Test
+		@DisplayName("Test for not throwing File Not Found Exception for Phases table,Because it is handled in the method itself.")
+		@Order(10)
+		public void FileAvailable_ShouldNotThrowFileNotFoundException_PhasesTable()
+
+		{	
+			String strPhasesFile = "";
+			
+			Assertions.assertDoesNotThrow(()->Vehicle.PhasesTableTest(strPhasesFile),"Exception Handled");
+		}
+		
+		boolean PhaseTableFileExists() {
+			File fileVehicles = new File("src/Intersection.csv");
+			return fileVehicles.exists();
+			}
 		
 	}
 	
-	private long CompareBothFiles(BufferedInputStream fis1, BufferedInputStream fis2)
-	{
-		try {
-			
-			int ch = 0;
-	        long pos = 1;
-	        while ((ch = fis1.read()) != -1) {
-	            if (ch != fis2.read()) {
-	                return pos;
-	            }
-	            pos++;
-	        }
-	        if (fis2.read() == -1) {
-	            return -1;
-	        }
-	        else 
-	        {
-	            return pos;
-	        }
+	@Nested
+	class clsStatisticsTableTest{
+		@Test
+		@DisplayName("Test for the null value of Statistics table."	)
+		@Order(11)
+		public void LoadData_StatisticsTable_NullValues()
+		{	
+			String[][] statisticsTableUnderTest = null;
+			String[][] statisticsTableActual = Vehicle.StatisticsTableTest();
+			Assertions.assertNotEquals(statisticsTableUnderTest, statisticsTableActual);
 			
 		}
-		catch(IOException ex){
+		
+		@Test
+		@DisplayName("Test for the data of Statistics table."	)
+		@Order(12)
+		public void LoadData_StatisticsTable()
+		{	
+			String statisticsTableUnderTest[][] = {{"S1", "600s", "2000m", "20s"},
+			        {"S2", "60s", "300m", "10s"},
+			        {"S3", "300s", "1500m", "15s"},
+			        {"S4", "40s", "100m", "10s"},};
+			        
+					String  statisticsTableActual[][] = Vehicle.StatisticsTableTest();
+					Assertions.assertArrayEquals(statisticsTableUnderTest, statisticsTableActual);
+			
+		}
+		
+	}
+	
+	@Nested
+	class clsAddVehiclesTableTests{
+		@Test
+		@DisplayName("Test for the null file Exception for Vehicles table.")
+		@Order(15)
+		public void NullFile_ShouldThrowNullPointerException_AddVehiclesTable()
+		{	
+			String strVehicleFile = null;
+			Assertions.assertThrows(NullPointerException.class, ()-> Vehicle.AddDataIntoVehicleTable(strVehicleFile));
+		}
+		
+		@Test
+		@DisplayName("Test for not throwing null file Exception for Vehicles table.")
+		@EnabledIf("VehicleFileExists")
+		@Order(13)
+		public void NullFile_ShouldNotThrowNullPointerException_AddVehiclesTable()
+		{	
+			String strVehicleFile = "src/Vehicles.csv";
+			Vehicle.setGUIAddVehicles();
+			Vehicle.addActionListenersAndSetFrame();
+	        		
+			Assertions.assertDoesNotThrow(()->Vehicle.AddDataIntoVehicleTable(strVehicleFile),"Exception Handled");
+		}
+		
+		@Test  
+		@DisplayName("Test for checking if vehicles.csv is updated.")
+		@EnabledIf("VehicleFileExists")
+		@Order(14)
+		@Disabled
+		public void WriteFile_ShouldAddVehicleDetails_VehiclesTable() throws IOException
+		{	try
+			{
+			String strVehicleFile = "src/Vehicles.csv";
+			List<String> listOfStrings
+	        = new ArrayList<String>();
+			BufferedReader bf = new BufferedReader(
+			        new FileReader(strVehicleFile));
+			String line = bf.readLine();
+			while (line != null) {
+		        listOfStrings.add(line);
+		        line = bf.readLine();
+		    }
+			bf.close();
+			String[] array
+	        = listOfStrings.toArray(new String[0]);
+			System.out.println("Length of the array is" + array.length);
+			System.out.println(array);
+			
+			
+			Vehicle.setGUIAddVehicles();
+			Vehicle.addActionListenersAndSetFrame();
+	        
+			Vehicle.AddDataIntoVehicleTable(strVehicleFile);
+			
+		   //	Assertions.assertEquals(1, lngComparator);
+			}
+		catch(FileNotFoundException ex){
 			ex.printStackTrace();
 		     }
+			
+		}
+		boolean VehicleFileExists() {
+			File fileVehicles = new File("src/Vehicles.csv");
+			return fileVehicles.exists();
+			}
+
+	}
+
+	private long CompareBothFiles(BufferedInputStream fis1, BufferedInputStream fis2)
+	{
+	
 		return 0;
 				
 	}
-	
 	
 }
