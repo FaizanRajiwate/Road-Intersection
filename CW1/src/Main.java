@@ -21,6 +21,8 @@ public class Main{
 	}
 	
 	public static long timeElapsed(long startingTime) {
+		//This function takes the starting time of the program, and calculates the elapsed time since.
+		//The input is the starting time, it returns the elapsed time which is also an integer (long)
 		long timeElapsed;
 		long currentTime = System.currentTimeMillis();
 	    timeElapsed = currentTime - startingTime;
@@ -29,7 +31,11 @@ public class Main{
 	}
 	
 	public static float averageWaiting(LinkedList<Phases> phaseList, float executionTime) {
-		float average = 0f;
+		//This function approximates the waiting time, by determining 
+		//how many cars crossed in the amount of time the program was run for
+		//It receives as input a linkedlist comprising of various phases known as phaselist and 
+		//how long the program was executed for before being shut down. 
+		//it returns a flost which determines how long each car that passed waited for.
 		float totalCars = 0;
 		for (Phases phase : phaseList) {
 			LinkedList<Vehicles> exitedCars = phase.getCrossedLinkedList();
@@ -75,6 +81,7 @@ public class Main{
 						if (phaseTimer >= currCarTime) {
 							crossedVehicles.add(currCar);
 							queuedVehicles.remove(currCar);
+							phaseWaitTime += currCar.getCrossingTime();
 							float carEmissions = currCar.calculateEmissions(waitTime);
 							totalEmissions += carEmissions;
 							//calculate emissions
@@ -141,7 +148,7 @@ public class Main{
 				float totalEmissions = controlIntersections(phaseList, elapsedTime);
 				float waitingTimeAverage = averageWaiting(phaseList, elapsedTime);
 				int totalCarsCrossed = totalVehicles(phaseList);
-				System.out.println("Done.\n Waiting Average: " + waitingTimeAverage);
+				System.out.println("Done.\nWaiting Average: " + waitingTimeAverage);
 				ReportFile file = new ReportFile();
 				try {
 					FileWriter writingFile = file.writeToFile("report.txt");

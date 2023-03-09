@@ -12,8 +12,6 @@ import java.lang.Float;
 import java.lang.Integer;
 
 
-
-
 public class GUI extends JFrame{
 	/**
 	 * 
@@ -23,16 +21,21 @@ public class GUI extends JFrame{
 	JLabel phaseLabel;
 	JLabel segmentStatistics;
 	JTable vehicleTable;
+	JPanel tablesPanel;
 	JScrollPane vehiclePane;
 	JScrollPane phasePane;
+	JScrollPane statsPane;
 	JTable phaseTable;
 	JTable segmentStatsTable;
+	JTable statsTable;
 	DefaultTableModel vehicleModel;
 	DefaultTableModel phaseModel;
+	DefaultTableModel statsModel;
 	JPanel addVehicle;
 	String[] crossingDirection = {"straight", "left", "right"};
 	String[] vehicleType = {"bus", "car", "truck"};
 	String[] segment = {"1", "2", "3", "4"};
+	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	JLabel pNumberLabel;
 	JLabel vTypeLabel;
 	JLabel cTimeLabel;
@@ -49,13 +52,29 @@ public class GUI extends JFrame{
 	JTextField vEField;
 	JTextField vLField;
 	JComboBox<String> sField;
+	int s1counter = 0;
+	float s1WaitingTime = 0;
+	float s1CrossTime = 0;
+	float s1WaitingLength = 0;
+	int s2counter = 0;
+	float s2WaitingTime = 0;
+	float s2CrossTime = 0;
+	float s2WaitingLength = 0;
+	int s3counter = 0;
+	float s3WaitingTime = 0;
+	float s3CrossTime = 0;
+	float s3WaitingLength = 0;
+	int s4counter = 0;
+	float s4WaitingTime = 0;
+	float s4CrossTime = 0;
+	float s4WaitingLength = 0;
 	
 	public GUI(){
 		setTitle("Road Intersection");
 		setVisible(true);
 	}
 	
-	public Vehicles createVehicle(List<String> csvFileLine) {
+	public Vehicles createVehicle(List<String> csvFileLine, LinkedList<Phases> phaseList) {
 		//Extract variables from csv File
 		String plateNumber = csvFileLine.get(0);
 		String vehicleType = csvFileLine.get(1);
@@ -66,18 +85,61 @@ public class GUI extends JFrame{
 		String vehicleLength = csvFileLine.get(6);
 		String segment = csvFileLine.get(7);
 		
-		//set instance variable for car object;
-		Vehicles car = new Vehicles();
-		car.setPlateNumber(plateNumber);
-		car.setVehicleType(vehicleType);
-		car.setCrossingTime(Float.parseFloat(crossingTime));
-		car.setCrossingDirection(direction);
-		car.setCrossingStatus(crossingStatus);
-		car.setVehicleEmission(Float.parseFloat(emissionRate));
-		car.setVehicleLength(Float.parseFloat(vehicleLength));
-		car.setSegment(segment);
-		
-		return car;
+    	try {
+    		if (checkNull(plateNumber)) {
+    			throw new InaccurateDataException("The Plate Number cannot be empty");
+    		}else if (checkNull(crossingTime)){
+    			throw new InaccurateDataException("The Crossing Time cannot be empty");
+    		}else if(checkNull(crossingStatus)) {
+    			throw new InaccurateDataException("The Crossing Status cannot be empty ");
+    		}else if (checkNull(emissionRate)) {
+    			throw new InaccurateDataException("The Vehicle Emissions cannot be empty");
+    		}else if (checkNull(vehicleLength)) {
+    			throw new InaccurateDataException("The Vehicle Length cannot be empty");
+    		}else if(!checkNumberValid(crossingTime)) {
+    			throw new NumberFormatException("The Crossing Time entry is not a number");
+    		}else if(!checkNumberValid(emissionRate)) {
+    			throw new NumberFormatException("The Vehicle Emissions is not a float.");
+    		}else if (!checkNumberValid(segment)) {
+    			throw new NumberFormatException("The Segment is not a number");
+    		}else if (!((Float.parseFloat(crossingTime) < 10) && (Float.parseFloat(crossingTime) > 0))) {
+    			throw new NumberFormatException("Your Crossing Time Entry is not between 0 and 10s");
+    		}else if (!((Float.parseFloat(emissionRate) < 50) && (Float.parseFloat(emissionRate) > 0))) {
+    			throw new NumberFormatException("Your vehicle emission Entry is not between 0 and 50 " + emissionRate);
+    		}else if (!((Integer.parseInt(segment) < 5) && (Integer.parseInt(segment) > 0))) {
+    			throw new NumberFormatException("Your Segment Entry is not between 1 and 4");
+    		}else if(!((crossingStatus.equals("not crossed")) || (crossingStatus.equals("crossed")))) {
+    			throw new InaccurateDataException("Your Crossing status should either be 'crossed' or 'not crossed'");
+    		}else if (checkDuplicate(plateNumber, phaseList)) {
+    			throw new DuplicateIDException(plateNumber + ": This vehicle has a duplicate car plate number.");
+    		}else {
+
+    			Vehicles car = new Vehicles();
+    			car.setPlateNumber(plateNumber);
+    			car.setVehicleType(vehicleType);
+    			car.setCrossingTime(Float.parseFloat(crossingTime));
+    			car.setCrossingDirection(direction);
+    			car.setCrossingStatus(crossingStatus);
+    			car.setVehicleEmission(Float.parseFloat(emissionRate));
+    			car.setVehicleLength(Float.parseFloat(vehicleLength));
+    			car.setSegment(segment);
+    			
+    			return car;
+
+    		}
+    	}catch(InaccurateDataException ex) {
+    		JFrame alert = new JFrame();
+			JOptionPane.showMessageDialog(alert, ex);
+			return null;
+    	}catch(NumberFormatException ex) {
+    		JFrame alert = new JFrame();
+			JOptionPane.showMessageDialog(alert, ex);
+			return null;
+    	}catch(DuplicateIDException ex) {
+    		JFrame alert = new JFrame();
+			JOptionPane.showMessageDialog(alert, ex);
+			return null;
+    	}	
 	}
 	
 	public Phases createPhase(List<String> csvFileLine) {
@@ -186,9 +248,7 @@ public class GUI extends JFrame{
 		}
 		JTable phasesTable = new JTable(phaseModel);
 		phasePane = new JScrollPane(phasesTable);
-		return phasePane;
-		
-		
+		return phasePane;		
 	}
 
 	public JLabel addLabels(String labelname) {
@@ -215,11 +275,14 @@ public class GUI extends JFrame{
 						Object[] rowData = new Object[splitLine.length];
 						List<String> listSplitLine = Arrays.asList(splitLine);
 						rowData = splitLine;
-						vehicleModel.addRow(rowData);
+		
 						//populate VehicleJTable
 					
-						Vehicles car = createVehicle(listSplitLine);
-					
+						Vehicles car = createVehicle(listSplitLine, phaseList);
+						if (car == null) {
+							throw new InaccurateDataException("The row with " + listSplitLine.get(0) + "could not be created");
+						}
+						vehicleModel.addRow(rowData);					
 						boolean sortedPhase = findPhase(car, phaseList);
 						if (sortedPhase) {
 							System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
@@ -228,7 +291,10 @@ public class GUI extends JFrame{
 						}
 					}catch (PhaseException e) {
 						 System.out.println(e); 
-					 }				
+					}catch (InaccurateDataException e) {
+						System.out.println(e);
+						continue;
+					}
 				}
 			}		     
 		}
@@ -248,13 +314,15 @@ public class GUI extends JFrame{
 	
 	public JPanel tablesDisplayPanel(LinkedList<Phases> phaseList) {
 		JScrollPane vehiclePane = addVehicleTable(phaseList);
-		JPanel tablePanel = new JPanel();
-		tablePanel.setLayout(new GridLayout(1,2, 20, 0));
-		tablePanel.add(vehiclePane);
+		tablesPanel = new JPanel();
+		tablesPanel.setLayout(new GridLayout(1, 3, 20, 0));
+		tablesPanel.add(vehiclePane);
 		//Panel for Phase and phase Table
-		JScrollPane phasePane = addPhasesPane(phaseList);
-		tablePanel.add(phasePane);
-		return tablePanel;
+		phasePane = addPhasesPane(phaseList);
+		statsPane = addStatsDisplayPane(phaseList);
+		tablesPanel.add(phasePane);
+		tablesPanel.add(statsPane);
+		return tablesPanel;
 	}
 	
 	public boolean checkNull(String text) {
@@ -388,24 +456,17 @@ public class GUI extends JFrame{
             		}else if (checkDuplicate(pNEntry, phaseList)) {
             			throw new DuplicateIDException(pNEntry + ": This vehicle has a duplicate car plate number.");
             		}else {
-//            			Vector<String> tableEntry = new Vector<String>();
+
             			String[] tableEntry = {pNEntry, vTEntry, cTEntry, cDEntry, cSEntry, vEEntry, vLEntry, sEntry};
             			List<String> newLine = Arrays.asList(tableEntry);
-            			Vehicles car = createVehicle(newLine);
-            			
-//            			tableEntry.add(pNEntry);
-//            			tableEntry.add(vTEntry);
-//            			tableEntry.add(cTEntry);
-//            			tableEntry.add(cDEntry);
-//            			tableEntry.add(cSEntry);
-//            			tableEntry.add(vEEntry);
-//            			tableEntry.add(vLEntry);
-//            			tableEntry.add(sEntry);
+            			Vehicles car = createVehicle(newLine, phaseList);
+            			if (car == null) {
+            				throw new InaccurateDataException("The row with " + newLine.get(0) + "could not be created");
+            			}           			
+
             			
             			vehicleModel.addRow(tableEntry);
-            			
-            			
-            			
+            			           			
             			pNField.setText("");
                     	cTField.setText("");
 //                    	cSField.setText(""); //field is now uneditable so no need to clear it
@@ -417,7 +478,51 @@ public class GUI extends JFrame{
 						}else {
 							throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 						}
+						checkCarSegment(car);
+						String segment = car.getSegment();
 
+						if (segment.equals("1")) {
+							String carsAtSegment = Integer.toString(s1counter);
+							String waitingTime = Float.toString(s1WaitingTime);
+							String waitingLength = Float.toString(s1WaitingLength);
+							String avgCrossSegment = Float.toString(s1CrossTime / 2);
+							statsModel.setValueAt(carsAtSegment, 0, 0);
+							statsModel.setValueAt(waitingTime, 0, 1);
+							statsModel.setValueAt(waitingLength, 0, 2);
+							statsModel.setValueAt(avgCrossSegment, 0, 3);
+						}
+						if (segment.equals("2")) {
+							String carsAtSegment = Integer.toString(s2counter);
+							String waitingTime = Float.toString(s2WaitingTime);
+							String waitingLength = Float.toString(s2WaitingLength);
+							String avgCrossSegment = Float.toString(s2CrossTime / 2);
+							statsModel.setValueAt(carsAtSegment, 1, 0);
+							statsModel.setValueAt(waitingTime, 1, 1);
+							statsModel.setValueAt(waitingLength, 1, 2);
+							statsModel.setValueAt(avgCrossSegment, 1, 3);
+						}
+						if (segment.equals("3")) {
+							String carsAtSegment = Integer.toString(s3counter);
+							String waitingTime = Float.toString(s3WaitingTime);
+							String waitingLength = Float.toString(s3WaitingLength);
+							String avgCrossSegment = Float.toString(s3CrossTime / 2);
+							statsModel.setValueAt(carsAtSegment, 2, 0);
+							statsModel.setValueAt(waitingTime, 2, 1);
+							statsModel.setValueAt(waitingLength, 2, 2);
+							statsModel.setValueAt(avgCrossSegment, 2, 3);
+						}
+						if (segment.equals("4")) {
+							String carsAtSegment = Integer.toString(s4counter);
+							String waitingTime = Float.toString(s4WaitingTime);
+							String waitingLength = Float.toString(s4WaitingLength);
+							String avgCrossSegment = Float.toString(s4CrossTime / 2);
+							statsModel.setValueAt(carsAtSegment, 3, 0);
+							statsModel.setValueAt(waitingTime, 3, 1);
+							statsModel.setValueAt(waitingLength, 3, 2);
+							statsModel.setValueAt(avgCrossSegment, 3, 3);
+						}	
+						
+						
             		}
             	}catch(InaccurateDataException ex) {
             		JFrame alert = new JFrame();
@@ -432,8 +537,6 @@ public class GUI extends JFrame{
             		JFrame alert = new JFrame();
     				JOptionPane.showMessageDialog(alert, ex);
             	}
-            	
-            	
             }
         });
 		JLabel emptyLabel = new JLabel();
@@ -446,7 +549,109 @@ public class GUI extends JFrame{
 		return addVehicle;
 	}
 	
+	public void checkCarSegment(Vehicles car) {
+		String carSegment = car.getSegment();
+		if (carSegment.equals("1")) {
+			s1counter ++;	
+			s1WaitingTime += car.getCrossingTime();
+			s1WaitingLength += car.getVehicleLength();
+		}
+		if (carSegment.equals("2")) {
+			s2counter ++;
+			s2WaitingTime += car.getCrossingTime();
+			s2WaitingLength += car.getVehicleLength();
+		}
+		if (carSegment.equals("3")) {
+			s3counter ++;
+			s3WaitingTime += car.getCrossingTime();
+			s3WaitingLength += car.getVehicleLength();
+		}
+		if (carSegment.equals("4")) {
+			s4counter ++;
+			s4WaitingTime += car.getCrossingTime();
+			s4WaitingLength += car.getVehicleLength();
+		}
+	}
 	
+	
+	
+	public JScrollPane addStatsDisplayPane(LinkedList<Phases> phaseList) {
+		String[] columnNames = {"Segment",	"No. of Vehicles Waiting", "Waiting Time", 
+				"Waiting Length", "Avg. Cross Time"};
+		statsModel = new DefaultTableModel();
+		statsModel.setColumnIdentifiers(columnNames);
+		for (int i = 0; i < 8; i++) {
+			Phases phase = phaseList.get(i);
+			String segment = phaseSegment[i];
+			if (segment.equals("1")) {
+				s1CrossTime += phase.getPhaseTimer();
+			}
+			if (segment.equals("2")) {
+				s2CrossTime += phase.getPhaseTimer();
+			}
+			if (segment.equals("3")) {
+				s3CrossTime += phase.getPhaseTimer();
+			}
+			if (segment.equals("4")) {
+				s4CrossTime += phase.getPhaseTimer();
+			}
+
+			LinkedList<Vehicles> carsQueue = phase.getLinkedList();
+			for (Vehicles car : carsQueue) {
+				checkCarSegment(car);
+			}
+
+		}
+		for (int i = 1; i < 5; i ++) {
+			Vector<String> rowData = new Vector<String>();
+			String segment = Integer.toString(i);
+			rowData.add(segment);
+			if (i == 1) {
+				String carsAtSegment = Integer.toString(s1counter);
+				String waitingTime = Float.toString(s1WaitingTime);
+				String waitingLength = Float.toString(s1WaitingLength);
+				String avgCrossSegment = Float.toString(s1CrossTime / 2);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 2) {
+				String carsAtSegment = Integer.toString(s2counter);
+				String waitingTime = Float.toString(s2WaitingTime);
+				String waitingLength = Float.toString(s2WaitingLength);
+				String avgCrossSegment = Float.toString(s2CrossTime / 2);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 3) {
+				String carsAtSegment = Integer.toString(s3counter);
+				String waitingTime = Float.toString(s3WaitingTime);
+				String waitingLength = Float.toString(s3WaitingLength);
+				String avgCrossSegment = Float.toString(s3CrossTime / 2);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 4) {
+				String carsAtSegment = Integer.toString(s4counter);
+				String waitingTime = Float.toString(s4WaitingTime);
+				String waitingLength = Float.toString(s4WaitingLength);
+				String avgCrossSegment = Float.toString(s4CrossTime / 2);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}	
+			statsModel.addRow(rowData);			
+		}
+		JTable statsTable = new JTable(statsModel);
+		statsPane = new JScrollPane(statsTable);
+		return statsPane;		
+	}
 }
 
 
