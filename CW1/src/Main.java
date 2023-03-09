@@ -116,9 +116,10 @@ public class Main{
 		phaseLabel.setFont(font);
 		segmentLabel.setFont(font);
 		JPanel labelPane = new JPanel();
-		labelPane.setLayout(new FlowLayout(FlowLayout.CENTER,650,20));
+		labelPane.setLayout(new FlowLayout(FlowLayout.CENTER,375,20));
 		labelPane.add(vehicleLabel);
 		labelPane.add(phaseLabel);
+		labelPane.add(segmentLabel);
 //		labelPane.add(segmentLabel);
 		mainWindow.add(labelPane);
 
@@ -136,6 +137,8 @@ public class Main{
 
 		JLabel emptyLabel2 = new JLabel();
 		mainWindow.add(emptyLabel2);
+		JPanel emissionsPanel = mainWindow.addEmissionsPanel();
+		mainWindow.add(emissionsPanel); 
 		JLabel emptyLabel3 = new JLabel();
 		mainWindow.add(emptyLabel3);
 		mainWindow.pack();

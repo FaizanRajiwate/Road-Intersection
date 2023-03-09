@@ -44,6 +44,7 @@ public class GUI extends JFrame{
 	JLabel vEmissionsLabel;
 	JLabel vLengthLabel;
 	JLabel vSegmentLabel;
+	JTextField emissionField;
 	JTextField pNField;
 	JComboBox<String> vTField;
 	JTextField cTField;
@@ -68,6 +69,7 @@ public class GUI extends JFrame{
 	float s4WaitingTime = 0;
 	float s4CrossTime = 0;
 	float s4WaitingLength = 0;
+	float totalEmissions = 0;
 	
 	public GUI(){
 		setTitle("Road Intersection");
@@ -282,7 +284,8 @@ public class GUI extends JFrame{
 						if (car == null) {
 							throw new InaccurateDataException("The row with " + listSplitLine.get(0) + "could not be created");
 						}
-						vehicleModel.addRow(rowData);					
+						vehicleModel.addRow(rowData);	
+						totalEmissions += car.getVehicleEmission();
 						boolean sortedPhase = findPhase(car, phaseList);
 						if (sortedPhase) {
 							System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
@@ -309,6 +312,7 @@ public class GUI extends JFrame{
 	
 	public JComboBox<String> addComboBox(String[] choices) {
 		JComboBox<String> option = new JComboBox<String>(choices);
+		option.setBackground(Color.white);
 		return option;	
 	}
 	
@@ -354,6 +358,7 @@ public class GUI extends JFrame{
 		}
 		return false;
 	}
+	
 	public JPanel addTableDisplayPanel(LinkedList<Phases> phaseList) {
 		Font formFont = new Font("Courier", Font.BOLD, 15);
 		JPanel addVehicle = new JPanel();
@@ -396,6 +401,8 @@ public class GUI extends JFrame{
 		cDField = addComboBox(this.crossingDirection);
 		cSField = new JTextField();
 		cSField.setText("not crossed");
+		cSField.setBackground(Color.white);
+		cSField.setFont(formFont);
 		cSField.setEditable(false);
 		vEField = new JTextField();
 		vLField = new JTextField();
@@ -439,6 +446,8 @@ public class GUI extends JFrame{
             			throw new InaccurateDataException("The Vehicle Emissions cannot be empty");
             		}else if (checkNull(vLEntry)) {
             			throw new InaccurateDataException("The Vehicle Length cannot be empty");
+            		}else if(!((pNEntry.length() > 4) && (pNEntry.length() < 9))) {
+            			throw new InaccurateDataException("The Plate Number Should be between 4 and 9 characters long.");
             		}else if(!checkNumberValid(cTEntry)) {
             			throw new NumberFormatException("The Crossing Time entry is not a number");
             		}else if(!checkNumberValid(vEEntry)) {
@@ -464,9 +473,9 @@ public class GUI extends JFrame{
             				throw new InaccurateDataException("The row with " + newLine.get(0) + "could not be created");
             			}           			
 
-            			
-            			vehicleModel.addRow(tableEntry);
-            			           			
+            			totalEmissions += car.getVehicleEmission();
+            			emissionField.setText(Float.toString(totalEmissions));
+            			vehicleModel.addRow(tableEntry);            			           			
             			pNField.setText("");
                     	cTField.setText("");
 //                    	cSField.setText(""); //field is now uneditable so no need to clear it
@@ -486,40 +495,40 @@ public class GUI extends JFrame{
 							String waitingTime = Float.toString(s1WaitingTime);
 							String waitingLength = Float.toString(s1WaitingLength);
 							String avgCrossSegment = Float.toString(s1CrossTime / 2);
-							statsModel.setValueAt(carsAtSegment, 0, 0);
-							statsModel.setValueAt(waitingTime, 0, 1);
-							statsModel.setValueAt(waitingLength, 0, 2);
-							statsModel.setValueAt(avgCrossSegment, 0, 3);
+							statsModel.setValueAt(carsAtSegment, 0, 1);
+							statsModel.setValueAt(waitingTime, 0, 2);
+							statsModel.setValueAt(waitingLength, 0, 3);
+							statsModel.setValueAt(avgCrossSegment, 0, 4);
 						}
 						if (segment.equals("2")) {
 							String carsAtSegment = Integer.toString(s2counter);
 							String waitingTime = Float.toString(s2WaitingTime);
 							String waitingLength = Float.toString(s2WaitingLength);
 							String avgCrossSegment = Float.toString(s2CrossTime / 2);
-							statsModel.setValueAt(carsAtSegment, 1, 0);
-							statsModel.setValueAt(waitingTime, 1, 1);
-							statsModel.setValueAt(waitingLength, 1, 2);
-							statsModel.setValueAt(avgCrossSegment, 1, 3);
+							statsModel.setValueAt(carsAtSegment, 1, 1);
+							statsModel.setValueAt(waitingTime, 1, 2);
+							statsModel.setValueAt(waitingLength, 1, 3);
+							statsModel.setValueAt(avgCrossSegment, 1, 4);
 						}
 						if (segment.equals("3")) {
 							String carsAtSegment = Integer.toString(s3counter);
 							String waitingTime = Float.toString(s3WaitingTime);
 							String waitingLength = Float.toString(s3WaitingLength);
 							String avgCrossSegment = Float.toString(s3CrossTime / 2);
-							statsModel.setValueAt(carsAtSegment, 2, 0);
-							statsModel.setValueAt(waitingTime, 2, 1);
-							statsModel.setValueAt(waitingLength, 2, 2);
-							statsModel.setValueAt(avgCrossSegment, 2, 3);
+							statsModel.setValueAt(carsAtSegment, 2, 1);
+							statsModel.setValueAt(waitingTime, 2, 2);
+							statsModel.setValueAt(waitingLength, 2, 3);
+							statsModel.setValueAt(avgCrossSegment, 2, 4);
 						}
 						if (segment.equals("4")) {
 							String carsAtSegment = Integer.toString(s4counter);
 							String waitingTime = Float.toString(s4WaitingTime);
 							String waitingLength = Float.toString(s4WaitingLength);
 							String avgCrossSegment = Float.toString(s4CrossTime / 2);
-							statsModel.setValueAt(carsAtSegment, 3, 0);
-							statsModel.setValueAt(waitingTime, 3, 1);
-							statsModel.setValueAt(waitingLength, 3, 2);
-							statsModel.setValueAt(avgCrossSegment, 3, 3);
+							statsModel.setValueAt(carsAtSegment, 3, 1);
+							statsModel.setValueAt(waitingTime, 3, 2);
+							statsModel.setValueAt(waitingLength, 3, 3);
+							statsModel.setValueAt(avgCrossSegment, 3, 4);
 						}	
 						
 						
@@ -572,8 +581,6 @@ public class GUI extends JFrame{
 			s4WaitingLength += car.getVehicleLength();
 		}
 	}
-	
-	
 	
 	public JScrollPane addStatsDisplayPane(LinkedList<Phases> phaseList) {
 		String[] columnNames = {"Segment",	"No. of Vehicles Waiting", "Waiting Time", 
@@ -651,6 +658,21 @@ public class GUI extends JFrame{
 		JTable statsTable = new JTable(statsModel);
 		statsPane = new JScrollPane(statsTable);
 		return statsPane;		
+	}
+	
+	public JPanel addEmissionsPanel() {
+		 Font formFont = new Font("Courier", Font.BOLD, 15);
+		 JPanel emissionPanel = new JPanel();
+		 emissionPanel.setLayout(new FlowLayout());
+		 JLabel emissionLabel = addLabels("Total CO2 Emissions");
+		 emissionLabel.setFont(formFont);
+		 emissionField = new JTextField(Float.toString(totalEmissions), 6);
+		 emissionField.setBackground(Color.white);
+		 emissionField.setFont(formFont);
+		 emissionField.setEditable(false);
+		 emissionPanel.add(emissionLabel);
+		 emissionPanel.add(emissionField);		 
+		 return emissionPanel;
 	}
 }
 
