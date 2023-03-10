@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 
 
-public class Main{		
+public class Main{	
+	static float totalCarsForTest = 0;
 	
 	public static long startTimer() {
 		long startingTime = System.currentTimeMillis();
@@ -37,7 +38,8 @@ public class Main{
 			totalCars += exitedCars.size();
 			System.out.println(totalCars);
 		}
-		System.out.println(totalCars); 
+		System.out.println(totalCars);
+		totalCarsForTest = totalCars;
 		return totalCars / waitTime;
 	}
 	

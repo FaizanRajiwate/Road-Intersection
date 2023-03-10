@@ -171,6 +171,10 @@ public class GUI extends JFrame{
 	}
 	
 	public LinkedList<Phases> readPhasesFile(String filename) {
+		if(filename == null || filename == "" )
+		{
+			throw new NullPointerException();
+		}
 		try {
 			LinkedList<Phases> phaseList = new LinkedList<Phases>();
 			Scanner csvScanner = readCsvFile("phases.csv");
