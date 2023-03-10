@@ -72,6 +72,7 @@ public class GUI extends JFrame{
 	float totalEmissions = 0;
 	
 	public GUI(){
+		//creates an empty jframe object with a title and makes it visible
 		setTitle("Road Intersection");
 		setVisible(true);
 	}
@@ -80,68 +81,28 @@ public class GUI extends JFrame{
 		//Extract variables from csv File
 		String plateNumber = csvFileLine.get(0);
 		String vehicleType = csvFileLine.get(1);
+		vehicleType = vehicleType.toLowerCase();
 		String crossingTime = csvFileLine.get(2);
 		String direction = csvFileLine.get(3);
 		String crossingStatus = csvFileLine.get(4);
+		vehicleType = crossingStatus.toLowerCase();
 		String emissionRate = csvFileLine.get(5);
 		String vehicleLength = csvFileLine.get(6);
 		String segment = csvFileLine.get(7);
 		
-    	try {
-    		if (checkNull(plateNumber)) {
-    			throw new InaccurateDataException("The Plate Number cannot be empty");
-    		}else if (checkNull(crossingTime)){
-    			throw new InaccurateDataException("The Crossing Time cannot be empty");
-    		}else if(checkNull(crossingStatus)) {
-    			throw new InaccurateDataException("The Crossing Status cannot be empty ");
-    		}else if (checkNull(emissionRate)) {
-    			throw new InaccurateDataException("The Vehicle Emissions cannot be empty");
-    		}else if (checkNull(vehicleLength)) {
-    			throw new InaccurateDataException("The Vehicle Length cannot be empty");
-    		}else if(!checkNumberValid(crossingTime)) {
-    			throw new NumberFormatException("The Crossing Time entry is not a number");
-    		}else if(!checkNumberValid(emissionRate)) {
-    			throw new NumberFormatException("The Vehicle Emissions is not a float.");
-    		}else if (!checkNumberValid(segment)) {
-    			throw new NumberFormatException("The Segment is not a number");
-    		}else if (!((Float.parseFloat(crossingTime) < 10) && (Float.parseFloat(crossingTime) > 0))) {
-    			throw new NumberFormatException("Your Crossing Time Entry is not between 0 and 10s");
-    		}else if (!((Float.parseFloat(emissionRate) < 50) && (Float.parseFloat(emissionRate) > 0))) {
-    			throw new NumberFormatException("Your vehicle emission Entry is not between 0 and 50 " + emissionRate);
-    		}else if (!((Integer.parseInt(segment) < 5) && (Integer.parseInt(segment) > 0))) {
-    			throw new NumberFormatException("Your Segment Entry is not between 1 and 4");
-    		}else if(!((crossingStatus.equals("not crossed")) || (crossingStatus.equals("crossed")))) {
-    			throw new InaccurateDataException("Your Crossing status should either be 'crossed' or 'not crossed'");
-    		}else if (checkDuplicate(plateNumber, phaseList)) {
-    			throw new DuplicateIDException(plateNumber + ": This vehicle has a duplicate car plate number.");
-    		}else {
+		Vehicles car = new Vehicles();
+		car.setPlateNumber(plateNumber);
+		car.setVehicleType(vehicleType);
+		car.setCrossingTime(Float.parseFloat(crossingTime));
+		car.setCrossingDirection(direction);
+		car.setCrossingStatus(crossingStatus);
+		car.setVehicleEmission(Float.parseFloat(emissionRate));
+		car.setVehicleLength(Float.parseFloat(vehicleLength));
+		car.setSegment(segment);
+		
+		return car;
 
-    			Vehicles car = new Vehicles();
-    			car.setPlateNumber(plateNumber);
-    			car.setVehicleType(vehicleType);
-    			car.setCrossingTime(Float.parseFloat(crossingTime));
-    			car.setCrossingDirection(direction);
-    			car.setCrossingStatus(crossingStatus);
-    			car.setVehicleEmission(Float.parseFloat(emissionRate));
-    			car.setVehicleLength(Float.parseFloat(vehicleLength));
-    			car.setSegment(segment);
-    			
-    			return car;
 
-    		}
-    	}catch(InaccurateDataException ex) {
-    		JFrame alert = new JFrame();
-			JOptionPane.showMessageDialog(alert, ex);
-			return null;
-    	}catch(NumberFormatException ex) {
-    		JFrame alert = new JFrame();
-			JOptionPane.showMessageDialog(alert, ex);
-			return null;
-    	}catch(DuplicateIDException ex) {
-    		JFrame alert = new JFrame();
-			JOptionPane.showMessageDialog(alert, ex);
-			return null;
-    	}	
 	}
 	
 	public Phases createPhase(List<String> csvFileLine) {
@@ -277,7 +238,55 @@ public class GUI extends JFrame{
 						Object[] rowData = new Object[splitLine.length];
 						List<String> listSplitLine = Arrays.asList(splitLine);
 						rowData = splitLine;
-		
+						
+						String plateNumber = listSplitLine.get(0);
+						String vehicleType = listSplitLine.get(1);
+						vehicleType = vehicleType.toLowerCase().trim();
+						String crossingTime = listSplitLine.get(2);
+						String direction = listSplitLine.get(3);
+						String crossingStatus = listSplitLine.get(4);
+						crossingStatus = crossingStatus.toLowerCase().trim();
+						String emissionRate = listSplitLine.get(5);
+						String vehicleLength = listSplitLine.get(6);
+						String segment = listSplitLine.get(7);
+						
+						
+			    		if (checkNull(plateNumber)) {
+			    			throw new InaccurateDataException("The Plate Number cannot be empty");
+			    		}else if (checkNull(crossingTime)){
+			    			throw new InaccurateDataException("The Crossing Time cannot be empty");
+			    		}else if (checkNull(vehicleType)){
+			    			throw new InaccurateDataException("The Vehicle Type cannot be empty");
+			    		}else if (!((vehicleType.equals("car")) || (vehicleType.equals("bus") || (vehicleType.equals("truck"))))){
+			    			throw new InaccurateDataException("The Vehicle Type cannot be empty");	
+			    		}else if(checkNull(crossingStatus)) {
+			    			throw new InaccurateDataException("The Crossing Status cannot be empty ");
+			    		}else if (checkNull(emissionRate)) {
+			    			throw new InaccurateDataException("The Vehicle Emissions cannot be empty");
+			    		}else if (checkNull(vehicleLength)) {
+			    			throw new InaccurateDataException("The Vehicle Length cannot be empty");
+			    		}else if(!checkNumberValid(crossingTime)) {
+			    			throw new NumberFormatException("The Crossing Time entry is not a number");
+			    		}else if(!checkNumberValid(emissionRate)) {
+			    			throw new NumberFormatException("The Vehicle Emissions is not a float.");
+			    		}else if (!checkNumberValid(segment)) {
+			    			throw new NumberFormatException("The Segment is not a number");
+			    		}else if (!((Float.parseFloat(crossingTime) < 10) && (Float.parseFloat(crossingTime) > 0))) {
+			    			throw new NumberFormatException("Your Crossing Time Entry is not between 0 and 10s");
+			    		}else if (!((Float.parseFloat(emissionRate) < 50) && (Float.parseFloat(emissionRate) > 0))) {
+			    			throw new NumberFormatException("Your vehicle emission Entry is not between 0 and 50 " + emissionRate);
+			    		}else if (!((Integer.parseInt(segment) < 5) && (Integer.parseInt(segment) > 0))) {
+			    			throw new NumberFormatException("Your Segment Entry is not between 1 and 4");
+			    		}else if (!((Float.parseFloat(vehicleLength) < 8) && (Float.parseFloat(vehicleLength)) > 0)) {
+			        			throw new NumberFormatException("Your Vehicle Length is not between 0 and 8m");
+			    		}else if(!((crossingStatus.equals("not crossed")) || (crossingStatus.equals("waiting")))){
+			    			throw new InaccurateDataException("Your Crossing status should either be 'crossed' or 'not crossed'");
+			    		}else if(!((direction.equals("straight")) || (direction.equals("left")) || (direction.equals("right")))){
+			    			throw new InaccurateDataException("Your direction should either be straight, left or right");
+			    		}else if (checkDuplicate(plateNumber, phaseList)) {
+			    			throw new DuplicateIDException(plateNumber + ": This vehicle has a duplicate car plate number.");
+			    		}
+				    	
 						//populate VehicleJTable
 					
 						Vehicles car = createVehicle(listSplitLine, phaseList);
@@ -293,11 +302,24 @@ public class GUI extends JFrame{
 							throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 						}
 					}catch (PhaseException e) {
-						 System.out.println(e); 
+						JFrame alert = new JFrame();
+						JOptionPane.showMessageDialog(alert, e);
+						continue;
 					}catch (InaccurateDataException e) {
-						System.out.println(e);
+						e.printStackTrace();
+						JFrame alert = new JFrame();
+						JOptionPane.showMessageDialog(alert, e);
+						continue;
+					}catch(DuplicateIDException e){
+						JFrame alert = new JFrame();
+						JOptionPane.showMessageDialog(alert, e);
+						continue;
+					}catch(NumberFormatException e) {
+						JFrame alert = new JFrame();
+						JOptionPane.showMessageDialog(alert, e);
 						continue;
 					}
+					
 				}
 			}		     
 		}
@@ -460,6 +482,8 @@ public class GUI extends JFrame{
             			throw new NumberFormatException("Your vehicle emission Entry is not between 0 and 50 " + vEEntry);
             		}else if (!((Integer.parseInt(sEntry) < 5) && (Integer.parseInt(sEntry) > 0))) {
             			throw new NumberFormatException("Your Segment Entry is not between 1 and 4");
+            		}else if (!((Float.parseFloat(vLEntry) < 8) && (Float.parseFloat(vLEntry) > 0))) {
+            			throw new NumberFormatException("Your vehicle Length is not between 0 and 8 " + vEEntry);
             		}else if(!((cSEntry.equals("not crossed")) || (cSEntry.equals("crossed")))) {
             			throw new InaccurateDataException("Your Crossing status should either be 'crossed' or 'not crossed'");
             		}else if (checkDuplicate(pNEntry, phaseList)) {
