@@ -1,11 +1,6 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.List;
 import java.lang.Float;
 import java.awt.*;
 import java.awt.event.*;
@@ -30,7 +25,7 @@ public class Main{
 		return elapsedTimeInSeconds;
 	}
 	
-	public static float averageWaiting(LinkedList<Phases> phaseList, float executionTime) {
+	public static float averageWaiting(LinkedList<Phases> phaseList, float waitTime) {
 		//This function approximates the waiting time, by determining 
 		//how many cars crossed in the amount of time the program was run for
 		//It receives as input a linkedlist comprising of various phases known as phaselist and 
@@ -43,21 +38,39 @@ public class Main{
 			System.out.println(totalCars);
 		}
 		System.out.println(totalCars); 
-		return totalCars / executionTime;
+		return totalCars / waitTime;
 	}
 	
 	public static int totalVehicles(LinkedList<Phases> phaseList) {
+		//Find the number of vehicles that crossed successfully
 		int totalCars = 0;
 		for (Phases phase: phaseList) {
 			totalCars += phase.getCrossedLinkedList().size();
 		}
 		return totalCars;
 	}
-	public static float controlIntersections(LinkedList<Phases> phaseList, long executionTime) {
+	
+	public static LinkedList<Float> exitedVehiclesPerPhase(LinkedList<Phases> phaseList) {
+		//Find the number of vehicles which left each phase.
+		//checks the list of phase objects which are included in order. 
+		LinkedList<Float> exitedVehicleNumber = new LinkedList<Float>();
+		for (Phases phase : phaseList) {
+			LinkedList<Vehicles> exitedVehicles = phase.getCrossedLinkedList();
+			float numberOfExitedVehicles = exitedVehicles.size();
+			exitedVehicleNumber.add(numberOfExitedVehicles);
+		}
+		return exitedVehicleNumber;
+	}
+	
+	public static LinkedList<Float> controlIntersections(LinkedList<Phases> phaseList, long executionTime) {
 		//execution Time is the amount of time the program was kept running for before being exited
 		//phaseList is the list of phases available at the intersection
-		float unusedTime = 0f;
+		//The program iterates through each phase in the order of phase 1, phase 1, phase 3, phase 4 etc.... 
+		//and checks the vehicles in for if they can move through in the respective allocated phase time, 
+		//at the point where a vehicle cannot cross successfully, the active phase becomes the nest available phase.
+		//This is done until the execution time becomes 0.
 		float waitTime = 0f;
+		float waitTotal = 0f;
 		float totalEmissions = 0f;
 		while (executionTime > 0) {
 			for (Phases phase: phaseList) {
@@ -72,23 +85,23 @@ public class Main{
 					phaseTimer = executionTime;	
 				}
 				executionTime -= phaseTimer;
-				float phaseWaitTime = 0f;
+//				float phaseWaitTime = 0f;
 				while (phaseTimer > 0) {
 					try {
 						Vehicles currCar = queuedVehicles.get(0);
 						float currCarTime = currCar.getCrossingTime();
 						waitTime += currCarTime;
+						waitTotal += waitTime;
 						if (phaseTimer >= currCarTime) {
 							crossedVehicles.add(currCar);
 							queuedVehicles.remove(currCar);
-							phaseWaitTime += currCar.getCrossingTime();
+//							phaseWaitTime += currCar.getCrossingTime();
 							float carEmissions = currCar.calculateEmissions(waitTime);
 							totalEmissions += carEmissions;
 							//calculate emissions
 							phaseTimer -= currCarTime;
 						}else {
 							System.out.println(currCar.getPlateNumber() + " cannot cross due to inadequate time");
-							unusedTime += phaseTimer;
 							break;
 						}
 					}catch (IndexOutOfBoundsException e){
@@ -100,7 +113,10 @@ public class Main{
 				}
 			}
 		}
-		return totalEmissions;
+		LinkedList<Float> waitTimeEmissionList = new LinkedList<Float>();
+		waitTimeEmissionList.add(totalEmissions);
+		waitTimeEmissionList.add(waitTotal);
+		return waitTimeEmissionList;
 	}
 	
 	public static void main(String Args[]) {
@@ -148,9 +164,11 @@ public class Main{
 			public void windowClosing(WindowEvent e) {
 
 				long elapsedTime = timeElapsed(startingTime);
-				float totalEmissions = controlIntersections(phaseList, elapsedTime);
-				float waitingTimeAverage = averageWaiting(phaseList, elapsedTime);
+				LinkedList<Float> totalEmissions = controlIntersections(phaseList, elapsedTime);
+				float waitingTimeAverage = averageWaiting(phaseList, totalEmissions.get(1));
 				int totalCarsCrossed = totalVehicles(phaseList);
+				LinkedList<Float> numberOfExitedVehicles = exitedVehiclesPerPhase(phaseList);
+				
 				System.out.println("Done.\nWaiting Average: " + waitingTimeAverage);
 				ReportFile file = new ReportFile();
 				try {
@@ -158,8 +176,13 @@ public class Main{
 					if (writingFile == null) {
 						System.out.println("This file cannot be written to!");
 					}else {
+						int index = 1;
+						for (Float f: numberOfExitedVehicles) {
+							writingFile.write("The number of exited cars for Phase " + index + ": " + f + "\n");
+							index += 1;
+						}
 						writingFile.write("The Average Waiting Time per car is: " + waitingTimeAverage + "\n");
-						writingFile.write("The total Emissions are: " + totalEmissions + "\n");
+						writingFile.write("The total Emissions are: " + totalEmissions.get(0) + "\n");
 						writingFile.write("The total crossed vehicles are: " + totalCarsCrossed + "\n");
 						writingFile.close();
 					}

@@ -3,7 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-public class ReportFile {	
+public class ReportFile{	
 	
 	public FileWriter writeToFile(String filename) {
 		try {
