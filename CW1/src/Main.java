@@ -172,20 +172,21 @@ public class Main{
 				LinkedList<Float> numberOfExitedVehicles = exitedVehiclesPerPhase(phaseList);
 				
 				System.out.println("Done.\nWaiting Average: " + waitingTimeAverage);
-				ReportFile file = new ReportFile();
+				ReportFile file = ReportFile.getInstance("report.txt");
 				try {
-					FileWriter writingFile = file.writeToFile("report.txt");
+					FileWriter writingFile = file.writeToFile();
 					if (writingFile == null) {
 						System.out.println("This file cannot be written to!");
 					}else {
 						int index = 1;
 						for (Float f: numberOfExitedVehicles) {
-							writingFile.write("The number of exited cars for Phase " + index + ": " + f + "\n");
+							writingFile.append("The number of exited cars for Phase " + index + ": " + f + "\n");
+							
 							index += 1;
 						}
-						writingFile.write("The Average Waiting Time per car is: " + waitingTimeAverage + "\n");
-						writingFile.write("The total Emissions are: " + totalEmissions.get(0) + "\n");
-						writingFile.write("The total crossed vehicles are: " + totalCarsCrossed + "\n");
+						writingFile.append("The Average Waiting Time per car is: " + waitingTimeAverage + "\n");
+						writingFile.append("The total Emissions are: " + totalEmissions.get(0) + "\n");
+						writingFile.append("The total crossed vehicles are: " + totalCarsCrossed + "\n");
 						writingFile.close();
 					}
 				}catch (IOException a) {
@@ -198,40 +199,7 @@ public class Main{
 				System.exit(0);
 			}
 			
-		});
-		
-		
-		
-		
-
-		
-		 
-		
-
-//		mainWindow.add(buttonPanel);
-
-
-
-		
-
-//		//Add to Main Window
-//		mainWindow.add(addVehicle);
-//		
-//		mainWindow.add(phasePanel);
-//		
-		
-		
-		
-		
-	
-//		
-//
-//			
-//		}
-		//figure out details of report
-		
-
-		
+		});	
 	}
 }
 
