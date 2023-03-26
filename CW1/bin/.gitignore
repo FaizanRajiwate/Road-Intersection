@@ -1,3 +1,8 @@
+/GUIController.class
+/GUIModel.class
+/GUIView.class
+/Helper.class
+/InaccurateDataException.class
 /JunitTests$CheckDuplicateTest.class
 /JunitTests$FileReadTest.class
 /JunitTests$FindPhaseTest.class
@@ -5,3 +10,9 @@
 /JunitTests$PhaseClassTest.class
 /JunitTests$VehicleClassClassTest.class
 /JunitTests.class
+/Main.class
+/PhaseException.class
+/Phases.class
+/ReportFile.class
+/Vehicles.class
+/GUIController$AddVehicleListener.class

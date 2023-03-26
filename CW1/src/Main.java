@@ -122,114 +122,115 @@ public class Main{
 	}
 	
 	public static void main(String Args[]) {
-		long startingTime = startTimer();
-		GUI mainWindow = new GUI();
-		LinkedList<Phases> phaseList = mainWindow.readPhasesFile("phases.csv");
-		mainWindow.setLayout(new GridLayout(7,3,20,0));
-		Font font = new Font("Courier", Font.BOLD, 20);
-		JLabel vehicleLabel = mainWindow.addLabels("Vehicles");
-		JLabel phaseLabel = mainWindow.addLabels("Phases");
-		JLabel segmentLabel = mainWindow.addLabels("Segments");
-		vehicleLabel.setFont(font);
-		phaseLabel.setFont(font);
-		segmentLabel.setFont(font);
-		JPanel labelPane = new JPanel();
-		labelPane.setLayout(new FlowLayout(FlowLayout.CENTER,375,20));
-		labelPane.add(vehicleLabel);
-		labelPane.add(phaseLabel);
-		labelPane.add(segmentLabel);
+		GUIController controller = new GUIController(new GUIModel(), new GUIView(), new Helper() );
+//		long startingTime = startTimer();
+//		GUI mainWindow = new GUI();
+//		LinkedList<Phases> phaseList = mainWindow.readPhasesFile("phases.csv");
+//		mainWindow.setLayout(new GridLayout(7,3,20,40));
+//		Font font = new Font("Courier", Font.BOLD, 20);
+//		JLabel vehicleLabel = mainWindow.addLabels("Vehicles");
+//		JLabel phaseLabel = mainWindow.addLabels("Phases");
+//		JLabel segmentLabel = mainWindow.addLabels("Segments");
+//		vehicleLabel.setFont(font);
+//		phaseLabel.setFont(font);
+//		segmentLabel.setFont(font);
+//		JPanel labelPane = new JPanel();
+//		labelPane.setLayout(new GridLayout(1,3,20,40));
+//		labelPane.add(vehicleLabel);
+//		labelPane.add(phaseLabel);
 //		labelPane.add(segmentLabel);
-		mainWindow.add(labelPane);
-
-		//Pane for Tables
-		JPanel tableDisplayPanel = mainWindow.tablesDisplayPanel(phaseList);
-		mainWindow.add(tableDisplayPanel);
-		JLabel emptyLabel = new JLabel();
-		mainWindow.add(emptyLabel);
-		System.out.println("Table Created");
-		//Create Add Vehicle Form
-		JPanel addVehicle = mainWindow.addTableDisplayPanel(phaseList);
-		mainWindow.add(addVehicle);
-		
-		
-
-		JLabel emptyLabel2 = new JLabel();
-		mainWindow.add(emptyLabel2);
-		JPanel emissionsPanel = mainWindow.addEmissionsPanel();
-		mainWindow.add(emissionsPanel); 
-		JLabel emptyLabel3 = new JLabel();
-		mainWindow.add(emptyLabel3);
-		mainWindow.pack();
-//		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainWindow.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-
-				long elapsedTime = timeElapsed(startingTime);
-				LinkedList<Float> totalEmissions = controlIntersections(phaseList, elapsedTime);
-				float waitingTimeAverage = averageWaiting(phaseList, totalEmissions.get(1));
-				int totalCarsCrossed = totalVehicles(phaseList);
-				LinkedList<Float> numberOfExitedVehicles = exitedVehiclesPerPhase(phaseList);
-				
-				System.out.println("Done.\nWaiting Average: " + waitingTimeAverage);
-				ReportFile file = new ReportFile();
-				try {
-					FileWriter writingFile = file.writeToFile("report.txt");
-					if (writingFile == null) {
-						System.out.println("This file cannot be written to!");
-					}else {
-						int index = 1;
-						for (Float f: numberOfExitedVehicles) {
-							writingFile.write("The number of exited cars for Phase " + index + ": " + f + "\n");
-							index += 1;
-						}
-						writingFile.write("The Average Waiting Time per car is: " + waitingTimeAverage + "\n");
-						writingFile.write("The total Emissions are: " + totalEmissions.get(0) + "\n");
-						writingFile.write("The total crossed vehicles are: " + totalCarsCrossed + "\n");
-						writingFile.close();
-					}
-				}catch (IOException a) {
-					System.out.println("The File could not be written");
-				}
-				
-				JFrame alert = new JFrame();
-				JOptionPane.showMessageDialog(alert, "Total Time Elapsed: " + elapsedTime);
-				
-				System.exit(0);
-			}
-			
-		});
-		
-		
-		
-		
-
-		
-		 
-		
-
-//		mainWindow.add(buttonPanel);
-
-
-
-		
-
-//		//Add to Main Window
+////		labelPane.add(segmentLabel);
+//		mainWindow.add(labelPane);
+//
+//		//Pane for Tables
+//		JPanel tableDisplayPanel = mainWindow.tablesDisplayPanel(phaseList);
+//		mainWindow.add(tableDisplayPanel);
+////		JLabel emptyLabel = new JLabel();
+////		mainWindow.add(emptyLabel);
+//		System.out.println("Table Created");
+//		//Create Add Vehicle Form
+//		JPanel addVehicle = mainWindow.addTableDisplayPanel(phaseList);
 //		mainWindow.add(addVehicle);
 //		
-//		mainWindow.add(phasePanel);
-//		
-		
-		
-		
-		
-	
 //		
 //
+//		JLabel emptyLabel2 = new JLabel();
+//		mainWindow.add(emptyLabel2);
+//		JPanel emissionsPanel = mainWindow.addEmissionsPanel();
+//		mainWindow.add(emissionsPanel); 
+//		JLabel emptyLabel3 = new JLabel();
+//		mainWindow.add(emptyLabel3);
+//		mainWindow.pack();
+////		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		mainWindow.addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosing(WindowEvent e) {
+//
+//				long elapsedTime = timeElapsed(startingTime);
+//				LinkedList<Float> totalEmissions = controlIntersections(phaseList, elapsedTime);
+//				float waitingTimeAverage = averageWaiting(phaseList, totalEmissions.get(1));
+//				int totalCarsCrossed = totalVehicles(phaseList);
+//				LinkedList<Float> numberOfExitedVehicles = exitedVehiclesPerPhase(phaseList);
+//				
+//				System.out.println("Done.\nWaiting Average: " + waitingTimeAverage);
+//				ReportFile file = new ReportFile();
+//				try {
+//					FileWriter writingFile = file.writeToFile("report.txt");
+//					if (writingFile == null) {
+//						System.out.println("This file cannot be written to!");
+//					}else {
+//						int index = 1;
+//						for (Float f: numberOfExitedVehicles) {
+//							writingFile.write("The number of exited cars for Phase " + index + ": " + f + "\n");
+//							index += 1;
+//						}
+//						writingFile.write("The Average Waiting Time per car is: " + waitingTimeAverage + "\n");
+//						writingFile.write("The total Emissions are: " + totalEmissions.get(0) + "\n");
+//						writingFile.write("The total crossed vehicles are: " + totalCarsCrossed + "\n");
+//						writingFile.close();
+//					}
+//				}catch (IOException a) {
+//					System.out.println("The File could not be written");
+//				}
+//				
+//				JFrame alert = new JFrame();
+//				JOptionPane.showMessageDialog(alert, "Total Time Elapsed: " + elapsedTime);
+//				
+//				System.exit(0);
+//			}
 //			
-//		}
-		//figure out details of report
-		
+//		});
+//		
+//		
+//		
+//		
+//
+//		
+//		 
+//		
+//
+////		mainWindow.add(buttonPanel);
+//
+//
+//
+//		
+//
+////		//Add to Main Window
+////		mainWindow.add(addVehicle);
+////		
+////		mainWindow.add(phasePanel);
+////		
+//		
+//		
+//		
+//		
+//	
+////		
+////
+////			
+////		}
+//		//figure out details of report
+//		
 
 		
 	}

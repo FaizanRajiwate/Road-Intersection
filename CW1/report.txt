@@ -1,11 +1,11 @@
 The number of exited cars for Phase 1: 1.0
-The number of exited cars for Phase 2: 0.0
-The number of exited cars for Phase 3: 0.0
+The number of exited cars for Phase 2: 2.0
+The number of exited cars for Phase 3: 1.0
 The number of exited cars for Phase 4: 0.0
-The number of exited cars for Phase 5: 0.0
+The number of exited cars for Phase 5: 2.0
 The number of exited cars for Phase 6: 0.0
-The number of exited cars for Phase 7: 0.0
+The number of exited cars for Phase 7: 1.0
 The number of exited cars for Phase 8: 0.0
-The Average Waiting Time per car is: 0.25974026
-The total Emissions are: 0.64166665
-The total crossed vehicles are: 1
+The Average Waiting Time per car is: 0.06809338
+The total Emissions are: 17.133333
+The total crossed vehicles are: 7
