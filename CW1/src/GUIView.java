@@ -73,7 +73,9 @@ public class GUIView extends JFrame {
 	private JLabel emptyLabel2;
 	//Total Emission Display
 	private JPanel emissionPanel;
-	private JLabel emissionLabel;;
+	private JLabel emissionLabel;
+	//button to start intersection
+	private JButton startButton;
 	public GUIView() {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
@@ -107,7 +109,9 @@ public class GUIView extends JFrame {
 		basePanel.add(emptyLabel2);
 		//Emission Panel
 		emissionPanel = addEmissionsPanel();
-		basePanel.add(emissionPanel);		
+		basePanel.add(emissionPanel);
+		startButton = createButton("Start Simulation");
+		basePanel.add(startButton);
 		this.add(basePanel);
 		
 		
@@ -184,7 +188,7 @@ public class GUIView extends JFrame {
 
 	private JPanel createFormButtonPanel() {
 		JPanel _panel = createPanel(1, 3, 0, 20);
-		addVehicleButton = createAddVehicleButton("Add Vehicle");
+		addVehicleButton = createButton("Add Vehicle");
 		JLabel emptyLabel = new JLabel("");
 		JLabel emptyLabel2 = new JLabel("");
 		_panel.add(emptyLabel);
@@ -193,7 +197,7 @@ public class GUIView extends JFrame {
 		return _panel;
 	}
 
-	private JButton createAddVehicleButton(String buttonName) {
+	private JButton createButton(String buttonName) {
 		JButton _button = new JButton(buttonName);
 		_button.setLayout(new FlowLayout(FlowLayout.CENTER));
 		return _button;
@@ -253,6 +257,10 @@ public class GUIView extends JFrame {
 
 	public void addVehicleButtonListener(ActionListener listener) {
 		addVehicleButton.addActionListener(listener);
+	}
+	
+	public void startButtonListener(ActionListener listener) {
+		startButton.addActionListener(listener);
 	}
 	
 	public JScrollPane getStatsPane() {

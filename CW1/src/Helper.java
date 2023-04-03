@@ -1,8 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Helper {
@@ -99,7 +101,9 @@ public class Helper {
 			System.out.println("The file you've selected does not exist in the src directory.");
 			return null;
 		}
-	}public boolean findPhase(Vehicles car, LinkedList<Phases> listOfPhases) {
+	}
+	
+	public boolean findPhase(Vehicles car, LinkedList<Phases> listOfPhases) {
 		String direction = car.getCrossingDirection();
 		String segment = car.getSegment();
 		if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("1"))) {
@@ -137,7 +141,6 @@ public class Helper {
 		else {
 			return false;
 		}
-		
 	}
 	
 	public Vehicles createVehicle(List<String> csvFileLine, LinkedList<Phases> phaseList) {
@@ -210,6 +213,116 @@ public class Helper {
 		
 		 }
 	}
+	
+	public ArrayList<String> randomlyGenerateVehicles(){
+		ArrayList<String> vehicleDetails = new ArrayList<String>();
+		
+		String plateNumber = generatePlateNumber();
+		String vehicleType = generateVehicleType();
+		String crossingTime = generateCrossingTime();
+		String direction = generateCrossingDirection();
+		String crossingStatus = generateCrossingStatus();
+		String emissionRate = generateEmissions();
+		String vehicleLength = generateVehicleLength();
+		String segment = generateVehicleSegment();
+		
+		vehicleDetails.add(plateNumber);
+		vehicleDetails.add(vehicleType);
+		vehicleDetails.add(crossingTime);
+		vehicleDetails.add(direction);
+		vehicleDetails.add(crossingStatus);
+		vehicleDetails.add(emissionRate);
+		vehicleDetails.add(vehicleLength);
+		vehicleDetails.add(segment);
+		
+		return vehicleDetails;
+	}
+	
+	public String generatePlateNumber() {
+		Random random = generateRandomSeed(1500);
+		int aMax = 90;
+		int aMin = 65;
+		
+		String plateOpening = "";
+		String plateNumerals = "";
+		String plateEnding = "";
+		for (int i= 0; i < 3; i++) {
+			int genLetter = random.nextInt((aMax - aMin) + 1) + aMin;
+			plateOpening += (char) genLetter;
+		}
+		for (int i= 0; i < 3; i++) {
+			int genNumber = random.nextInt(10);
+			plateOpening += (char) genNumber;
+		}
+		for (int i= 0; i < 3; i++) {
+			int genLetter = random.nextInt((aMax - aMin) + 1) + aMin;
+			plateEnding += (char) genLetter;
+		}
+		String plateNumber = plateOpening + plateNumerals + plateEnding;
+		return plateNumber;
+	}
+	
+	public Random generateRandomSeed(long seed) {
+		Random random = new Random();
+		random.setSeed(seed);
+		return random;
+	}
+	
+	public String generateVehicleType() {
+		String[] vehicleTypes = {"bus", "car", "truck"};
+		Random random = generateRandomSeed(1200);
+		int index = random.nextInt(3);
+		String vehicleType = vehicleTypes[index];
+		return vehicleType;
+	}
+	
+	public String generateCrossingDirection() {
+		String[] crossingDirections = {"straight", "left", "right"};
+		Random random = generateRandomSeed(1200);
+		int index = random.nextInt(3);
+		String crossingDirection = crossingDirections[index];
+		return crossingDirection;
+	}
+	
+	public String generateCrossingTime() {
+		
+		Random random = generateRandomSeed(1200);
+		int aMax = 5;
+		int aMin = 1;
+		float crossingTime = random.nextFloat((aMax - aMin) + 1) + aMin;
+		return "" + crossingTime;
+	}
+	
+	public String generateCrossingStatus() {
+		String crossingStatus = "not crossed";
+		return crossingStatus;
+	}
+	
+	public String generateEmissions() {
+		Random random = generateRandomSeed(1200);
+		int aMax = 50;
+		int aMin = 1;
+		float emissions = random.nextFloat((aMax - aMin) + 1) + aMin;
+		return "" + emissions;
+	}
+	
+	public String generateVehicleLength() {
+		Random random = generateRandomSeed(1200);
+		int aMax = 8;
+		int aMin = 1;
+		float vehicleLength = random.nextFloat((aMax - aMin) + 1) + aMin;
+		return "" + vehicleLength;
+	}
+	
+	public String generateVehicleSegment() {
+		String[] vehicleSegments = {"1", "2", "3", "4"};
+		Random random = generateRandomSeed(1200);
+		int index = random.nextInt(4);
+		String vehicleType = vehicleSegments[index];
+		return vehicleType;
+	}
+	
+	
 	
 	
 	

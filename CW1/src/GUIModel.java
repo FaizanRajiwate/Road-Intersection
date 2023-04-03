@@ -1,6 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel {
+public class GUIModel{
 	
 	private String[] vehicleColNames = {
 				"plate number",	

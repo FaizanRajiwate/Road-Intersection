@@ -8,6 +8,8 @@ public class Vehicles {
 	private float vehicleLength;
 	private float vehicleEmission;
 	private String segment;
+	private float queuedDistance;
+//	private float travelledDistance;
 	
 	public String getPlateNumber() { 
 		return plateNumber; 
@@ -69,6 +71,14 @@ public class Vehicles {
 		this.segment = segmentNumber;
 	}
 	
+	public void setQueuedDistance(float queuedDistance) {
+		this.queuedDistance = queuedDistance;
+	}
+	
+	public float getQueuedDistance() {
+		return this.queuedDistance;
+	}
+		
 	public String getSegment() {
 		return segment;
 	}

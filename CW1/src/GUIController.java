@@ -96,6 +96,7 @@ public class GUIController {
 		
 		view.setEmissionField(Float.toString(totalEmissions));
 		view.addVehicleButtonListener(new AddVehicleListener());
+		view.startButtonListener(new StartButtonListener());
 			
 	}
 	class AddVehicleListener implements ActionListener {
@@ -125,7 +126,6 @@ public class GUIController {
     			vehicleModel.addRow(newVehicle);            			           			
     			pNField.setText("");
             	cTField.setText("");
-//                    	cSField.setText(""); //field is now uneditable so no need to clear it
             	vEField.setText("");
             	vLField.setText("");
             	boolean sortedPhase = helper.findPhase(car, phaseList);
@@ -193,6 +193,20 @@ public class GUIController {
         }		 
 	}
 	
+	class StartButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			for (Phases phase: phaseList){
+				JunctionController jctrl = new JunctionController(phase);
+				jctrl.start();
+//				break;
+			}
+		}	
+	}
+	
 	
 	private JScrollPane addVehiclePane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
 		vehiclePane = view.getVehiclePane();
@@ -242,7 +256,6 @@ public class GUIController {
 						JOptionPane.showMessageDialog(alert, e);
 						continue;
 					}
-					
 				}
 			}		     
 		}
