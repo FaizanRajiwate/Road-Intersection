@@ -1,5 +1,5 @@
 
-public class Vehicles {
+public class Vehicles extends Thread {
 	private String plateNumber;
 	private String vehicleType;
 	private float crossingTime;
@@ -11,11 +11,17 @@ public class Vehicles {
 	private float queuedDistance;
 //	private float travelledDistance;
 	
+	public void run()
+	{ // code to be run as a thread
+		System.out.println("Started....Vehicle");
+				
+	}
+	
 	public String getPlateNumber() { 
 		return plateNumber; 
 	}
 	 
-	public void setPlateNumber (String plateNumber) {
+	public synchronized void setPlateNumber (String plateNumber) {
 		this.plateNumber = plateNumber;
 	}
 	
@@ -23,7 +29,7 @@ public class Vehicles {
 		return vehicleType; 
 	}
 	
-	public void setVehicleType (String vehicleType) {
+	public synchronized void setVehicleType (String vehicleType) {
 		this.vehicleType = vehicleType;
 	}
 	
@@ -31,7 +37,7 @@ public class Vehicles {
 		return crossingTime;
 	}
 	
-	public void setCrossingTime(float crossingTime) {
+	public synchronized void setCrossingTime(float crossingTime) {
 		this.crossingTime = crossingTime;
 	}
 	
@@ -39,7 +45,7 @@ public class Vehicles {
 		return crossingDirection; 
 	}
 	
-	public void setCrossingDirection (String crossingDirection) {
+	public synchronized void setCrossingDirection (String crossingDirection) {
 		this.crossingDirection = crossingDirection;
 	}
 	
@@ -47,7 +53,7 @@ public class Vehicles {
 		return crossingStatus;
 	}
 	
-	public void setCrossingStatus(String crossingStatus) {
+	public synchronized void setCrossingStatus(String crossingStatus) {
 		this.crossingStatus = crossingStatus;
 	}
 	
@@ -55,7 +61,7 @@ public class Vehicles {
 		return vehicleLength; 
 	}
 	
-	public void setVehicleLength(float vehicleLength) {
+	public synchronized void setVehicleLength(float vehicleLength) {
 		this.vehicleLength = vehicleLength;
 	}
 	
@@ -63,11 +69,11 @@ public class Vehicles {
 		return vehicleEmission;
 	}
 	
-	public void setVehicleEmission(float vehicleEmission) {
+	public synchronized void setVehicleEmission(float vehicleEmission) {
 		this.vehicleEmission = vehicleEmission;
 	}
 	
-	public void setSegment(String segmentNumber) {
+	public synchronized void setSegment(String segmentNumber) {
 		this.segment = segmentNumber;
 	}
 	
@@ -83,7 +89,17 @@ public class Vehicles {
 		return segment;
 	}
 	
-	public float calculateEmissions(float waitingTime) {
+	public synchronized float calculateEmissions(float waitingTime) {
+		/*
+		while(true) { // when no number available
+			try { wait(); } // consumer enters Waiting state
+			catch (InterruptedException e) {}
+			// it will stay here until notified
+			}
+			System.out.println("Got: " );
+			empty = true; // consumer has consumed the number
+			notifyAll(); // so wake up the producer
+		*/
 		return this.getVehicleEmission() * (waitingTime/60);
 	}
 	

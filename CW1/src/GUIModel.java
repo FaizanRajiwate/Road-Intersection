@@ -12,32 +12,39 @@ public class GUIModel{
 				"segment"};
 	
 	private String[] phaseColNames = {"Phase name",	
-							"Phase Timer"};
-	
+	"Phase Timer"};
+
 	private String[] segmentStatColNames = {"Segment",	
-							"No. of Vehicles Waiting", 
-							"Waiting Time", 
-							"Waiting Length", 
-							"Avg. Cross Time"};
-	
+	"No. of Vehicles Waiting", 
+	"Waiting Time", 
+	"Waiting Length", 
+	"Avg. Cross Time"};
+
 	private DefaultTableModel vehicleModel;
 	private DefaultTableModel phaseModel;
 	private DefaultTableModel statsModel;
-	
-	
+
+
 	public GUIModel() {
 		vehicleModel = createTableModel(vehicleColNames);
 		phaseModel = createTableModel(phaseColNames);
 		statsModel = createTableModel(segmentStatColNames);
 	}
 	
-	public DefaultTableModel createTableModel(String[] columns) {
+
+	public void run()
+	{ // code to be run as a thread
+		System.out.println("Started....");
+				
+	}
+
+	public synchronized DefaultTableModel createTableModel(String[] columns) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);
 		return model;		
 	}
 	
-	public void updateModel(DefaultTableModel  model, String[] rowData) {
+	public synchronized void updateModel(DefaultTableModel  model, String[] rowData) {
 		model.addRow(rowData);		
 	}
 	

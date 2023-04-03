@@ -1,5 +1,3 @@
-/DuplicateIDException.class
-/GUI$1.class
 /GUI.class
 /GUIController$AddVehicleListener.class
 /GUIController.class
@@ -19,9 +17,3 @@
 /Phases.class
 /ReportFile.class
 /Vehicles.class
-/TrafficContoller.class
-/Subject.class
-/Observer.class
-/JunctionController.class
-/GUIController$startButtonListener.class
-/GUIController$StartButtonListener.class
