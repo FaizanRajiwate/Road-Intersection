@@ -9,6 +9,8 @@ import java.awt.event.WindowAdapter;
 
 
 public class Main{	
+	
+	public static boolean blnEmpty;
 	static float totalCarsForTest = 0;
 	
 	public static long startTimer() {
@@ -98,6 +100,7 @@ public class Main{
 							crossedVehicles.add(currCar);
 							queuedVehicles.remove(currCar);
 //							phaseWaitTime += currCar.getCrossingTime();
+							
 							float carEmissions = currCar.calculateEmissions(waitTime);
 							totalEmissions += carEmissions;
 							//calculate emissions

@@ -19,7 +19,7 @@ public class Vehicles extends Thread {
 		return plateNumber; 
 	}
 	 
-	public void setPlateNumber (String plateNumber) {
+	public synchronized void setPlateNumber (String plateNumber) {
 		this.plateNumber = plateNumber;
 	}
 	
@@ -80,6 +80,16 @@ public class Vehicles extends Thread {
 	}
 	
 	public synchronized float calculateEmissions(float waitingTime) {
+		/*
+		while(true) { // when no number available
+			try { wait(); } // consumer enters Waiting state
+			catch (InterruptedException e) {}
+			// it will stay here until notified
+			}
+			System.out.println("Got: " );
+			empty = true; // consumer has consumed the number
+			notifyAll(); // so wake up the producer
+		*/
 		return this.getVehicleEmission() * (waitingTime/60);
 	}
 	
