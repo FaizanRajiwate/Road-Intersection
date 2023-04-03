@@ -1,3 +1,5 @@
+/GUI.class
+/GUIController$AddVehicleListener.class
 /GUIController.class
 /GUIModel.class
 /GUIView.class
@@ -15,4 +17,3 @@
 /Phases.class
 /ReportFile.class
 /Vehicles.class
-/GUIController$AddVehicleListener.class

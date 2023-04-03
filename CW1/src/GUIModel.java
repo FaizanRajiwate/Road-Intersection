@@ -1,15 +1,30 @@
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel {
+public class GUIModel extends Thread {
+	
+	public void run()
+	{ // code to be run as a thread
+		System.out.println("Started....");
+				
+	}
 	
 	private String[] vehicleColNames = {
-				"plate number",	
-				"type",	
-				"crossing time (s)",
-				"direction","crossing status",	
-				"emission rate (g/min)", 
-				"length (m)", 
-				"segment"};
+			"plate number",	
+			"type",	
+			"crossing time (s)",
+			"direction","crossing status",	
+			"emission rate (g/min)", 
+			"length (m)", 
+			"segment"};
+	
+	public GUIModel() {
+		vehicleModel = createTableModel(vehicleColNames);
+		phaseModel = createTableModel(phaseColNames);
+		statsModel = createTableModel(segmentStatColNames);
+	}
+	
+	
+	
 	
 	private String[] phaseColNames = {"Phase name",	
 							"Phase Timer"};
@@ -25,12 +40,7 @@ public class GUIModel {
 	private DefaultTableModel statsModel;
 	
 	
-	public GUIModel() {
-		vehicleModel = createTableModel(vehicleColNames);
-		phaseModel = createTableModel(phaseColNames);
-		statsModel = createTableModel(segmentStatColNames);
-	}
-	
+
 	public DefaultTableModel createTableModel(String[] columns) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);

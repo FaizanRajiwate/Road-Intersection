@@ -1,5 +1,5 @@
 
-public class Vehicles {
+public class Vehicles extends Thread {
 	private String plateNumber;
 	private String vehicleType;
 	private float crossingTime;
@@ -8,6 +8,12 @@ public class Vehicles {
 	private float vehicleLength;
 	private float vehicleEmission;
 	private String segment;
+	
+	public void run()
+	{ // code to be run as a thread
+		System.out.println("Started....Vehicle");
+				
+	}
 	
 	public String getPlateNumber() { 
 		return plateNumber; 

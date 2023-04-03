@@ -1,10 +1,16 @@
 import java.util.LinkedList;
 
-public class Phases {
+public class Phases  extends Thread {
 	private String phaseName;
 	private float phaseTimer;
 	private LinkedList<Vehicles> cars;
 	private LinkedList<Vehicles> crossedCars;
+	
+	public void run()
+	{ // code to be run as a thread
+		System.out.println("Started....Phases");
+				
+	}
 	
 	public String getPhaseName() { 
 		return phaseName; 
