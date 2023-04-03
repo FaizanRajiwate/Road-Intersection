@@ -12,37 +12,37 @@ public class Phases  extends Thread {
 				
 	}
 	
-	public String getPhaseName() { 
+	public synchronized String getPhaseName() { 
 		return phaseName; 
 	}
 	 
-	public void setPhaseName (String phaseName) {
+	public synchronized void setPhaseName (String phaseName) {
 		this.phaseName = phaseName;
 	}
 	
-	public float getPhaseTimer() { 
+	public synchronized float getPhaseTimer() { 
 		return phaseTimer; 
 	}
 	 
-	public void setPhaseTimer (float phaseTimer) {
+	public synchronized void setPhaseTimer (float phaseTimer) {
 		this.phaseTimer = phaseTimer;
 	}
 	
-	public void setLinkedList() {
+	public synchronized void setLinkedList() {
 		this.cars = new LinkedList<Vehicles>();
 		
 	}
 	
-	public LinkedList<Vehicles> getLinkedList(){
+	public synchronized LinkedList<Vehicles> getLinkedList(){
 		return cars;
 	}
 	
-	public void setCrossedLinkedList() {
+	public synchronized void setCrossedLinkedList() {
 		this.crossedCars = new LinkedList<Vehicles>();
 		
 	}
 	
-	public LinkedList<Vehicles> getCrossedLinkedList(){
+	public synchronized LinkedList<Vehicles> getCrossedLinkedList(){
 		return crossedCars;
 	}
 	

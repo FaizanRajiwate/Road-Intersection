@@ -27,7 +27,7 @@ public class Vehicles extends Thread {
 		return vehicleType; 
 	}
 	
-	public void setVehicleType (String vehicleType) {
+	public synchronized void setVehicleType (String vehicleType) {
 		this.vehicleType = vehicleType;
 	}
 	
@@ -35,7 +35,7 @@ public class Vehicles extends Thread {
 		return crossingTime;
 	}
 	
-	public void setCrossingTime(float crossingTime) {
+	public synchronized void setCrossingTime(float crossingTime) {
 		this.crossingTime = crossingTime;
 	}
 	
@@ -43,7 +43,7 @@ public class Vehicles extends Thread {
 		return crossingDirection; 
 	}
 	
-	public void setCrossingDirection (String crossingDirection) {
+	public synchronized void setCrossingDirection (String crossingDirection) {
 		this.crossingDirection = crossingDirection;
 	}
 	
@@ -51,7 +51,7 @@ public class Vehicles extends Thread {
 		return crossingStatus;
 	}
 	
-	public void setCrossingStatus(String crossingStatus) {
+	public synchronized void setCrossingStatus(String crossingStatus) {
 		this.crossingStatus = crossingStatus;
 	}
 	
@@ -59,7 +59,7 @@ public class Vehicles extends Thread {
 		return vehicleLength; 
 	}
 	
-	public void setVehicleLength(float vehicleLength) {
+	public synchronized void setVehicleLength(float vehicleLength) {
 		this.vehicleLength = vehicleLength;
 	}
 	
@@ -67,11 +67,11 @@ public class Vehicles extends Thread {
 		return vehicleEmission;
 	}
 	
-	public void setVehicleEmission(float vehicleEmission) {
+	public synchronized void setVehicleEmission(float vehicleEmission) {
 		this.vehicleEmission = vehicleEmission;
 	}
 	
-	public void setSegment(String segmentNumber) {
+	public synchronized void setSegment(String segmentNumber) {
 		this.segment = segmentNumber;
 	}
 	
@@ -79,7 +79,7 @@ public class Vehicles extends Thread {
 		return segment;
 	}
 	
-	public float calculateEmissions(float waitingTime) {
+	public synchronized float calculateEmissions(float waitingTime) {
 		return this.getVehicleEmission() * (waitingTime/60);
 	}
 	
