@@ -5,11 +5,13 @@ import java.io.IOException;
 public class ReportFile {
 	private static ReportFile instance;
 	private String filename;
-
+    //This class implements singleton pattern for single instance of this class across whole code
+	// private constructor, access only within class
 	private ReportFile(String filename) {
 		this.filename = filename;
 	}
 
+	// public getInstance(), accessible everywhere
 	public static synchronized ReportFile getInstance(String filename) {
 		if (instance == null) {
 			instance = new ReportFile(filename);
