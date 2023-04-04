@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 //import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class GUIController {
@@ -109,7 +110,13 @@ public class GUIController {
 				public void run() {
 				// time-consuming code to run here
 					doTheTask();
-					
+					// Update the user interface components here
+					SwingUtilities.invokeLater(new Runnable() 
+					{ 
+						public void run() {
+					        
+					                                          }
+					});
 					
 				}
 				}.start();
@@ -302,7 +309,7 @@ public class GUIController {
 				
 	}
 	
-	private synchronized void checkCarSegment(Vehicles car) {
+	private void checkCarSegment(Vehicles car) {
 		synchronized (this) 
 		{	String carSegment = car.getSegment();
 		if (carSegment.equals("1")) {
