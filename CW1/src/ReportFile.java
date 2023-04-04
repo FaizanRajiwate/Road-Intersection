@@ -13,9 +13,11 @@ public class ReportFile {
 
 	// public getInstance(), accessible everywhere
 	public static synchronized ReportFile getInstance(String filename) {
-		if (instance == null) {
+		if (instance == null) { // If there is no instance
+			synchronized(ReportFile.class) { //Put a synchronisation lock
+				if (instance == null) // check again for instance
 			instance = new ReportFile(filename);
-
+			}
 		}
 		return instance;
 	}
