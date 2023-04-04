@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 
 
 
-public class GUIView extends JFrame {
+public class GUIView extends JFrame implements Observer {
 
 	/**
 	 * 
@@ -324,6 +324,12 @@ public class GUIView extends JFrame {
 	
 	public JComboBox<String> getcDField() {
 		return cDField;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

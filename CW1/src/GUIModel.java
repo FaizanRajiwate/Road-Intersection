@@ -1,6 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel extends Thread {
+public class GUIModel extends Thread implements Subject  {
 
 	private String[] phaseColNames = {"Phase name",	
 	"Phase Timer"};
@@ -58,6 +58,27 @@ private String[] vehicleColNames = {
 	
 	public DefaultTableModel getStatsModel() {
 		return statsModel;
+	}
+
+
+	@Override
+	public void attach(Observer observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void detach(Observer observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
