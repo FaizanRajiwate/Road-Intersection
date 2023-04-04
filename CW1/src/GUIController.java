@@ -109,6 +109,8 @@ public class GUIController {
 				public void run() {
 				// time-consuming code to run here
 					doTheTask();
+					
+					
 				}
 				}.start();
 			// TODO Auto-generated method stub
