@@ -10,7 +10,7 @@ import java.awt.event.WindowAdapter;
 
 public class Main{	
 	
-	public static boolean blnEmpty;
+	public static boolean blnDoWork;
 	static float totalCarsForTest = 0;
 	
 	public static long startTimer() {
