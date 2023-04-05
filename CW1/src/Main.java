@@ -128,7 +128,7 @@ public class Main{
 		
 		GUIModel model = new GUIModel();
 		GUIView guiView =new GUIView(model);
-		//guiView.guiModel = model;
+		
 		GUIController controller = new GUIController(model, guiView, new Helper());
 		
 		

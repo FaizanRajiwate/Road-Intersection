@@ -308,6 +308,7 @@ public class GUIController  {
 			}
 			phaseTable.setModel(phaseModel);
 			phasePane.getViewport().add(phaseTable);
+			
 			return phasePane;
 		}
 				
@@ -415,6 +416,7 @@ public class GUIController  {
 			}
 			statsTable.setModel(statsModel);
 			statsPane.getViewport().add(statsTable);
+			
 			return statsPane;		
 		}
 		
