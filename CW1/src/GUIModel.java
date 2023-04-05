@@ -1,7 +1,11 @@
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel{
+public class GUIModel extends Thread implements Subject{
 	
+	private List<Observer> registeredObservers = new LinkedList<Observer>();
 	private String[] vehicleColNames = {
 				"plate number",	
 				"type",	
@@ -59,6 +63,7 @@ public class GUIModel{
 	public DefaultTableModel getStatsModel() {
 		return statsModel;
 	}
+	
 
 	@Override
 	public void registerObserver(Observer observer) {

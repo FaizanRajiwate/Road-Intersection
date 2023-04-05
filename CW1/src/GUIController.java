@@ -16,13 +16,15 @@ import javax.swing.JScrollPane;
 //import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class GUIController {
+public class GUIController  {
+	// list of observers
+	private List<Observer> registeredObservers = new LinkedList<Observer>();
 	private GUIModel model;
 	private GUIView view;
 	private Helper helper;
-	private Vehicles vehicle;
 	private int s1counter = 0;
 	private float s1WaitingTime = 0;
 	private float s1CrossTime = 0;
@@ -42,6 +44,7 @@ public class GUIController {
 	private float totalEmissions = 0;
 	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	private LinkedList<Phases> phaseList;
+	
 	
 	//GUI Elements 
 	private JPanel tablesPanel;
@@ -70,21 +73,19 @@ public class GUIController {
 	private JTextField vEField;
 	private JTextField vLField;
 	private JComboBox<String> sField;
-	private LinkedList<String> createdVehicles;
 	
 	
-	public GUIController(GUIModel _model, GUIView _view, Helper _helper, Vehicles vehicle) {
+	public GUIController(GUIModel _model, GUIView _view, Helper _helper) {
 		this.model = _model;
 		this.view = _view;
 		this.helper = _helper;
 		this.phaseList = helper.readPhasesFile("phases.csv");
-		this.vehicle = vehicle;
-		this.vehicle.setCreatedVehicles();
-		this.createdVehicles = vehicle.getCreatedVehicles();
 		
 		//GUI Elements;
 		tablesPanel = view.getTablesPanel();
+		if(tablesPanel != null) {Main.blnDoWork = true;}else{Main.blnDoWork = false;};
 		tablesPanel.add(addVehiclePane(phaseList, helper, model, view));
+		Main.blnDoWork = false;
 		tablesPanel.add(addPhasesPane(phaseList, helper, model, view));
 		tablesPanel.add(addStatsPane(phaseList, helper, model, view));
 		
@@ -101,106 +102,50 @@ public class GUIController {
 		
 		view.setEmissionField(Float.toString(totalEmissions));
 		view.addVehicleButtonListener(new AddVehicleListener());
-
+			
 	}
 	class AddVehicleListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			new Thread() { 
+				public void run() {
+				// time-consuming code to run here
+					addVehicles();
+					// Update the user interface components here
+					SwingUtilities.invokeLater(new Runnable() 
+					{ 
+						public void run() {
+					        
+					                                          }
+					});
+					
+				}
+				}.start();
 			// TODO Auto-generated method stub
-			try {
-            	String pNEntry = pNField.getText();
-            	String vTEntry = vTField.getSelectedItem().toString();
-            	String cTEntry = cTField.getText();
-            	String cDEntry = cDField.getSelectedItem().toString();
-            	String cSEntry = cSField.getText();
-            	String vEEntry = vEField.getText();
-            	String vLEntry = vLField.getText();
-            	String sEntry = sField.getSelectedItem().toString();
-        		String[] newVehicle = {pNEntry, vTEntry, cTEntry, cDEntry, cSEntry, vEEntry, vLEntry, sEntry};
-            	List<String> newVehicleLine = Arrays.asList(newVehicle);
-            	helper.evaluateVehicleFile(newVehicleLine, phaseList);
-    			Vehicles car = helper.createVehicle(newVehicleLine, phaseList);
-    			if (car == null) {
-    				throw new InaccurateDataException("The row with " + newVehicleLine.get(0) + "could not be created");
-    			}           			
-
-    			totalEmissions += car.getVehicleEmission();
-    			emissionField.setText(Float.toString(totalEmissions));
-    			vehicleModel.addRow(newVehicle);            			           			
-    			pNField.setText("");
-            	cTField.setText("");
-            	vEField.setText("");
-            	vLField.setText("");
-            	boolean sortedPhase = helper.findPhase(car, phaseList);
-				if (sortedPhase) {
-					System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
-				}else {
-					throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
-				}
-				checkCarSegment(car);
-				String segment = car.getSegment();
-
-				if (segment.equals("1")) {
-					String carsAtSegment = Integer.toString(s1counter);
-					String waitingTime = Float.toString(s1WaitingTime);
-					String waitingLength = Float.toString(s1WaitingLength);
-					String avgCrossSegment = Float.toString(s1CrossTime / 2);
-					statsModel.setValueAt(carsAtSegment, 0, 1);
-					statsModel.setValueAt(waitingTime, 0, 2);
-					statsModel.setValueAt(waitingLength, 0, 3);
-					statsModel.setValueAt(avgCrossSegment, 0, 4);
-				}
-				if (segment.equals("2")) {
-					String carsAtSegment = Integer.toString(s2counter);
-					String waitingTime = Float.toString(s2WaitingTime);
-					String waitingLength = Float.toString(s2WaitingLength);
-					String avgCrossSegment = Float.toString(s2CrossTime / 2);
-					statsModel.setValueAt(carsAtSegment, 1, 1);
-					statsModel.setValueAt(waitingTime, 1, 2);
-					statsModel.setValueAt(waitingLength, 1, 3);
-					statsModel.setValueAt(avgCrossSegment, 1, 4);
-				}
-				if (segment.equals("3")) {
-					String carsAtSegment = Integer.toString(s3counter);
-					String waitingTime = Float.toString(s3WaitingTime);
-					String waitingLength = Float.toString(s3WaitingLength);
-					String avgCrossSegment = Float.toString(s3CrossTime / 2);
-					statsModel.setValueAt(carsAtSegment, 2, 1);
-					statsModel.setValueAt(waitingTime, 2, 2);
-					statsModel.setValueAt(waitingLength, 2, 3);
-					statsModel.setValueAt(avgCrossSegment, 2, 4);
-				}
-				if (segment.equals("4")) {
-					String carsAtSegment = Integer.toString(s4counter);
-					String waitingTime = Float.toString(s4WaitingTime);
-					String waitingLength = Float.toString(s4WaitingLength);
-					String avgCrossSegment = Float.toString(s4CrossTime / 2);
-					statsModel.setValueAt(carsAtSegment, 3, 1);
-					statsModel.setValueAt(waitingTime, 3, 2);
-					statsModel.setValueAt(waitingLength, 3, 3);
-					statsModel.setValueAt(avgCrossSegment, 3, 4);
-				}	
-        	}catch(InaccurateDataException ex) {
-        		JFrame alert = new JFrame();
-				JOptionPane.showMessageDialog(alert, ex);
-        	}catch(NumberFormatException ex) {
-        		JFrame alert = new JFrame();
-				JOptionPane.showMessageDialog(alert, ex);
-        	}catch(PhaseException ex) { 
-        		JFrame alert = new JFrame();
-				JOptionPane.showMessageDialog(alert, ex);
-        	}catch(DuplicateIDException ex) {
-        		JFrame alert = new JFrame();
-				JOptionPane.showMessageDialog(alert, ex);
-        	}
-        }		 
+			        }		 
 	}
 	
-	class StartButtonListener implements ActionListener {
+	public void addVehicles()
+	{
+				try {
+	            	String pNEntry = pNField.getText();
+	            	String vTEntry = vTField.getSelectedItem().toString();
+	            	String cTEntry = cTField.getText();
+	            	String cDEntry = cDField.getSelectedItem().toString();
+	            	String cSEntry = cSField.getText();
+	            	String vEEntry = vEField.getText();
+	            	String vLEntry = vLField.getText();
+	            	String sEntry = sField.getSelectedItem().toString();
+	        		String[] newVehicle = {pNEntry, vTEntry, cTEntry, cDEntry, cSEntry, vEEntry, vLEntry, sEntry};
+	            	List<String> newVehicleLine = Arrays.asList(newVehicle);
+	            	helper.evaluateVehicleFile(newVehicleLine, phaseList);
+	    			Vehicles car = helper.createVehicle(newVehicleLine, phaseList);
+	    			if (car == null) {
+	    				throw new InaccurateDataException("The row with " + newVehicleLine.get(0) + "could not be created");
+	    			}           			
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 	    			totalEmissions += car.getVehicleEmission();
 	    			emissionField.setText(Float.toString(totalEmissions));
 	    			vehicleModel.addRow(newVehicle);            			           			
@@ -272,132 +217,104 @@ public class GUIController {
 					JOptionPane.showMessageDialog(alert, ex);
 	        	}
 			this.model.notifyObservers();
-=======
-		private DefaultTableModel vehicleModel;
-		private LinkedList<String> createdVehicles;
-		
-		
-		
-		public StartButtonListener(GUIModel model, LinkedList<String> vehicleList) {
-			// TODO Auto-generated constructor stub
-			this.vehicleModel = model.getVehicleModel();
-			this.createdVehicles = vehicleList;
-		}
-
-
-
-=======
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-			for (Phases phase: phaseList){
-<<<<<<< HEAD
-				JunctionController jctrl = new JunctionController(phase, vehicleModel, createdVehicles);
-=======
-				JunctionController jctrl = new JunctionController(phase);
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
-				jctrl.start();
-//				break;
-			}
-		}	
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
 	}
+
 	
 	
 	private JScrollPane addVehiclePane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
+		
+		while(!Main.blnDoWork) { 
+			try { wait(); }
+			catch (InterruptedException e) {}
+			}
+
 		vehiclePane = view.getVehiclePane();
 		vehicleModel = model.getVehicleModel();
 		vehicleTable = view.getvehicleTable();
-		try { 
-			Scanner csvScanner = helper.readCsvFile("vehicles.csv");
-			if (csvScanner == null) {
-				throw new FileNotFoundException("The File you entered cannot be found");
-			}else {
+		synchronized (this) {
 			
-				while (csvScanner.hasNext()) {
-					try {
-					
-						String line = csvScanner.nextLine();
-						String[] splitLine = line.split(",");
-						List<String> listSplitLine = Arrays.asList(splitLine);
-						helper.evaluateVehicleFile(listSplitLine, phaseList);
-						//populate VehicleJTable
-						Vehicles car = helper.createVehicle(listSplitLine, phaseList);
-						if (car == null) {
-							throw new InaccurateDataException("The row with " + listSplitLine.get(0) + "could not be created");
-						}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+			try { 
+				Scanner csvScanner = helper.readCsvFile("vehicles.csv");
+				if (csvScanner == null) {
+					throw new FileNotFoundException("The File you entered cannot be found");
+				}else {
+				
+					while (csvScanner.hasNext()) {
+						try {
 						
-=======
-						createdVehicles.add(car.getPlateNumber());
-=======
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
-						vehicleModel.addRow(splitLine);	
-						totalEmissions += car.getVehicleEmission();
-						boolean sortedPhase = helper.findPhase(car, phaseList);
-						if (sortedPhase) {
-							System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
-						}else {
-							throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
+							String line = csvScanner.nextLine();
+							String[] splitLine = line.split(",");
+							List<String> listSplitLine = Arrays.asList(splitLine);
+							helper.evaluateVehicleFile(listSplitLine, phaseList);
+							//populate VehicleJTable
+							Vehicles car = helper.createVehicle(listSplitLine, phaseList);
+							if (car == null) {
+								throw new InaccurateDataException("The row with " + listSplitLine.get(0) + "could not be created");
+							}
+							vehicleModel.addRow(splitLine);	
+							totalEmissions += car.getVehicleEmission();
+							boolean sortedPhase = helper.findPhase(car, phaseList);
+							if (sortedPhase) {
+								//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+							}else {
+								throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
+							}
+						}catch (PhaseException e) {
+							JFrame alert = new JFrame();
+							JOptionPane.showMessageDialog(alert, e);
+							continue;
+						}catch (InaccurateDataException e) {
+							e.printStackTrace();
+							JFrame alert = new JFrame();
+							JOptionPane.showMessageDialog(alert, e);
+							continue;
+						}catch(DuplicateIDException e){
+							JFrame alert = new JFrame();
+							JOptionPane.showMessageDialog(alert, e);
+							continue;
+						}catch(NumberFormatException e) {
+							JFrame alert = new JFrame();
+							JOptionPane.showMessageDialog(alert, e);
+							continue;
 						}
-					}catch (PhaseException e) {
-						JFrame alert = new JFrame();
-						JOptionPane.showMessageDialog(alert, e);
-						continue;
-					}catch (InaccurateDataException e) {
-						e.printStackTrace();
-						JFrame alert = new JFrame();
-						JOptionPane.showMessageDialog(alert, e);
-						continue;
-					}catch(DuplicateIDException e){
-						JFrame alert = new JFrame();
-						JOptionPane.showMessageDialog(alert, e);
-						continue;
-					}catch(NumberFormatException e) {
-						JFrame alert = new JFrame();
-						JOptionPane.showMessageDialog(alert, e);
-						continue;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
+						
 					}
-				}
-			}		     
-		}
-		 catch (FileNotFoundException e) {
-			System.out.println(e);
+				}		     
+			}
+			 catch (FileNotFoundException e) {
+				System.out.println(e);
+			}
+			
+			vehicleTable.setAutoCreateRowSorter(true);
+			vehicleTable.setModel(vehicleModel);
+			vehiclePane.getViewport().add(view.getvehicleTable()); 
+			return vehiclePane;
 		}
 		
-		vehicleTable.setAutoCreateRowSorter(true);
-		vehicleTable.setModel(vehicleModel);
-		vehiclePane.getViewport().add(view.getvehicleTable()); 
-		return vehiclePane;
 	}
 	
 	private JScrollPane addPhasesPane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
 		phasePane = view.getPhasePane();
 		phaseModel = model.getPhaseModel();
 		phaseTable = view.getphaseTable();
-		for (Phases phase: phaseList) {
-			Vector<String> rowData = new Vector<String>();
-			rowData.add(phase.getPhaseName());
-			rowData.add(Float.toString(phase.getPhaseTimer()));
-			phaseModel.addRow(rowData);
+		synchronized (this) 
+		{
+			for (Phases phase: phaseList) {
+				Vector<String> rowData = new Vector<String>();
+				rowData.add(phase.getPhaseName());
+				rowData.add(Float.toString(phase.getPhaseTimer()));
+				phaseModel.addRow(rowData);
+			}
+			phaseTable.setModel(phaseModel);
+			phasePane.getViewport().add(phaseTable);
+			return phasePane;
 		}
-		phaseTable.setModel(phaseModel);
-		phasePane.getViewport().add(phaseTable);
-		return phasePane;		
+				
 	}
 	
 	private void checkCarSegment(Vehicles car) {
-		String carSegment = car.getSegment();
+		synchronized (this) 
+		{	String carSegment = car.getSegment();
 		if (carSegment.equals("1")) {
 			s1counter ++;	
 			s1WaitingTime += car.getCrossingTime();
@@ -417,97 +334,94 @@ public class GUIController {
 			s4counter ++;
 			s4WaitingTime += car.getCrossingTime();
 			s4WaitingLength += car.getVehicleLength();
-		}
+		}}
+	
 	}
 	
 	private JScrollPane addStatsPane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
 		statsPane = view.getStatsPane();
 		statsModel = model.getStatsModel();
 		statsTable = view.getstatsTable();
-		for (int i = 0; i < 8; i++) {
-			Phases phase = phaseList.get(i);
-			String segment = phaseSegment[i];
-			if (segment.equals("1")) {
-				s1CrossTime += phase.getPhaseTimer();
-			}
-			if (segment.equals("2")) {
-				s2CrossTime += phase.getPhaseTimer();
-			}
-			if (segment.equals("3")) {
-				s3CrossTime += phase.getPhaseTimer();
-			}
-			if (segment.equals("4")) {
-				s4CrossTime += phase.getPhaseTimer();
-			}
+		synchronized (this) 
+		{	
+			for (int i = 0; i < 8; i++) {
+				Phases phase = phaseList.get(i);
+				String segment = phaseSegment[i];
+				if (segment.equals("1")) {
+					s1CrossTime += phase.getPhaseTimer();
+				}
+				if (segment.equals("2")) {
+					s2CrossTime += phase.getPhaseTimer();
+				}
+				if (segment.equals("3")) {
+					s3CrossTime += phase.getPhaseTimer();
+				}
+				if (segment.equals("4")) {
+					s4CrossTime += phase.getPhaseTimer();
+				}
 
-			LinkedList<Vehicles> carsQueue = phase.getLinkedList();
-			for (Vehicles car : carsQueue) {
-				checkCarSegment(car);
-			}
+				LinkedList<Vehicles> carsQueue = phase.getLinkedList();
+				for (Vehicles car : carsQueue) {
+					checkCarSegment(car);
+				}
 
+			}
+			for (int i = 1; i < 5; i ++) {
+				Vector<String> rowData = new Vector<String>();
+				String segment = Integer.toString(i);
+				rowData.add(segment);
+				if (i == 1) {
+					String carsAtSegment = Integer.toString(s1counter);
+					String waitingTime = Float.toString(s1WaitingTime);
+					String waitingLength = Float.toString(s1WaitingLength);
+					String avgCrossSegment = Float.toString(s1CrossTime / 2);
+					rowData.add(carsAtSegment);
+					rowData.add(waitingTime);
+					rowData.add(waitingLength);
+					rowData.add(avgCrossSegment);
+				}
+				if (i == 2) {
+					String carsAtSegment = Integer.toString(s2counter);
+					String waitingTime = Float.toString(s2WaitingTime);
+					String waitingLength = Float.toString(s2WaitingLength);
+					String avgCrossSegment = Float.toString(s2CrossTime / 2);
+					rowData.add(carsAtSegment);
+					rowData.add(waitingTime);
+					rowData.add(waitingLength);
+					rowData.add(avgCrossSegment);
+				}
+				if (i == 3) {
+					String carsAtSegment = Integer.toString(s3counter);
+					String waitingTime = Float.toString(s3WaitingTime);
+					String waitingLength = Float.toString(s3WaitingLength);
+					String avgCrossSegment = Float.toString(s3CrossTime / 2);
+					rowData.add(carsAtSegment);
+					rowData.add(waitingTime);
+					rowData.add(waitingLength);
+					rowData.add(avgCrossSegment);
+				}
+				if (i == 4) {
+					String carsAtSegment = Integer.toString(s4counter);
+					String waitingTime = Float.toString(s4WaitingTime);
+					String waitingLength = Float.toString(s4WaitingLength);
+					String avgCrossSegment = Float.toString(s4CrossTime / 2);
+					rowData.add(carsAtSegment);
+					rowData.add(waitingTime);
+					rowData.add(waitingLength);
+					rowData.add(avgCrossSegment);
+				}	
+				statsModel.addRow(rowData);			
+			}
+			statsTable.setModel(statsModel);
+			statsPane.getViewport().add(statsTable);
+			return statsPane;		
 		}
-		for (int i = 1; i < 5; i ++) {
-			Vector<String> rowData = new Vector<String>();
-			String segment = Integer.toString(i);
-			rowData.add(segment);
-			if (i == 1) {
-				String carsAtSegment = Integer.toString(s1counter);
-				String waitingTime = Float.toString(s1WaitingTime);
-				String waitingLength = Float.toString(s1WaitingLength);
-				String avgCrossSegment = Float.toString(s1CrossTime / 2);
-				rowData.add(carsAtSegment);
-				rowData.add(waitingTime);
-				rowData.add(waitingLength);
-				rowData.add(avgCrossSegment);
-			}
-			if (i == 2) {
-				String carsAtSegment = Integer.toString(s2counter);
-				String waitingTime = Float.toString(s2WaitingTime);
-				String waitingLength = Float.toString(s2WaitingLength);
-				String avgCrossSegment = Float.toString(s2CrossTime / 2);
-				rowData.add(carsAtSegment);
-				rowData.add(waitingTime);
-				rowData.add(waitingLength);
-				rowData.add(avgCrossSegment);
-			}
-			if (i == 3) {
-				String carsAtSegment = Integer.toString(s3counter);
-				String waitingTime = Float.toString(s3WaitingTime);
-				String waitingLength = Float.toString(s3WaitingLength);
-				String avgCrossSegment = Float.toString(s3CrossTime / 2);
-				rowData.add(carsAtSegment);
-				rowData.add(waitingTime);
-				rowData.add(waitingLength);
-				rowData.add(avgCrossSegment);
-			}
-			if (i == 4) {
-				String carsAtSegment = Integer.toString(s4counter);
-				String waitingTime = Float.toString(s4WaitingTime);
-				String waitingLength = Float.toString(s4WaitingLength);
-				String avgCrossSegment = Float.toString(s4CrossTime / 2);
-				rowData.add(carsAtSegment);
-				rowData.add(waitingTime);
-				rowData.add(waitingLength);
-				rowData.add(avgCrossSegment);
-			}	
-			statsModel.addRow(rowData);			
-		}
-		statsTable.setModel(statsModel);
-		statsPane.getViewport().add(statsTable);
-		return statsPane;		
+		
 	}
 	
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 
 
 
 	
 
-=======
-	
-	
->>>>>>> Stashed changes
-=======
->>>>>>> parent of 690ee98 (Merge branch 'CW2_MIebaka' of https://github.com/FaizanRajiwate/Road-Intersection into CW2_MIebaka)
 }

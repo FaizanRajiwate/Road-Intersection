@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,11 +17,12 @@ import javax.swing.SwingConstants;
 
 
 
-public class GUIView extends JFrame {
+public class GUIView extends JFrame implements Observer {
 
 	/**
 	 * 
 	 */
+	public GUIModel guiModel;
 	private static final long serialVersionUID = 1L;
 	private Font font = new Font("Courier", Font.BOLD, 20);
 	private Font formFont = new Font("Courier", Font.BOLD, 15);
@@ -73,10 +75,8 @@ public class GUIView extends JFrame {
 	private JLabel emptyLabel2;
 	//Total Emission Display
 	private JPanel emissionPanel;
-	private JLabel emissionLabel;
-	//button to start intersection
-	private JButton startButton;
-	public GUIView() {
+	private JLabel emissionLabel;;
+	public GUIView(GUIModel model) {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -109,13 +109,14 @@ public class GUIView extends JFrame {
 		basePanel.add(emptyLabel2);
 		//Emission Panel
 		emissionPanel = addEmissionsPanel();
-		basePanel.add(emissionPanel);
-		startButton = createButton("Start Simulation");
-		basePanel.add(startButton);
+		basePanel.add(emissionPanel);		
 		this.add(basePanel);
-		
+		this.guiModel = model;
+		guiModel.registerObserver(this);
+		System.out.println("View successfully registered to the model");
 		
 	}
+	
 
 	private JPanel createPanel(int rows, int columns, int horizontal, int vertical) {
 		JPanel _panel = new JPanel();
@@ -188,7 +189,7 @@ public class GUIView extends JFrame {
 
 	private JPanel createFormButtonPanel() {
 		JPanel _panel = createPanel(1, 3, 0, 20);
-		addVehicleButton = createButton("Add Vehicle");
+		addVehicleButton = createAddVehicleButton("Add Vehicle");
 		JLabel emptyLabel = new JLabel("");
 		JLabel emptyLabel2 = new JLabel("");
 		_panel.add(emptyLabel);
@@ -197,7 +198,7 @@ public class GUIView extends JFrame {
 		return _panel;
 	}
 
-	private JButton createButton(String buttonName) {
+	private JButton createAddVehicleButton(String buttonName) {
 		JButton _button = new JButton(buttonName);
 		_button.setLayout(new FlowLayout(FlowLayout.CENTER));
 		return _button;
@@ -257,10 +258,6 @@ public class GUIView extends JFrame {
 
 	public void addVehicleButtonListener(ActionListener listener) {
 		addVehicleButton.addActionListener(listener);
-	}
-	
-	public void startButtonListener(ActionListener listener) {
-		startButton.addActionListener(listener);
 	}
 	
 	public JScrollPane getStatsPane() {
@@ -332,6 +329,14 @@ public class GUIView extends JFrame {
 	
 	public JComboBox<String> getcDField() {
 		return cDField;
+	}
+
+	@Override
+	public void update() {
+		System.out.println("Success-----The View has been Updated");
+		JOptionPane.showMessageDialog(null, // display count
+				"The View has been Updated");
+		
 	}
 
 }

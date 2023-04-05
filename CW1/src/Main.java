@@ -10,7 +10,7 @@ import java.awt.event.WindowAdapter;
 
 public class Main{	
 	
-	public static boolean blnEmpty;
+	public static boolean blnDoWork;
 	static float totalCarsForTest = 0;
 	
 	public static long startTimer() {
@@ -128,29 +128,17 @@ public class Main{
 		
 		GUIModel model = new GUIModel();
 		GUIView guiView =new GUIView(model);
-		
+		//guiView.guiModel = model;
 		GUIController controller = new GUIController(model, guiView, new Helper());
-		
-		
-
-		GUIController controller = new GUIController(new GUIModel(), new GUIView(), new Helper() );
-
+		//GUIController controller = new GUIController(new GUIModel(), new GUIView(), new Helper());
+		/*
 		GUIModel guimodelThread = new GUIModel(); 
 		guimodelThread.start();
 		Vehicles vehiclesThread = new Vehicles(); 
 		vehiclesThread.start();
 		Phases phasesThread = new Phases(); 
 		phasesThread.start();
-=======
-		GUIController controller = new GUIController(new GUIModel(), new GUIView(), new Helper(), new Vehicles());
-//		GUIModel guimodelThread = new GUIModel(); 
-//		guimodelThread.start();
-//		Vehicles vehiclesThread = new Vehicles(); 
-//		vehiclesThread.start();
-//		Phases phasesThread = new Phases(); 
-//		phasesThread.start();
->>>>>>> Stashed changes
+		*/
 		
 	}
 }
-
