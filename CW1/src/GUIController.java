@@ -19,7 +19,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class GUIController {
+public class GUIController  {
+	// list of observers
+		private List<Observer> registeredObservers = new 
+		LinkedList<Observer>();
 	private GUIModel model;
 	private GUIView view;
 	private Helper helper;
@@ -42,6 +45,7 @@ public class GUIController {
 	private float totalEmissions = 0;
 	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	private LinkedList<Phases> phaseList;
+	
 	
 	//GUI Elements 
 	private JPanel tablesPanel;
@@ -153,7 +157,7 @@ public class GUIController {
 	            	vLField.setText("");
 	            	boolean sortedPhase = helper.findPhase(car, phaseList);
 					if (sortedPhase) {
-						System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+						//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 					}else {
 						throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 					}
@@ -213,7 +217,7 @@ public class GUIController {
 	        		JFrame alert = new JFrame();
 					JOptionPane.showMessageDialog(alert, ex);
 	        	}
-
+			this.model.notifyObservers();
 	}
 
 	
@@ -252,7 +256,7 @@ public class GUIController {
 							totalEmissions += car.getVehicleEmission();
 							boolean sortedPhase = helper.findPhase(car, phaseList);
 							if (sortedPhase) {
-								System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+								//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 							}else {
 								throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 							}
@@ -416,4 +420,9 @@ public class GUIController {
 		
 	}
 	
+
+
+
+	
+
 }

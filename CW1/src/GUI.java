@@ -247,7 +247,7 @@ public class GUI extends JFrame{
 						totalEmissions += car.getVehicleEmission();
 						boolean sortedPhase = findPhase(car, phaseList);
 						if (sortedPhase) {
-							System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+							//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 						}else {
 							throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 						}
@@ -481,7 +481,7 @@ public class GUI extends JFrame{
             	vLField.setText("");
             	boolean sortedPhase = findPhase(car, phaseList);
 				if (sortedPhase) {
-					System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+					//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 				}else {
 					throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 				}

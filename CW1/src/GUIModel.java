@@ -1,7 +1,15 @@
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel extends Thread implements Subject  {
+public class GUIModel extends Thread implements Subject{
 
+	// list of observers
+	private List<Observer> registeredObservers = new 
+	LinkedList<Observer>();
+	
+	
 	private String[] phaseColNames = {"Phase name",	
 	"Phase Timer"};
 
@@ -29,6 +37,7 @@ private String[] vehicleColNames = {
 		vehicleModel = createTableModel(vehicleColNames);
 		phaseModel = createTableModel(phaseColNames);
 		statsModel = createTableModel(segmentStatColNames);
+		
 	}
 	
 
@@ -41,11 +50,14 @@ private String[] vehicleColNames = {
 	public synchronized DefaultTableModel createTableModel(String[] columns) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);
-		return model;		
+		
+		return model;
+		
 	}
 	
 	public synchronized void updateModel(DefaultTableModel  model, String[] rowData) {
-		model.addRow(rowData);		
+		model.addRow(rowData);
+		
 	}
 	
 	public DefaultTableModel getVehicleModel() {
@@ -62,25 +74,29 @@ private String[] vehicleColNames = {
 
 
 	@Override
-	public void attach(Observer observer) {
-		// TODO Auto-generated method stub
+	public void registerObserver(Observer observer) {
 		
+		registeredObservers.add(observer);
+		System.out.println("View successfully registered to the model");
+		System.out.println("Observer Count is" + registeredObservers.size());
 	}
 
 
 	@Override
-	public void detach(Observer observer) {
-		// TODO Auto-generated method stub
+	public void removeObserver(Observer observer) {
+		registeredObservers.remove(observer); 
 		
 	}
 
 
 	@Override
 	public void notifyObservers() {
-		// TODO Auto-generated method stub
 		
+		
+		System.out.println("All observers are notified");
+		System.out.println(registeredObservers.size());
+		for(Observer obs : registeredObservers) obs.update();
 	}
-	
 	
 
 }

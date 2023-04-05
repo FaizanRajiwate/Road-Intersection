@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +22,7 @@ public class GUIView extends JFrame implements Observer {
 	/**
 	 * 
 	 */
+	public GUIModel guiModel;
 	private static final long serialVersionUID = 1L;
 	private Font font = new Font("Courier", Font.BOLD, 20);
 	private Font formFont = new Font("Courier", Font.BOLD, 15);
@@ -74,7 +76,7 @@ public class GUIView extends JFrame implements Observer {
 	//Total Emission Display
 	private JPanel emissionPanel;
 	private JLabel emissionLabel;;
-	public GUIView() {
+	public GUIView(GUIModel model) {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -109,9 +111,12 @@ public class GUIView extends JFrame implements Observer {
 		emissionPanel = addEmissionsPanel();
 		basePanel.add(emissionPanel);		
 		this.add(basePanel);
-		
+		this.guiModel = model;
+		guiModel.registerObserver(this);
+		System.out.println("View successfully registered to the model");
 		
 	}
+	
 
 	private JPanel createPanel(int rows, int columns, int horizontal, int vertical) {
 		JPanel _panel = new JPanel();
@@ -328,7 +333,9 @@ public class GUIView extends JFrame implements Observer {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		System.out.println("Success-----The View has been Updated");
+		JOptionPane.showMessageDialog(null, // display count
+				"The View has been Updated");
 		
 	}
 
