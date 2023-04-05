@@ -247,7 +247,7 @@ public class GUI extends JFrame{
 						totalEmissions += car.getVehicleEmission();
 						boolean sortedPhase = findPhase(car, phaseList);
 						if (sortedPhase) {
-							System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+							//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 						}else {
 							throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 						}
@@ -374,7 +374,7 @@ public class GUI extends JFrame{
 		}else if(!((direction.equals("straight")) || (direction.equals("left")) || (direction.equals("right")))){
 			throw new InaccurateDataException("Your direction should either be straight, left or right");
 		}else if (checkDuplicate(plateNumber, phaseList)) {
-			throw new DuplicateIDException(plateNumber + ": This vehicle has a duplicate car plate number.");
+			//throw new DuplicateIDException(plateNumber + ": This vehicle has a duplicate car plate number.");
 		}
 	}
 	
@@ -481,7 +481,7 @@ public class GUI extends JFrame{
             	vLField.setText("");
             	boolean sortedPhase = findPhase(car, phaseList);
 				if (sortedPhase) {
-					System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+					//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 				}else {
 					throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
 				}

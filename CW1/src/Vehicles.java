@@ -14,7 +14,7 @@ public class Vehicles extends Thread {
 	public void run()
 	{ // code to be run as a thread
 		System.out.println("Started....Vehicle");
-				
+	
 	}
 	
 	public String getPlateNumber() { 
@@ -90,16 +90,7 @@ public class Vehicles extends Thread {
 	}
 	
 	public synchronized float calculateEmissions(float waitingTime) {
-		/*
-		while(true) { // when no number available
-			try { wait(); } // consumer enters Waiting state
-			catch (InterruptedException e) {}
-			// it will stay here until notified
-			}
-			System.out.println("Got: " );
-			empty = true; // consumer has consumed the number
-			notifyAll(); // so wake up the producer
-		*/
+		
 		return this.getVehicleEmission() * (waitingTime/60);
 	}
 	

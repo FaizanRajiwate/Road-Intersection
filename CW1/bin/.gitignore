@@ -1,4 +1,8 @@
+/DuplicateIDException.class
+/GUI$1.class
 /GUI.class
+/GUIController$AddVehicleListener$1$1.class
+/GUIController$AddVehicleListener$1.class
 /GUIController$AddVehicleListener.class
 /GUIController.class
 /GUIModel.class
@@ -17,3 +21,7 @@
 /Phases.class
 /ReportFile.class
 /Vehicles.class
+/Observer.class
+/Subject.class
+/Strategy.class
+/ConcreteStrategyA.class
