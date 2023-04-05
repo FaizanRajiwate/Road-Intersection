@@ -174,10 +174,12 @@ public class Helper {
 		String phaseName = csvFileLine.get(0);
 		float phaseTimer = Float.parseFloat(csvFileLine.get(1));					
 		Phases phase = new Phases();
+		TrafficController controller = new TrafficController();
 		phase.setPhaseName(phaseName);
 		phase.setPhaseTimer(phaseTimer);
 		phase.setLinkedList();
 		phase.setCrossedLinkedList();
+		phase.setTrafficController(controller);
 		return phase;	
 	}
 	

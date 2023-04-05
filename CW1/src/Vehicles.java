@@ -1,3 +1,5 @@
+//import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Vehicles extends Thread {
 	private String plateNumber;
@@ -9,12 +11,24 @@ public class Vehicles extends Thread {
 	private float vehicleEmission;
 	private String segment;
 	private float queuedDistance;
+	private LinkedList<String> createdVehicles; 
 //	private float travelledDistance;
 	
 	public void run()
 	{ // code to be run as a thread
+
 		System.out.println("Started....Vehicle");
+////		System.out.println("Started....Vehicle");		
+//		this.setCrossingStatus("Crossed");	
+	}
 	
+	
+	public LinkedList<String> getCreatedVehicles(){
+		return this.createdVehicles;
+	}
+	
+	public void setCreatedVehicles() {
+		this.createdVehicles = new LinkedList<String>();
 	}
 	
 	public String getPlateNumber() { 
@@ -90,7 +104,16 @@ public class Vehicles extends Thread {
 	}
 	
 	public synchronized float calculateEmissions(float waitingTime) {
-		
+		/*
+		while(true) { // when no number available
+			try { wait(); } // consumer enters Waiting state
+			catch (InterruptedException e) {}
+			// it will stay here until notified
+			}
+			System.out.println("Got: " );
+			empty = true; // consumer has consumed the number
+			notifyAll(); // so wake up the producer
+		*/
 		return this.getVehicleEmission() * (waitingTime/60);
 	}
 	

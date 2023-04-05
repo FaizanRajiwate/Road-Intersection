@@ -1,3 +1,4 @@
+
 public interface Observer {
-    void update();
+	public void sendMessage(String text);
 }

@@ -5,12 +5,22 @@ public class Phases  extends Thread {
 	private float phaseTimer;
 	private LinkedList<Vehicles> cars;
 	private LinkedList<Vehicles> crossedCars;
+	private TrafficController trafficController;
 	
 	public void run()
 	{ // code to be run as a thread
-		System.out.println("Started....Phases");
-				
+		System.out.println("Started....Phases");	
 	}
+	
+	public synchronized void setTrafficController(TrafficController controller) {
+		this.trafficController = controller;
+	}
+	
+	public TrafficController getTrafficController() {
+
+		return this.trafficController;
+	}
+	
 	
 	public synchronized String getPhaseName() { 
 		return phaseName; 

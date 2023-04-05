@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,12 +16,11 @@ import javax.swing.SwingConstants;
 
 
 
-public class GUIView extends JFrame implements Observer {
+public class GUIView extends JFrame {
 
 	/**
 	 * 
 	 */
-	public GUIModel guiModel;
 	private static final long serialVersionUID = 1L;
 	private Font font = new Font("Courier", Font.BOLD, 20);
 	private Font formFont = new Font("Courier", Font.BOLD, 15);
@@ -75,10 +73,10 @@ public class GUIView extends JFrame implements Observer {
 	private JLabel emptyLabel2;
 	//Total Emission Display
 	private JPanel emissionPanel;
-	private JLabel emissionLabel;;
+	private JLabel emissionLabel;
+	//button to start intersection
 	private JButton startButton;
-	
-	public GUIView(GUIModel model) {
+	public GUIView() {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -115,12 +113,9 @@ public class GUIView extends JFrame implements Observer {
 		startButton = createButton("Start Simulation");
 		basePanel.add(startButton);
 		this.add(basePanel);
-		this.guiModel = model;
-		guiModel.registerObserver(this);
-		System.out.println("View successfully registered to the model");
+		
 		
 	}
-	
 
 	private JPanel createPanel(int rows, int columns, int horizontal, int vertical) {
 		JPanel _panel = new JPanel();
@@ -337,14 +332,6 @@ public class GUIView extends JFrame implements Observer {
 	
 	public JComboBox<String> getcDField() {
 		return cDField;
-	}
-
-	@Override
-	public void update() {
-		System.out.println("Success-----The View has been Updated");
-		JOptionPane.showMessageDialog(null, // display count
-				"The View has been Updated");
-		
 	}
 
 }

@@ -5,9 +5,9 @@ public class JunctionController extends Thread{
 	private LinkedList<Vehicles> queuedVehicles;
 	private float phaseDuration;
 	private float waitTime = 0;
-	private float totalEmissions = 0;
-	
+	private float totalEmissions = 0;	
 	LinkedList<Vehicles> crossedVehicles;
+	
 	public JunctionController(Phases phase) {
 		this.phase = phase;
 		this.queuedVehicles = phase.getLinkedList();
@@ -18,11 +18,11 @@ public class JunctionController extends Thread{
 	
 	@Override
 	public void run() {
-		this.checkPhase(queuedVehicles, crossedVehicles, phaseDuration);
+		
 	}
 
 	
-	private void checkPhase(LinkedList<Vehicles> queuedVehicles, LinkedList<Vehicles> crossedVehicles, float phaseDuration) {
+	private synchronized void checkPhase(LinkedList<Vehicles> queuedVehicles, LinkedList<Vehicles> crossedVehicles, float phaseDuration) {
 		while (phaseDuration > 0) {
 			try {
 				System.out.println("This is working");

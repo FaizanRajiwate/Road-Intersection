@@ -1,22 +1,15 @@
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
 
-public class GUIModel extends Thread implements Subject{
-
-	// list of observers
-	private List<Observer> registeredObservers = new 
-	LinkedList<Observer>();
+public class GUIModel{
 	
 	private String[] vehicleColNames = {
-		"plate number",	
-		"type",	
-		"crossing time (s)",
-		"direction","crossing status",	
-		"emission rate (g/min)", 
-		"length (m)", 
-		"segment"};
+				"plate number",	
+				"type",	
+				"crossing time (s)",
+				"direction","crossing status",	
+				"emission rate (g/min)", 
+				"length (m)", 
+				"segment"};
 	
 	private String[] phaseColNames = {"Phase name",	
 	"Phase Timer"};
@@ -36,7 +29,6 @@ public class GUIModel extends Thread implements Subject{
 		vehicleModel = createTableModel(vehicleColNames);
 		phaseModel = createTableModel(phaseColNames);
 		statsModel = createTableModel(segmentStatColNames);
-		
 	}
 	
 
@@ -49,14 +41,11 @@ public class GUIModel extends Thread implements Subject{
 	public synchronized DefaultTableModel createTableModel(String[] columns) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);
-		
-		return model;
-		
+		return model;		
 	}
 	
 	public synchronized void updateModel(DefaultTableModel  model, String[] rowData) {
-		model.addRow(rowData);
-		
+		model.addRow(rowData);		
 	}
 	
 	public DefaultTableModel getVehicleModel() {
@@ -70,7 +59,6 @@ public class GUIModel extends Thread implements Subject{
 	public DefaultTableModel getStatsModel() {
 		return statsModel;
 	}
-
 
 	@Override
 	public void registerObserver(Observer observer) {
@@ -96,6 +84,11 @@ public class GUIModel extends Thread implements Subject{
 		System.out.println(registeredObservers.size());
 		for(Observer obs : registeredObservers) obs.update();
 	}
+	
+	public void updateVehicleWaiting(DefaultTableModel model, int row, int column, String crossingStatus) {
+		model.setValueAt(crossingStatus, row, column);
+	}
+	
 	
 
 }
