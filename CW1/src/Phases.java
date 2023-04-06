@@ -6,6 +6,8 @@ public class Phases  extends Thread {
 	private LinkedList<Vehicles> cars;
 	private LinkedList<Vehicles> crossedCars;
 	private TrafficController trafficController;
+	private float waitingTime = 0f;
+	private float waitingVehicleLength = 0f;
 	
 	public void run()
 	{ // code to be run as a thread
@@ -14,6 +16,21 @@ public class Phases  extends Thread {
 	
 	public synchronized void setTrafficController(TrafficController controller) {
 		this.trafficController = controller;
+	}
+	
+	public void updateWaitingLength(float vehicleLength) {
+		waitingVehicleLength += vehicleLength;
+	}
+	public float getWaitingLength() {
+		return waitingVehicleLength;
+	}
+	
+	public float getWaitingTime() {
+		return this.waitingTime;
+	}
+	
+	public void updateWaitingTime(float time) {
+		waitingTime += time;
 	}
 	
 	public TrafficController getTrafficController() {
