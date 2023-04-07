@@ -1,9 +1,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -44,6 +46,7 @@ public class GUIController  {
 	private float totalEmissions = 0;
 	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	private LinkedList<Phases> phaseList;
+	private LinkedList<String> createdVehicles = new LinkedList<String>();
 	
 	
 	//GUI Elements 
@@ -102,6 +105,7 @@ public class GUIController  {
 		
 		view.setEmissionField(Float.toString(totalEmissions));
 		view.addVehicleButtonListener(new AddVehicleListener());
+		view.startButtonListener(new StartButtonListener(helper, phaseList, model));
 			
 	}
 	class AddVehicleListener implements ActionListener {
@@ -125,6 +129,69 @@ public class GUIController  {
 				}.start();
 			// TODO Auto-generated method stub
 			        }		 
+	}
+	
+	class StartButtonListener implements ActionListener {
+		
+		private Helper helper;
+		private LinkedList<Phases> phaseList;
+		private DefaultTableModel vModel;
+		private GUIModel model;
+		
+		
+		public StartButtonListener(Helper helper, LinkedList<Phases> phaseList, GUIModel model) {
+			this.helper = helper;
+			this.phaseList = phaseList;
+			this.model = model;
+			this.vModel = this.model.getVehicleModel();
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			new Thread() { 
+				public void run() {
+				// time-consuming code to run here
+					while(true) {
+						try {
+							
+							ArrayList<String> vehicleDetails = new ArrayList<String>();
+							vehicleDetails = helper.randomlyGenerateVehicles();
+							helper.evaluateVehicleFile(vehicleDetails, phaseList);
+							Vehicles car = helper.createVehicle(vehicleDetails, phaseList);
+							boolean sortedPhase = helper.findPhase(car, phaseList);
+							if (sortedPhase) {
+								System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
+								createdVehicles.add(car.getPlateNumber());
+							}else {
+								throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());
+							}
+							vModel.addRow(vehicleDetails.toArray());
+//							model.notifyObservers();
+						} catch (NumberFormatException | PhaseException | InaccurateDataException
+								| DuplicateIDException e) {
+							// TODO Auto-generated catch block
+							JFrame alert = new JFrame();
+							JOptionPane.showMessageDialog(alert, e);
+						}
+						// Update the user interface components here
+						SwingUtilities.invokeLater(new Runnable() 
+						{ 
+							public void run() {
+						        
+						                                          }
+						});
+						
+					}
+				}
+				}.start();
+				for (Phases phase: phaseList) {
+					JunctionController controller = new JunctionController(phase, helper, phaseList, model, createdVehicles);
+					controller.start();
+				}
+				
+			
+		}		 
 	}
 	
 	public void addVehicles()
@@ -255,6 +322,7 @@ public class GUIController  {
 							totalEmissions += car.getVehicleEmission();
 							boolean sortedPhase = helper.findPhase(car, phaseList);
 							if (sortedPhase) {
+								createdVehicles.add(car.getPlateNumber());
 								//System.out.println(car.getPlateNumber() + " has been added to the appropriate phase");
 							}else {
 								throw new PhaseException(car.getPlateNumber() + " could not be sorted, check the segment and direction for format errors. " + car.getSegment() + ", " + car.getCrossingDirection());

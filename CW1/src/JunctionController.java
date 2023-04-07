@@ -1,5 +1,7 @@
 import java.util.LinkedList;
 
+import javax.swing.table.DefaultTableModel;
+
 public class JunctionController extends Thread{
 	private Phases phase;
 	private LinkedList<Vehicles> queuedVehicles;
@@ -8,24 +10,45 @@ public class JunctionController extends Thread{
 	private float totalEmissions = 0;	
 	LinkedList<Vehicles> crossedVehicles;
 	TrafficController controller;
+	private Helper helper;
+	private LinkedList<Phases> phaseList;
+	private boolean crossingStructureStatus;
+	private boolean crossing;
+	private GUIModel model;
+	private DefaultTableModel vModel;
+	private LinkedList<String> createdVehicles;
 	
 	
-	public JunctionController(Phases phase) {
+	public JunctionController(Phases phase, Helper helper, LinkedList<Phases> phaseList, GUIModel model, LinkedList<String> createdVehicles) {
 		this.phase = phase;
 		this.queuedVehicles = phase.getLinkedList();
 		this.phaseDuration = phase.getPhaseTimer();
 		this.crossedVehicles = phase.getCrossedLinkedList();
 		this.controller = phase.getTrafficController();
+		this.helper = helper;
+		this.phaseList = phaseList;
+		this.crossingStructureStatus = false;
+		this.crossing = false;
+		this.model = model;
+		vModel = model.getVehicleModel();
+		this.createdVehicles = createdVehicles;
 //		this.checkPhase(queuedVehicles, crossedVehicles, phaseDuration);
 	}
 	
 	@Override
 	public void run() {
 		
+		try {
+			checkPhase();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	
-	private synchronized void checkPhase() {
+	private synchronized void checkPhase() throws InterruptedException {
 		this.controller.advanceState();
 		if (controller.isGreen()) {
 			while (phaseDuration > 0) {
@@ -39,19 +62,24 @@ public class JunctionController extends Thread{
 						currCar.setQueuedDistance(0);
 					}
 					currCar.setQueuedDistance(phase.getWaitingLength());
+					int index = createdVehicles.indexOf(currCar.getPlateNumber()); 
 					
 					if (phaseDuration >= currCarTime) {
-						//currCar.start()						
-						crossedVehicles.add(currCar);
-						System.out.println(currCar.getPlateNumber() + "has crossed from " + phase.getPhaseName());
-						queuedVehicles.remove(currCar);
-						//crossing = false
-						//crossingStructureOccupied = false
-//						phaseWaitTime += currCar.getCrossingTime();
-						float carEmissions = currCar.calculateEmissions(waitTime);
-						waitTime += currCar.getCrossingTime();
-						phase.updateWaitingLength(currCar.getVehicleLength());
-						this.totalEmissions += carEmissions;
+//						crossedVehicles.add(currCar);					
+//						
+//						
+//						queuedVehicles.remove(currCar);
+//						//crossing = false
+//						//crossingStructureOccupied = false
+//						currCar.start();
+//						System.out.println(currCar.getPlateNumber() + "has crossed from " + phase.getPhaseName());
+////						phaseWaitTime += currCar.getCrossingTime();
+//						float carEmissions = currCar.calculateEmissions(waitTime);
+//						waitTime += currCar.getCrossingTime();
+//						phase.updateWaitingLength(currCar.getVehicleLength());
+//						this.totalEmissions += carEmissions;
+						vehicleCrossing(currCar, index);
+						completeCrossing();
 						//calculate emissions
 						phaseDuration -= currCarTime;
 						if (phaseDuration < 5f) {
@@ -62,7 +90,7 @@ public class JunctionController extends Thread{
 						break;
 					}
 				}catch (IndexOutOfBoundsException e){
-					System.out.println(phase.getPhaseName() + " is currently empty");
+					System.out.println("Vehicle does not exist in Created Vehiclesa");
 					break;
 				}
 				
@@ -75,12 +103,28 @@ public class JunctionController extends Thread{
 	}
 	
 	
-	private void vehicleCrossing(Vehicles vehicle) {
-		
+	private void vehicleCrossing(Vehicles vehicle, int index) throws InterruptedException {
+		synchronized (this) {
+            while (crossingStructureStatus) {
+                wait();
+            }
+            crossingStructureStatus = true;
+            crossing = true;
+        }
+		vehicle.start();
+		queuedVehicles.remove(vehicle);
+		crossedVehicles.add(vehicle);
+		waitTime += vehicle.getCrossingTime();
+		phase.updateWaitingLength(vehicle.getVehicleLength());
+		this.model.updateVehicleWaiting(vModel, index, 4, vehicle.getCrossingStatus());
 	}
 	
 	private void completeCrossing() {
-		
+		synchronized (this) {
+            crossing = false;
+            crossingStructureStatus = false;
+            notifyAll();
+        }
 	}
 	
 	

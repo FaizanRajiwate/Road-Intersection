@@ -240,8 +240,8 @@ public class Helper {
 		return vehicleDetails;
 	}
 	
-	public String generatePlateNumber() {
-		Random random = generateRandomSeed(1500);
+	private String generatePlateNumber() {
+		Random random = new Random();
 		int aMax = 90;
 		int aMin = 65;
 		
@@ -254,7 +254,7 @@ public class Helper {
 		}
 		for (int i= 0; i < 3; i++) {
 			int genNumber = random.nextInt(10);
-			plateOpening += (char) genNumber;
+			plateNumerals += String.valueOf(genNumber);
 		}
 		for (int i= 0; i < 3; i++) {
 			int genLetter = random.nextInt((aMax - aMin) + 1) + aMin;
@@ -264,61 +264,61 @@ public class Helper {
 		return plateNumber;
 	}
 	
-	public Random generateRandomSeed(long seed) {
+	private Random generateRandomSeed() {
 		Random random = new Random();
-		random.setSeed(seed);
+//		random.setSeed(seed);
 		return random;
 	}
 	
-	public String generateVehicleType() {
+	private String generateVehicleType() {
 		String[] vehicleTypes = {"bus", "car", "truck"};
-		Random random = generateRandomSeed(1200);
+		Random random = generateRandomSeed();
 		int index = random.nextInt(3);
 		String vehicleType = vehicleTypes[index];
 		return vehicleType;
 	}
 	
-	public String generateCrossingDirection() {
+	private String generateCrossingDirection() {
 		String[] crossingDirections = {"straight", "left", "right"};
-		Random random = generateRandomSeed(1200);
+		Random random = generateRandomSeed();
 		int index = random.nextInt(3);
 		String crossingDirection = crossingDirections[index];
 		return crossingDirection;
 	}
 	
-	public String generateCrossingTime() {
+	private String generateCrossingTime() {
 		
-		Random random = generateRandomSeed(1200);
+		Random random = generateRandomSeed();
 		int aMax = 5;
 		int aMin = 1;
-		float crossingTime = random.nextFloat((aMax - aMin) + 1) + aMin;
+		float crossingTime = aMin + random.nextFloat() * (aMax - aMin);
 		return "" + crossingTime;
 	}
 	
-	public String generateCrossingStatus() {
+	private String generateCrossingStatus() {
 		String crossingStatus = "not crossed";
 		return crossingStatus;
 	}
 	
-	public String generateEmissions() {
-		Random random = generateRandomSeed(1200);
+	private String generateEmissions() {
+		Random random = generateRandomSeed();
 		int aMax = 50;
 		int aMin = 1;
-		float emissions = random.nextFloat((aMax - aMin) + 1) + aMin;
+		float emissions = aMin + random.nextFloat() * (aMax - aMin);
 		return "" + emissions;
 	}
 	
-	public String generateVehicleLength() {
-		Random random = generateRandomSeed(1200);
+	private String generateVehicleLength() {
+		Random random = generateRandomSeed();
 		int aMax = 8;
 		int aMin = 1;
-		float vehicleLength = random.nextFloat((aMax - aMin) + 1) + aMin;
+		float vehicleLength = aMin + random.nextFloat() * (aMax - aMin);
 		return "" + vehicleLength;
 	}
 	
-	public String generateVehicleSegment() {
+	private String generateVehicleSegment() {
 		String[] vehicleSegments = {"1", "2", "3", "4"};
-		Random random = generateRandomSeed(1200);
+		Random random = generateRandomSeed();
 		int index = random.nextInt(4);
 		String vehicleType = vehicleSegments[index];
 		return vehicleType;

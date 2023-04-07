@@ -76,6 +76,10 @@ public class GUIView extends JFrame implements Observer {
 	//Total Emission Display
 	private JPanel emissionPanel;
 	private JLabel emissionLabel;;
+	//
+	private JButton startButton;
+	
+	
 	public GUIView(GUIModel model) {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
@@ -109,7 +113,9 @@ public class GUIView extends JFrame implements Observer {
 		basePanel.add(emptyLabel2);
 		//Emission Panel
 		emissionPanel = addEmissionsPanel();
-		basePanel.add(emissionPanel);		
+		basePanel.add(emissionPanel);	
+		startButton = new JButton("Start Simulation");
+		basePanel.add(startButton);
 		this.add(basePanel);
 		this.guiModel = model;
 		guiModel.registerObserver(this);
@@ -258,6 +264,10 @@ public class GUIView extends JFrame implements Observer {
 
 	public void addVehicleButtonListener(ActionListener listener) {
 		addVehicleButton.addActionListener(listener);
+	}
+	
+	public void startButtonListener(ActionListener listener) {
+		startButton.addActionListener(listener);
 	}
 	
 	public JScrollPane getStatsPane() {

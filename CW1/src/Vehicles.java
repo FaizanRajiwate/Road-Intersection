@@ -17,9 +17,9 @@ public class Vehicles extends Thread {
 	public void run()
 	{ // code to be run as a thread
 
-		System.out.println("Started....Vehicle");
-////		System.out.println("Started....Vehicle");		
-//		this.setCrossingStatus("Crossed");	
+//		System.out.println("Started....Vehicle");
+//		System.out.println("Started....Vehicle");		
+		this.setCrossingStatus("Crossed");	
 	}
 	
 	
