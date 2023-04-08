@@ -1,226 +1,150 @@
-[2023-04-09 00:22:42] ABC123XZ has been read and added to the Queue
-[2023-04-09 00:22:42] DEF456WY has been read and added to the Queue
-[2023-04-09 00:22:42] 7GHI789UV has been read and added to the Queue
-[2023-04-09 00:22:42] DKDK223 has been read and added to the Queue
-[2023-04-09 00:22:44] DKDK224 has been read and added to the Queue
-[2023-04-09 00:22:44] DKDK225 has been read and added to the Queue
-[2023-04-09 00:22:45] DKDK226 has been read and added to the Queue
-[2023-04-09 00:22:53] Lanes have been read and created
-[2023-04-09 00:22:53] Initial Segments calculated Statistics.
-[2023-04-09 00:22:56] CQE453XAV has been created
-[2023-04-09 00:22:58] YCU567HVE has been created
-[2023-04-09 00:22:59] BCS732KHU has been created
-[2023-04-09 00:23:01] ACW247FRV has been created
-[2023-04-09 00:23:02] PDE556QVR has been created
-[2023-04-09 00:29:50] ABC123XZ has been read and added to the Queue
-[2023-04-09 00:29:50] DEF456WY has been read and added to the Queue
-[2023-04-09 00:29:50] 7GHI789UV has been read and added to the Queue
-[2023-04-09 00:29:50] DKDK223 has been read and added to the Queue
-[2023-04-09 00:29:51] DKDK224 has been read and added to the Queue
-[2023-04-09 00:29:51] DKDK225 has been read and added to the Queue
-[2023-04-09 00:29:52] DKDK226 has been read and added to the Queue
-[2023-04-09 00:30:08] Lanes have been read and created
-[2023-04-09 00:30:08] Initial Segments calculated Statistics.
-[2023-04-09 00:30:11] ZPU461VFO has been created
-[2023-04-09 00:30:11] Entered P1. Advanced Traffic Light to GREEN
-[2023-04-09 00:30:11] DKDK225 has crossed the intersection
-[2023-04-09 00:30:13] CFZ994JYP has been created
-[2023-04-09 00:30:14] VYJ315YJG has been created
-[2023-04-09 00:30:15] Thread-1 was empty. Switching to Next Phase
-[2023-04-09 00:30:15] Entered P2. Advanced Traffic Light to GREEN
-[2023-04-09 00:30:15] DEF456WY has crossed the intersection
-[2023-04-09 00:30:15] MTJ318NIK has been created
-[2023-04-09 00:30:17] RLK119PQD has been created
-[2023-04-09 00:30:18] MWI258LJH has been created
-[2023-04-09 00:30:19] 7GHI789UV has crossed the intersection
-[2023-04-09 00:30:20] ARL240NKJ has been created
-[2023-04-09 00:30:21] IAF043ZDJ has been created
-[2023-04-09 00:30:23] ZPU461VFO has crossed the intersection
-[2023-04-09 00:30:23] LIC124LZY has been created
-[2023-04-09 00:30:24] HRU790WEX has been created
-[2023-04-09 00:30:26] GJN876VTC has been created
-[2023-04-09 00:31:39] ABC123XZ has been read and added to the Queue
-[2023-04-09 00:31:39] DEF456WY has been read and added to the Queue
-[2023-04-09 00:31:39] 7GHI789UV has been read and added to the Queue
-[2023-04-09 00:31:39] DKDK223 has been read and added to the Queue
-[2023-04-09 00:31:41] DKDK224 has been read and added to the Queue
-[2023-04-09 00:31:41] DKDK225 has been read and added to the Queue
-[2023-04-09 00:31:41] DKDK226 has been read and added to the Queue
-[2023-04-09 00:31:50] Lanes have been read and created
-[2023-04-09 00:31:50] Initial Segments calculated Statistics.
-[2023-04-09 00:31:53] KIV782IZB has been created
-[2023-04-09 00:31:53] Entered P1. Advanced Traffic Light to GREEN
-[2023-04-09 00:31:53] DKDK225 has crossed the intersection
-[2023-04-09 00:31:55] FKC608TUS has been created
-[2023-04-09 00:31:56] EXF381XHD has been created
-[2023-04-09 00:31:57] Thread-1 was empty. Switching to Next Phase
-[2023-04-09 00:31:57] Entered P2. Advanced Traffic Light to GREEN
-[2023-04-09 00:31:57] DEF456WY has crossed the intersection
-[2023-04-09 00:31:57] KYL501PRH has been created
-[2023-04-09 00:31:59] QCF488ZTH has been created
-[2023-04-09 00:32:01] 7GHI789UV has crossed the intersection
-[2023-04-09 00:32:01] BOG100XTD has been created
-[2023-04-09 00:32:02] AXL699KJN has been created
-[2023-04-09 00:32:04] ERF037EEY has been created
-[2023-04-09 00:32:05] Thread-2 was empty. Switching to Next Phase
-[2023-04-09 00:32:05] Entered P3. Advanced Traffic Light to GREEN
-[2023-04-09 00:32:05] DKDK226 has crossed the intersection
-[2023-04-09 00:32:06] MGV238FLK has been created
-[2023-04-09 00:32:07] LFH399HQH has been created
-[2023-04-09 00:32:09] FPO336BCK has been created
-[2023-04-09 00:32:09] QCF488ZTH has crossed the intersection
-[2023-04-09 00:32:10] ZCV128SPC has been created
-[2023-04-09 00:32:10] Thread-3 was empty. Switching to Next Phase
-[2023-04-09 00:32:10] Entered P4. Advanced Traffic Light to GREEN
-[2023-04-09 00:32:10] KYL501PRH has crossed the intersection
-[2023-04-09 00:32:11] PND539TUI has been created
-[2023-04-09 00:32:13] ERF037EEY has crossed the intersection
-[2023-04-09 00:32:13] YLC999CUM has been created
-[2023-04-09 00:32:14] MGV238FLK has crossed the intersection
-[2023-04-09 00:32:15] VXX142SKE has been created
-[2023-04-09 00:32:16] ZCV128SPC has crossed the intersection
-[2023-04-09 00:32:16] ZVF504ETW has been created
-[2023-04-09 00:32:18] IEY239ASM has been created
-[2023-04-09 00:32:20] TWT399AQF has been created
-[2023-04-09 00:32:21] YLC999CUM has crossed the intersection
-[2023-04-09 00:32:22] PWC223GLV has been created
-[2023-04-09 00:32:24] DDW154ULB has been created
-[2023-04-09 00:32:25] DKY581ABB has been created
-[2023-04-09 00:32:26] IEY239ASM has crossed the intersection
-[2023-04-09 00:32:27] CMM253FOQ has been created
-[2023-04-09 00:32:28] CMM253FOQ has crossed the intersection
-[2023-04-09 00:32:28] TKQ206HRE has been created
-[2023-04-09 00:32:30] WEZ558SWG has been created
-[2023-04-09 00:32:31] VBS048AUO has been created
-[2023-04-09 00:32:31] Thread-4 was empty. Switching to Next Phase
-[2023-04-09 00:32:31] Entered P5. Advanced Traffic Light to GREEN
-[2023-04-09 00:32:31] ABC123XZ has crossed the intersection
-[2023-04-09 00:32:33] XNS688QBU has been created
-[2023-04-09 00:32:34] DKDK223 has crossed the intersection
-[2023-04-09 00:32:34] DTY747XIT has been created
-[2023-04-09 00:32:36] EMP895WUF has been created
-[2023-04-09 00:32:37] FKC608TUS has crossed the intersection
-[2023-04-09 00:32:37] ETY612ZQK has been created
-[2023-04-09 00:32:39] JXR236BOR has been created
-[2023-04-09 00:32:40] EPW346QOS has been created
-[2023-04-09 00:32:41] ZVF504ETW has crossed the intersection
-[2023-04-09 00:32:42] QOB814KDF has been created
-[2023-04-09 00:32:43] TWT399AQF has crossed the intersection
-[2023-04-09 00:32:44] AYD765KHH has been created
-[2023-04-09 00:32:45] Thread-5 was empty. Switching to Next Phase
-[2023-04-09 00:32:45] Entered P6. Advanced Traffic Light to GREEN
-[2023-04-09 00:32:45] KIV782IZB has crossed the intersection
-[2023-04-09 00:32:46] XER389UGF has been created
-[2023-04-09 00:32:48] VAE633LYN has been created
-[2023-04-09 00:32:49] EXF381XHD has crossed the intersection
-[2023-04-09 00:32:49] OPE242YDV has been created
-[2023-04-09 00:32:51] NVZ357IND has been created
-[2023-04-09 00:32:52] BVH624DZI has been created
-[2023-04-09 00:32:53] YUE491RHL has been created
-[2023-04-09 00:32:54] AXL699KJN has crossed the intersection
-[2023-04-09 00:32:54] RGF497BWO has been created
-[2023-04-09 00:32:56] YHF590MDX has been created
-[2023-04-09 00:32:56] LFH399HQH has crossed the intersection
-[2023-04-09 00:32:57] XBW963VYK has been created
-[2023-04-09 00:32:58] FPO336BCK has crossed the intersection
-[2023-04-09 00:32:59] RYZ038BXJ has been created
-[2023-04-09 00:33:00] DDN178JFU has been created
-[2023-04-09 00:33:02] RTZ293GRC has been created
-[2023-04-09 00:33:03] PWC223GLV has crossed the intersection
-[2023-04-09 00:33:03] XZA751PII has been created
-[2023-04-09 00:33:04] EUM522GOZ has been created
-[2023-04-09 00:33:06] HGR722WNZ has been created
-[2023-04-09 00:33:06] DTY747XIT has crossed the intersection
-[2023-04-09 00:33:07] VHJ435SAO has been created
-[2023-04-09 00:33:09] QKN294EGC has been created
-[2023-04-09 00:33:10] QOB814KDF has crossed the intersection
-[2023-04-09 00:33:11] MMO492FKH has been created
-[2023-04-09 00:33:12] TTT813LGK has been created
-[2023-04-09 00:33:13] OUL977IZZ has been created
-[2023-04-09 00:33:15] RTZ293GRC cannot cross due to inadequate time
-[2023-04-09 00:33:15] Entered P7. Advanced Traffic Light to GREEN
-[2023-04-09 00:33:15] DKDK224 has crossed the intersection
-[2023-04-09 00:33:15] SEC708MKM has been created
-[2023-04-09 00:33:17] ONW078TRJ has been created
-[2023-04-09 00:33:18] JXO401WAO has been created
-[2023-04-09 00:33:18] YHF590MDX has crossed the intersection
-[2023-04-09 00:33:20] ZBQ437NSB has been created
-[2023-04-09 00:33:21] DLH808NUQ has been created
-[2023-04-09 00:33:21] XZA751PII has crossed the intersection
-[2023-04-09 00:33:23] OTP853NHL has been created
-[2023-04-09 00:33:25] RQT717ORW has been created
-[2023-04-09 00:33:26] Thread-7 was empty. Switching to Next Phase
-[2023-04-09 00:33:26] Entered P8. Advanced Traffic Light to GREEN
-[2023-04-09 00:33:26] BOG100XTD has crossed the intersection
-[2023-04-09 00:33:26] FIV824YCF has been created
-[2023-04-09 00:33:28] PND539TUI has crossed the intersection
-[2023-04-09 00:33:28] QEA855XJX has been created
-[2023-04-09 00:33:30] WRW249GYM has been created
-[2023-04-09 00:33:32] TKQ206HRE has crossed the intersection
-[2023-04-09 00:33:32] PMO535PQK has been created
-[2023-04-09 00:33:34] EZI140UYU has been created
-[2023-04-09 00:33:35] WEZ558SWG has crossed the intersection
-[2023-04-09 00:33:35] CCT200IYR has been created
-[2023-04-09 00:33:36] NVZ357IND has crossed the intersection
-[2023-04-09 00:33:37] DAP552HNB has been created
-[2023-04-09 00:33:39] WPW607KDI has been created
-[2023-04-09 00:33:39] RGF497BWO has crossed the intersection
-[2023-04-09 00:33:40] MUV861WQW has been created
-[2023-04-09 00:33:41] FNK935LTQ has been created
-[2023-04-09 00:33:43] RYZ038BXJ has crossed the intersection
-[2023-04-09 00:33:43] GGZ318MLG has been created
-[2023-04-09 00:33:44] HSM882XKC has been created
-[2023-04-09 00:33:45] EUM522GOZ has crossed the intersection
-[2023-04-09 00:33:46] DJC728LRN has been created
-[2023-04-09 00:33:47] HGR722WNZ has crossed the intersection
-[2023-04-09 00:33:48] AOK615LIB has been created
-[2023-04-09 00:33:49] DDB630RZY has been created
-[2023-04-09 00:33:50] RNV720CYR has been created
-[2023-04-09 00:33:50] MMO492FKH has crossed the intersection
-[2023-04-09 00:33:52] LDE565KOG has been created
-[2023-04-09 00:33:53] TTT813LGK has crossed the intersection
-[2023-04-09 00:33:53] PCW385HGG has been created
-[2023-04-09 00:33:55] RQT717ORW cannot cross due to inadequate time
-[2023-04-09 00:33:55] Entered P1. Advanced Traffic Light to GREEN
-[2023-04-09 00:33:55] XER389UGF has crossed the intersection
-[2023-04-09 00:33:55] LAG804JAF has been created
-[2023-04-09 00:33:56] JFO496TNK has been created
-[2023-04-09 00:33:57] LDO420JCE has been created
-[2023-04-09 00:33:58] DLH808NUQ has crossed the intersection
-[2023-04-09 00:33:59] HYR733DIG has been created
-[2023-04-09 00:34:01] SXW233KZC has been created
-[2023-04-09 00:34:01] WPW607KDI has crossed the intersection
-[2023-04-09 00:34:03] LSX484DZX has been created
-[2023-04-09 00:34:03] DDB630RZY has crossed the intersection
-[2023-04-09 00:34:05] ASI470NAO has been created
-[2023-04-09 00:34:06] CPF604ANU has been created
-[2023-04-09 00:34:06] Thread-1 was empty. Switching to Next Phase
-[2023-04-09 00:34:06] Entered P2. Advanced Traffic Light to GREEN
-[2023-04-09 00:34:06] VXX142SKE has crossed the intersection
-[2023-04-09 00:34:07] ICQ654SBM has been created
-[2023-04-09 00:34:09] VOJ481GXW has been created
-[2023-04-09 00:34:10] DDW154ULB has crossed the intersection
-[2023-04-09 00:34:10] FHY196ZQA has been created
-[2023-04-09 00:34:12] ESM100HDG has been created
-[2023-04-09 00:34:13] DKY581ABB has crossed the intersection
-[2023-04-09 00:34:13] BPF195RAB has been created
-[2023-04-09 00:34:14] EMP895WUF has crossed the intersection
-[2023-04-09 00:34:14] JCU146QFW has been created
-[2023-04-09 00:34:15] ETY612ZQK has crossed the intersection
-[2023-04-09 00:34:15] PXP897YAH has been created
-[2023-04-09 00:34:16] VAE633LYN has crossed the intersection
-[2023-04-09 00:34:17] VSB914KNX has been created
-[2023-04-09 00:34:18] OPE242YDV has crossed the intersection
-[2023-04-09 00:34:18] JFD031JWK has been created
-[2023-04-09 00:34:20] LZK153MBI has been created
-[2023-04-09 00:34:21] PDM467YXX has been created
-[2023-04-09 00:34:22] PEW764UNV has been created
-[2023-04-09 00:34:23] BVH624DZI has crossed the intersection
-[2023-04-09 00:34:24] ADF806LRP has been created
-[2023-04-09 00:34:25] KKC374DVC has been created
-[2023-04-09 00:34:27] HLF627WEG has been created
-[2023-04-09 00:34:27] YUE491RHL has crossed the intersection
-[2023-04-09 00:34:28] QCS766XJL has been created
-[2023-04-09 00:34:29] XBW963VYK has crossed the intersection
-[2023-04-09 00:34:30] KQO920HFI has been created
-[2023-04-09 00:34:32] ZWU518KJM has been created
+[2023-04-09 00:54:25] ABC123XZ has been read and added to the Queue
+[2023-04-09 00:54:25] DEF456WY has been read and added to the Queue
+[2023-04-09 00:54:25] 7GHI789UV has been read and added to the Queue
+[2023-04-09 00:54:25] DKDK223 has been read and added to the Queue
+[2023-04-09 00:54:25] LPDK223 has been read and added to the Queue
+[2023-04-09 00:54:25] DEF123PZ has been read and added to the Queue
+[2023-04-09 00:54:25] PEO452AY has been read and added to the Queue
+[2023-04-09 00:54:25] JIPO132 has been read and added to the Queue
+[2023-04-09 00:54:25] AEG150 has been read and added to the Queue
+[2023-04-09 00:54:25] YOWM643 has been read and added to the Queue
+[2023-04-09 00:54:25] Lanes have been read and created
+[2023-04-09 00:54:25] Initial Segments calculated Statistics.
+[2023-04-09 00:54:27] OKI202KXF has been created
+[2023-04-09 00:54:27] Entered P1. Advanced Traffic Light to GREEN
+[2023-04-09 00:54:27] DEF123PZ has crossed the intersection
+[2023-04-09 00:54:28] PRU773NDK has been created
+[2023-04-09 00:54:30] NUE501VVW has been created
+[2023-04-09 00:54:30] NUE501VVW has crossed the intersection
+[2023-04-09 00:54:32] AML392MUB has been created
+[2023-04-09 00:54:33] P1 was empty. Switching to Next Phase
+[2023-04-09 00:54:33] P1 was advanced to 85AMBER
+[2023-04-09 00:54:33] P1 was advanced to 99 RED
+[2023-04-09 00:54:33] Entered P2. Advanced Traffic Light to GREEN
+[2023-04-09 00:54:33] DEF456WY has crossed the intersection
+[2023-04-09 00:54:33] LFB422EIX has been created
+[2023-04-09 00:54:34] QLS200XCS has been created
+[2023-04-09 00:56:50] ABC123XZ has been read and added to the Queue
+[2023-04-09 00:56:50] DEF456WY has been read and added to the Queue
+[2023-04-09 00:56:50] 7GHI789UV has been read and added to the Queue
+[2023-04-09 00:56:50] DKDK223 has been read and added to the Queue
+[2023-04-09 00:56:50] LPDK223 has been read and added to the Queue
+[2023-04-09 00:56:50] DEF123PZ has been read and added to the Queue
+[2023-04-09 00:56:50] PEO452AY has been read and added to the Queue
+[2023-04-09 00:56:50] JIPO132 has been read and added to the Queue
+[2023-04-09 00:56:50] AEG150 has been read and added to the Queue
+[2023-04-09 00:56:50] YOWM643 has been read and added to the Queue
+[2023-04-09 00:56:50] Lanes have been read and created
+[2023-04-09 00:56:50] Initial Segments calculated Statistics.
+[2023-04-09 00:56:54] BOY942MKO has been created
+[2023-04-09 00:56:54] Entered P1. Advanced Traffic Light to GREEN
+[2023-04-09 00:56:54] DEF123PZ has crossed the intersection
+[2023-04-09 00:56:55] JPX990BWH has been created
+[2023-04-09 00:56:57] P1 was empty. Switching to Next Phase
+[2023-04-09 00:56:57] P1 was advanced to 85AMBER
+[2023-04-09 00:56:57] P1 was advanced to 99 RED
+[2023-04-09 00:56:57] Entered P2. Advanced Traffic Light to GREEN
+[2023-04-09 00:56:57] DEF456WY has crossed the intersection
+[2023-04-09 00:56:57] FZB274FZM has been created
+[2023-04-09 00:56:58] YGT227BKR has been created
+[2023-04-09 00:57:08] ABC123XZ has been read and added to the Queue
+[2023-04-09 00:57:08] DEF456WY has been read and added to the Queue
+[2023-04-09 00:57:08] 7GHI789UV has been read and added to the Queue
+[2023-04-09 00:57:08] DKDK223 has been read and added to the Queue
+[2023-04-09 00:57:08] LPDK223 has been read and added to the Queue
+[2023-04-09 00:57:08] DEF123PZ has been read and added to the Queue
+[2023-04-09 00:57:08] PEO452AY has been read and added to the Queue
+[2023-04-09 00:57:08] JIPO132 has been read and added to the Queue
+[2023-04-09 00:57:08] AEG150 has been read and added to the Queue
+[2023-04-09 00:57:08] YOWM643 has been read and added to the Queue
+[2023-04-09 00:57:08] Lanes have been read and created
+[2023-04-09 00:57:08] Initial Segments calculated Statistics.
+[2023-04-09 00:57:24] ZOK896BSO has been created
+[2023-04-09 00:57:24] Entered P1. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:24] DEF123PZ has crossed the intersection
+[2023-04-09 00:57:26] DLL342PZK has been created
+[2023-04-09 00:57:27] P1 was empty. Switching to Next Phase
+[2023-04-09 00:57:27] P1 was advanced to 85AMBER
+[2023-04-09 00:57:27] P1 was advanced to 99 RED
+[2023-04-09 00:57:27] Entered P2. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:27] DEF456WY has crossed the intersection
+[2023-04-09 00:57:28] BYN920LML has been created
+[2023-04-09 00:57:29] HYS587JAG has been created
+[2023-04-09 00:57:30] 7GHI789UV has crossed the intersection
+[2023-04-09 00:57:30] BIB327FSZ has been created
+[2023-04-09 00:57:32] MKN605QZX has been created
+[2023-04-09 00:57:34] MCM643QLU has been created
+[2023-04-09 00:57:34] MCM643QLU has crossed the intersection
+[2023-04-09 00:57:35] SWK527RZO has been created
+[2023-04-09 00:57:36] PFK153GWE has been created
+[2023-04-09 00:57:36] P2 was empty. Switching to Next Phase
+[2023-04-09 00:57:36] P2 was advanced to 85AMBER
+[2023-04-09 00:57:36] P2 was advanced to 99 RED
+[2023-04-09 00:57:36] Entered P3. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:36] P3 was empty. Switching to Next Phase
+[2023-04-09 00:57:36] P3 was advanced to 85AMBER
+[2023-04-09 00:57:36] P3 was advanced to 99 RED
+[2023-04-09 00:57:36] Entered P4. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:36] SWK527RZO has crossed the intersection
+[2023-04-09 00:57:38] P4 was empty. Switching to Next Phase
+[2023-04-09 00:57:38] P4 was advanced to 85AMBER
+[2023-04-09 00:57:38] P4 was advanced to 99 RED
+[2023-04-09 00:57:38] Entered P5. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:38] ABC123XZ has crossed the intersection
+[2023-04-09 00:57:38] YQU478MXY has been created
+[2023-04-09 00:57:40] KKK357DWO has been created
+[2023-04-09 00:57:41] DKDK223 has crossed the intersection
+[2023-04-09 00:57:42] VTW061MDM has been created
+[2023-04-09 00:57:43] DAP000MFI has been created
+[2023-04-09 00:57:44] KKK357DWO has crossed the intersection
+[2023-04-09 00:57:45] CLQ502BIY has been created
+[2023-04-09 00:57:46] LBK821OSX has been created
+[2023-04-09 00:57:46] P5 was empty. Switching to Next Phase
+[2023-04-09 00:57:46] P5 was advanced to 85AMBER
+[2023-04-09 00:57:46] P5 was advanced to 99 RED
+[2023-04-09 00:57:46] Entered P6. Advanced Traffic Light to GREEN
+[2023-04-09 00:57:46] PEO452AY has crossed the intersection
+[2023-04-09 00:57:47] XIK166UOS has been created
+[2023-04-09 00:57:49] HVO637TRA has been created
+[2023-04-09 00:57:49] JIPO132 has crossed the intersection
+[2023-04-09 00:57:50] IWH561TOE has been created
+[2023-04-09 00:57:51] CBE442FLR has been created
+[2023-04-09 00:57:53] QAK355AKR has been created
+[2023-04-09 00:57:53] MKN605QZX has crossed the intersection
+[2023-04-09 00:57:54] TIN929IEQ has been created
+[2023-04-09 00:57:56] LAB986MNL has been created
+[2023-04-09 00:57:57] YQU478MXY has crossed the intersection
+[2023-04-09 00:57:58] JMJ726STI has been created
+[2023-04-09 00:57:59] LBK821OSX has crossed the intersection
+[2023-04-09 00:57:59] HAR205GLG has been created
+[2023-04-09 00:58:01] ODK149JBJ has been created
+[2023-04-09 00:58:01] XIK166UOS has crossed the intersection
+[2023-04-09 00:58:02] QIV282ECF has been created
+[2023-04-09 00:58:02] P6 was empty. Switching to Next Phase
+[2023-04-09 00:58:02] P6 was advanced to 85AMBER
+[2023-04-09 00:58:02] P6 was advanced to 99 RED
+[2023-04-09 00:58:02] Entered P7. Advanced Traffic Light to GREEN
+[2023-04-09 00:58:02] LPDK223 has crossed the intersection
+[2023-04-09 00:58:03] RSL639NLE has been created
+[2023-04-09 00:58:04] JVL897KQF has been created
+[2023-04-09 00:58:05] BYN920LML has crossed the intersection
+[2023-04-09 00:58:06] JTG945QSF has been created
+[2023-04-09 00:58:07] AIK193ICK has been created
+[2023-04-09 00:58:09] GIQ563WBN has been created
+[2023-04-09 00:58:09] HYS587JAG has crossed the intersection
+[2023-04-09 00:58:10] HZI578FXB has been created
+[2023-04-09 00:58:11] LAB986MNL has crossed the intersection
+[2023-04-09 00:58:12] YVP267GZX has been created
+[2023-04-09 00:58:13] AIS287IFH has been created
+[2023-04-09 00:58:14] GUR536TWA has been created
+[2023-04-09 00:58:15] JMJ726STI has crossed the intersection
+[2023-04-09 00:58:16] IIF355XQS has been created
+[2023-04-09 00:58:17] RUB110VKR has been created
+[2023-04-09 00:58:18] YEW057EIT has been created
+[2023-04-09 00:58:20] ISA609UUK has been created
+[2023-04-09 00:58:20] P7 was empty. Switching to Next Phase
+[2023-04-09 00:58:20] P7 was advanced to 85AMBER
+[2023-04-09 00:58:20] P7 was advanced to 99 RED
+[2023-04-09 00:58:20] Entered P8. Advanced Traffic Light to GREEN
+[2023-04-09 00:58:20] AEG150 has crossed the intersection
+[2023-04-09 00:58:21] NZV351PPD has been created
