@@ -42,7 +42,6 @@ public class JunctionController extends Thread{
 				if (controller.isGreen()) {
 					while (phaseDuration > 0) {
 						try {
-//							System.out.println("This is working");
 							Vehicles currCar = queuedVehicles.get(0); //get the first car in queue
 							float currCarTime = currCar.getCrossingTime(); // check the crossingTime of the car
 							if (phase.getWaitingLength() == 0f) {
@@ -51,13 +50,10 @@ public class JunctionController extends Thread{
 							}else {
 								currCar.setQueuedDistance(phase.getWaitingLength());
 							}
-							System.out.println("Checking for index of vehicle");
+							
 							createdVehicles = model.getVehicleList();
 							int index = createdVehicles.indexOf(currCar.getPlateNumber()); 
-							while (index == -1) {
-								wait(10000); //wait some time for other threads to adapt the situation then try again;
-								createdVehicles = model.getVehicleList();
-							}
+							System.out.println("This is the " + index + 1 + " vehicle");
 							if (phaseDuration >= currCarTime) {
 								float carEmissions = currCar.calculateEmissions(waitTime);
 								waitTime += currCar.getCrossingTime();
@@ -68,40 +64,58 @@ public class JunctionController extends Thread{
 								//calculate emissions
 								phaseDuration -= currCarTime;
 								if (phaseDuration < 5f && controller.isGreen()) {
-									advanceTrafficState(controller);
-									System.out.println(controller.getTrafficState());
+									Thread ctrl = advanceTrafficState(controller);
+									ctrl.start();
+									ctrl.join();
+									file.writeToFile(phase.getPhaseName() + " had less than 5 seconds; advanced to 77 " + controller.getTrafficState().name());
 								}
 							}else {
-								file.writeToFile(currCar.getPlateNumber() + " cannot cross due to inadequate time");
+								file.writeToFile(currCar.getPlateNumber() + " cannot cross due to inadequate time 74");
+								if (controller.isGreen()) {
+									Thread ctrl = advanceTrafficState(controller);
+									ctrl.start();
+									ctrl.join();
+								}
+								file.writeToFile(phase.getPhaseName() + " was advanced to 78" + controller.getTrafficState().name());
 								break;
 							}
 						}catch (IndexOutOfBoundsException e){
-							file.writeToFile(phase.getName() + " was empty. Switching to Next Phase");
+							file.writeToFile(phase.getPhaseName() + " was empty. Switching to Next Phase");
 							if (controller.isGreen()) {
-								advanceTrafficState(controller);
-								System.out.println(controller.getTrafficState());
+								Thread ctrl = advanceTrafficState(controller);
+								ctrl.start();
+								ctrl.join();
+								file.writeToFile(phase.getPhaseName() + " was advanced to 85" + controller.getTrafficState().name());
 							}
 							break;
 						}			
 					}
 					if (controller.isGreen()) {
-						advanceTrafficState(controller);
-						advanceTrafficState(controller);
-						System.out.println(controller.getTrafficState());
+						Thread ctrl = advanceTrafficState(controller);
+						ctrl.start();
+						ctrl.join();
+						file.writeToFile(phase.getPhaseName() + " was advanced to 92 " + controller.getTrafficState().name());
+						Thread ctrl2 = advanceTrafficState(controller);
+						ctrl2.start();
+						ctrl2.join();
+						file.writeToFile(phase.getPhaseName() + " was advanced to 94 " + controller.getTrafficState().name());
 					}
 					else if (controller.isAmber()) {
-						advanceTrafficState(controller);
-						System.out.println(controller.getTrafficState());
+						Thread ctrl = advanceTrafficState(controller);
+						ctrl.start();
+						ctrl.join();
+						file.writeToFile(phase.getPhaseName() + " was advanced to 99 " + controller.getTrafficState().name());
 					}
 				}
 			}
 		}
 	}
 	
-	private synchronized void advanceTrafficState(TrafficController controller) {
-		new Thread(() -> {
+	private synchronized Thread advanceTrafficState(TrafficController controller) {
+		return new Thread(() -> {
 			controller.advanceState();
-		}).start();
+		});
+		
 	}
 	
 	
