@@ -150,15 +150,8 @@ public class GUIController  {
 	public void executeSimulation() {
 		VehicleRNG rngVehicle = new VehicleRNG(helper, phaseList, model);
 		rngVehicle.start();
-		while (true) {
-			for (Phases phase: phaseList) {
-				JunctionController controller = new JunctionController(phase, helper, model);
-				controller.start();
-				break;
-				
-			}
-			break;
-		}
+		JunctionController controller = new JunctionController(phaseList, helper, model);
+		controller.start();
 	}
 	
 	public void addVehicles()
