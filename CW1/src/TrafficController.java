@@ -5,7 +5,7 @@ public class TrafficController extends Thread {
 	private TrafficState currentState;
 	
 	public TrafficController() {
-		
+		currentState = TrafficState.RED;
 	}
 	
 	public enum TrafficState{
@@ -15,6 +15,7 @@ public class TrafficController extends Thread {
 	}
 	
 	public void advanceState() {
+		
 		if (currentState == TrafficState.RED) {
 			currentState = TrafficState.GREEN;
 		}
@@ -35,8 +36,12 @@ public class TrafficController extends Thread {
 		}
 	}
 	
+	public TrafficState getTafficState() {
+		return currentState;
+	}
+	
 	@Override
 	public void run() {
-		currentState = TrafficState.RED;
+		
 	}
 }

@@ -91,6 +91,124 @@ public class Helper {
 		}
 	}
 	
+	public void checkCarSegment(Vehicles car, GUIModel model) {
+		synchronized (this) 
+		{	String carSegment = car.getSegment();
+		if (carSegment.equals("1")) {
+			model.addToS1counter(1);
+			model.addToS1WaitingLength(car.getVehicleLength());
+			model.addToS1WaitingTime(car.getCrossingTime());
+		}
+		if (carSegment.equals("2")) {
+			model.addToS2counter(1);
+			model.addToS2WaitingLength(car.getVehicleLength());
+			model.addToS2WaitingTime(car.getCrossingTime());
+		}
+		if (carSegment.equals("3")) {
+			model.addToS3counter(1);
+			model.addToS3WaitingLength(car.getVehicleLength());
+			model.addToS3WaitingTime(car.getCrossingTime());
+		}
+		if (carSegment.equals("4")) {
+			model.addToS4counter(1);
+			model.addToS4WaitingLength(car.getVehicleLength());
+			model.addToS4WaitingTime(car.getCrossingTime());
+		}}
+	
+	}
+	
+	public void updateSegmentTable(String segment, GUIModel model) {
+		if (segment.equals("1")) {
+			String carsAtSegment = Integer.toString(model.getS1counter());
+			String waitingTime = Float.toString(model.getS1WaitingTime());
+			String waitingLength = Float.toString(model.getS1WaitingLength());
+			String avgCrossSegment = Float.toString(model.getS1CrossTime() / 2f);
+			model.updateTableModel(model.getStatsModel(),0,1, carsAtSegment);
+			model.updateTableModel(model.getStatsModel(),0,2, waitingTime);
+			model.updateTableModel(model.getStatsModel(),0,3, waitingLength);
+			model.updateTableModel(model.getStatsModel(),0,4, avgCrossSegment);
+		}
+		if (segment.equals("2")) {
+			String carsAtSegment = Integer.toString(model.getS2counter());
+			String waitingTime = Float.toString(model.getS2WaitingTime());
+			String waitingLength = Float.toString(model.getS2WaitingLength());
+			String avgCrossSegment = Float.toString(model.getS2CrossTime() / 2f);
+			model.updateTableModel(model.getStatsModel(),1,1, carsAtSegment);
+			model.updateTableModel(model.getStatsModel(),1,2, waitingTime);
+			model.updateTableModel(model.getStatsModel(),1,3, waitingLength);
+			model.updateTableModel(model.getStatsModel(),1,4, avgCrossSegment);
+		}
+		if (segment.equals("3")) {
+			String carsAtSegment = Integer.toString(model.getS3counter());
+			String waitingTime = Float.toString(model.getS3WaitingTime());
+			String waitingLength = Float.toString(model.getS3WaitingLength());
+			String avgCrossSegment = Float.toString(model.getS3CrossTime() / 2f);
+			model.updateTableModel(model.getStatsModel(),2,1, carsAtSegment);
+			model.updateTableModel(model.getStatsModel(),2,2, waitingTime);
+			model.updateTableModel(model.getStatsModel(),2,3, waitingLength);
+			model.updateTableModel(model.getStatsModel(),2,4, avgCrossSegment);
+		}
+		if (segment.equals("4")) {
+			String carsAtSegment = Integer.toString(model.getS4counter());
+			String waitingTime = Float.toString(model.getS4WaitingTime());
+			String waitingLength = Float.toString(model.getS4WaitingLength());
+			String avgCrossSegment = Float.toString(model.getS4CrossTime() / 2f);
+			model.updateTableModel(model.getStatsModel(),3,1, carsAtSegment);
+			model.updateTableModel(model.getStatsModel(),3,2, waitingTime);
+			model.updateTableModel(model.getStatsModel(),3,3, waitingLength);
+			model.updateTableModel(model.getStatsModel(),3,4, avgCrossSegment);
+		}	
+	}
+	
+	public void updateSegmentTable(GUIModel model) {
+		for (int i = 1; i < 5; i ++) {
+			ArrayList<String> rowData = new ArrayList<String>();
+			String segment = Integer.toString(i);
+			rowData.add(segment);
+			if (i == 1) {
+				String carsAtSegment = Integer.toString(model.getS1counter());
+				String waitingTime = Float.toString(model.getS1WaitingTime());
+				String waitingLength = Float.toString(model.getS1WaitingLength());
+				String avgCrossSegment = Float.toString(model.getS1CrossTime() / 2f);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 2) {
+				String carsAtSegment = Integer.toString(model.getS2counter());
+				String waitingTime = Float.toString(model.getS2WaitingTime());
+				String waitingLength = Float.toString(model.getS2WaitingLength());
+				String avgCrossSegment = Float.toString(model.getS2CrossTime() / 2f);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 3) {
+				String carsAtSegment = Integer.toString(model.getS3counter());
+				String waitingTime = Float.toString(model.getS3WaitingTime());
+				String waitingLength = Float.toString(model.getS3WaitingLength());
+				String avgCrossSegment = Float.toString(model.getS3CrossTime() / 2f);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			if (i == 4) {
+				String carsAtSegment = Integer.toString(model.getS4counter());
+				String waitingTime = Float.toString(model.getS4WaitingTime());
+				String waitingLength = Float.toString(model.getS4WaitingLength());
+				String avgCrossSegment = Float.toString(model.getS4CrossTime() / 2f);
+				rowData.add(carsAtSegment);
+				rowData.add(waitingTime);
+				rowData.add(waitingLength);
+				rowData.add(avgCrossSegment);
+			}
+			model.updateModel(model.getStatsModel(),rowData.toArray());
+		}
+	}
+	
 	public Scanner readCsvFile(String filename) {
 		try {
 			Scanner csvScanner = new Scanner(new File(filename));
