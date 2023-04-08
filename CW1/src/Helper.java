@@ -117,7 +117,7 @@ public class Helper {
 	
 	}
 	
-	public void updateSegmentTable(String segment, GUIModel model) {
+	public synchronized void updateSegmentTable(String segment, GUIModel model) {
 		if (segment.equals("1")) {
 			String carsAtSegment = Integer.toString(model.getS1counter());
 			String waitingTime = Float.toString(model.getS1WaitingTime());

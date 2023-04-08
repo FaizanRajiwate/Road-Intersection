@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,30 +26,14 @@ import javax.swing.table.DefaultTableModel;
 public class GUIController  {
 	// list of observers
 	private List<Observer> registeredObservers = new LinkedList<Observer>();
+	private ReportFile file;
 	private GUIModel model;
 	private GUIView view;
 	private Helper helper;
-	private int s1counter;
-	private float s1WaitingTime;
-	private float s1CrossTime;
-	private float s1WaitingLength;
-	private int s2counter;
-	private float s2WaitingTime;
-	private float s2CrossTime;
-	private float s2WaitingLength;
-	private int s3counter;
-	private float s3WaitingTime;
-	private float s3CrossTime;
-	private float s3WaitingLength;
-	private int s4counter;
-	private float s4WaitingTime;
-	private float s4CrossTime;
-	private float s4WaitingLength;
 	private float totalEmissions; 
 	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	private LinkedList<Phases> phaseList;
 
-	
 	
 	//GUI Elements 
 	private JPanel tablesPanel;
@@ -84,24 +70,8 @@ public class GUIController  {
 		this.helper = _helper;
 		this.phaseList = helper.readPhasesFile("phases.csv");
 		 //Segment Table Variables
-		s1counter = model.getS1counter();
-		s1WaitingTime = model.getS1WaitingTime();
-		s1CrossTime = model.getS1CrossTime();
-		s1WaitingLength = model.getS1WaitingLength();
-		s2counter = model.getS2counter();
-		s2WaitingTime = model.getS2WaitingTime();
-		s2CrossTime = model.getS2CrossTime();
-		s2WaitingLength = model.getS2WaitingLength();
-		s3counter = model.getS3counter();
-		s3WaitingTime = model.getS3WaitingTime();
-		s3CrossTime = model.getS3CrossTime();
-		s3WaitingLength = model.getS3WaitingLength();
-		s4counter = model.getS4counter();
-		s4WaitingTime = model.getS4WaitingTime();
-		s4CrossTime = model.getS4CrossTime();
-		s4WaitingLength = model.getS4WaitingLength();
 		totalEmissions = model.getTotalEmissions(); 
-		
+		this.file = ReportFile.getInstance();
 		//GUI Elements;
 		tablesPanel = view.getTablesPanel();
 		if(tablesPanel != null) {Main.blnDoWork = true;}else{Main.blnDoWork = false;};
@@ -124,6 +94,7 @@ public class GUIController  {
 		view.setEmissionField(Float.toString(totalEmissions));
 		view.addVehicleButtonListener(new AddVehicleListener());
 		view.startButtonListener(new StartButtonListener(model));
+		
 			
 	}
 	
@@ -181,11 +152,12 @@ public class GUIController  {
 		rngVehicle.start();
 		while (true) {
 			for (Phases phase: phaseList) {
-				System.out.println("This is " + phase.getPhaseName());
 				JunctionController controller = new JunctionController(phase, helper, model);
 				controller.start();
+				break;
 				
 			}
+			break;
 		}
 	}
 	
@@ -223,7 +195,9 @@ public class GUIController  {
 					}
 					helper.checkCarSegment(car, model);
 					String segment = car.getSegment();
+					
 					helper.updateSegmentTable(segment, model);
+					file.writeToFile(car.getPlateNumber() + "has been accepted and added to the Queue");
 	        	}catch(InaccurateDataException ex) {
 	        		JFrame alert = new JFrame();
 					JOptionPane.showMessageDialog(alert, ex);
@@ -267,9 +241,11 @@ public class GUIController  {
 							helper.evaluateVehicleFile(listSplitLine, phaseList);
 							//populate VehicleJTable
 							Vehicles car = helper.createVehicle(listSplitLine, phaseList);
+							
 							if (car == null) {
 								throw new InaccurateDataException("The row with " + listSplitLine.get(0) + "could not be created");
 							}
+							file.writeToFile(car.getPlateNumber() + " has been read and added to the Queue");
 							vehicleModel.addRow(splitLine);	
 							totalEmissions += car.getVehicleEmission();
 							boolean sortedPhase = helper.findPhase(car, phaseList);
@@ -325,8 +301,10 @@ public class GUIController  {
 				rowData.add(Float.toString(phase.getPhaseTimer()));
 				phaseModel.addRow(rowData);
 			}
+			
 			phaseTable.setModel(phaseModel);
 			phasePane.getViewport().add(phaseTable);
+			file.writeToFile("Lanes have been read and created");
 			return phasePane;
 		}
 				
@@ -409,6 +387,7 @@ public class GUIController  {
 			}
 			statsTable.setModel(statsModel);
 			statsPane.getViewport().add(statsTable);
+			file.writeToFile("Initial Segments calculated Statistics.");
 			return statsPane;		
 		}
 		

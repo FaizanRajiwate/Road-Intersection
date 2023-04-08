@@ -1,11 +1,12 @@
 //this class should implement the observer pattern, when the state changes, 
 //the phases should be informed that the color has changed.
 
-public class TrafficController extends Thread {
+public class TrafficController{
 	private TrafficState currentState;
 	
 	public TrafficController() {
 		currentState = TrafficState.RED;
+		advanceState();
 	}
 	
 	public enum TrafficState{
@@ -14,7 +15,7 @@ public class TrafficController extends Thread {
 		GREEN
 	}
 	
-	public void advanceState() {
+	public synchronized void advanceState() {
 		
 		if (currentState == TrafficState.RED) {
 			currentState = TrafficState.GREEN;
@@ -36,12 +37,28 @@ public class TrafficController extends Thread {
 		}
 	}
 	
-	public TrafficState getTafficState() {
+	public boolean isAmber() {
+		if (currentState == TrafficState.AMBER) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean isRed() {
+		if (currentState == TrafficState.RED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+	public synchronized TrafficState getTrafficState() {
 		return currentState;
 	}
 	
-	@Override
-	public void run() {
-		
-	}
+
 }

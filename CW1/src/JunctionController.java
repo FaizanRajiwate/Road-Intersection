@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-
 import javax.swing.table.DefaultTableModel;
 
 public class JunctionController extends Thread{
@@ -10,11 +9,11 @@ public class JunctionController extends Thread{
 	private float totalEmissions = 0;	
 	private LinkedList<Vehicles> crossedVehicles;
 	private TrafficController controller;
-	private Helper helper;
 	private boolean crossingStructureStatus;
 	private GUIModel model;
 	private DefaultTableModel vModel;
 	private volatile LinkedList<String> createdVehicles;
+	private ReportFile file = ReportFile.getInstance();
 	
 	
 	public JunctionController(Phases phase, Helper helper,  GUIModel model) {
@@ -23,13 +22,10 @@ public class JunctionController extends Thread{
 		this.phaseDuration = phase.getPhaseTimer();
 		this.crossedVehicles = phase.getCrossedLinkedList();
 		this.controller = phase.getTrafficController();
-		this.helper = helper;
-		
 		this.crossingStructureStatus = false;
 		this.model = model;
 		vModel = model.getVehicleModel();
 		this.createdVehicles = model.getVehicleList();
-//		this.checkPhase(queuedVehicles, crossedVehicles, phaseDuration);
 	}
 	
 	@Override
@@ -40,14 +36,11 @@ public class JunctionController extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
 	
 	private synchronized void checkPhase() throws InterruptedException {
-		this.controller.advanceState();
+		file.writeToFile("Entered " + phase.getPhaseName() + ". Advanced Traffic Light to " + controller.getTrafficState().name());
 		if (controller.isGreen()) {
-			System.out.println(controller.getTafficState());
 			while (phaseDuration > 0) {
 				try {
 //					System.out.println("This is working");
@@ -63,50 +56,57 @@ public class JunctionController extends Thread{
 					createdVehicles = model.getVehicleList();
 					int index = createdVehicles.indexOf(currCar.getPlateNumber()); 
 					while (index == -1) {
+						wait(10000); //wait some time for other threads to adapt the situation then try again;
 						createdVehicles = model.getVehicleList();
-						index = createdVehicles.indexOf(currCar.getPlateNumber());
-						System.out.println(index);
 					}
-					
 					if (phaseDuration >= currCarTime) {
-//						crossedVehicles.add(currCar);					
-//						
-//						
-//						queuedVehicles.remove(currCar);
-//						//crossing = false
-//						//crossingStructureOccupied = false
-//						currCar.start();
-//						System.out.println(currCar.getPlateNumber() + "has crossed from " + phase.getPhaseName());
-////						phaseWaitTime += currCar.getCrossingTime();
-//						float carEmissions = currCar.calculateEmissions(waitTime);
-//						waitTime += currCar.getCrossingTime();
-//						phase.updateWaitingLength(currCar.getVehicleLength());
-//						this.totalEmissions += carEmissions;
+						float carEmissions = currCar.calculateEmissions(waitTime);
+						waitTime += currCar.getCrossingTime();
+						phase.updateWaitingLength(currCar.getVehicleLength());
+						this.totalEmissions += carEmissions;
 						vehicleCrossing(currCar, index);
 						completeCrossing();
 						//calculate emissions
 						phaseDuration -= currCarTime;
 						if (phaseDuration < 5f && controller.isGreen()) {
-							controller.advanceState();
+							advanceTrafficState();
+							System.out.println(controller.getTrafficState());
 						}
 					}else {
-						System.out.println(currCar.getPlateNumber() + " cannot cross due to inadequate time");
+						file.writeToFile(currCar.getPlateNumber() + " cannot cross due to inadequate time");
 						break;
 					}
 				}catch (IndexOutOfBoundsException e){
-					System.out.println("Vehicle did not exist in the list at time of search");
-					controller.advanceState();
-					System.out.println(controller.getTafficState());
+					file.writeToFile(phase.getName() + " was empty. Switching to Next Phase");
+					if (controller.isGreen()) {
+						advanceTrafficState();
+						System.out.println(controller.getTrafficState());
+					}
 					break;
 				}			
 			}
-			controller.advanceState();
-			System.out.println(controller.getTafficState());
+			if (controller.isGreen()) {
+				advanceTrafficState();
+				advanceTrafficState();
+				System.out.println(controller.getTrafficState());
+			}
+			else if (controller.isAmber()) {
+				advanceTrafficState();
+				System.out.println(controller.getTrafficState());
+			}
+	
+			
 			
 			
 		}
 		
 		
+	}
+	
+	private synchronized void advanceTrafficState() {
+		new Thread(() -> {
+			controller.advanceState();
+		}).start();
 	}
 	
 	
@@ -116,17 +116,17 @@ public class JunctionController extends Thread{
             wait();
         }
         crossingStructureStatus = true;        
-		System.out.println("I'm working");
 		vehicle.start();
 		vehicle.join();
 		queuedVehicles.remove(vehicle);
 		crossedVehicles.add(vehicle);
+		file.writeToFile(vehicle.getPlateNumber() + " has crossed the intersection");
 		waitTime += vehicle.getCrossingTime();
 		phase.updateWaitingLength(vehicle.getVehicleLength());
+//		this.updateMovingSegmentTable(vehicle);
 		this.model.updateTableModel(vModel, index, 4, vehicle.getCrossingStatus());
 		System.out.println(vehicle.getPlateNumber() + " has crossed");
 		Thread.sleep((long) (vehicle.getCrossingTime() * 1000));
-		
 	}
 	
 	private synchronized void completeCrossing() {
@@ -134,6 +134,41 @@ public class JunctionController extends Thread{
         notifyAll();
 	}
 	
+//	private synchronized void updateMovingSegmentTable(Vehicles vehicle) {
+//		String segment = vehicle.getSegment();
+//		if (segment.equals("1")) {
+//			model.addToS1counter(-1);
+//			model.addToS1WaitingLength(-1 * vehicle.getVehicleLength());
+//			model.addToS1WaitingTime(-1 * vehicle.getCrossingTime());
+//			model.updateTableModel(model.getStatsModel(),0,1, Integer.toString(model.getS1counter()));
+//			model.updateTableModel(model.getStatsModel(),0,2, Float.toString(model.getS1WaitingTime()));
+//			model.updateTableModel(model.getStatsModel(),0,3, Float.toString(model.getS1WaitingLength()));
+//		}
+//		if (segment.equals("2")) {
+//			model.addToS2counter(-1);
+//			model.addToS2WaitingLength(-1* vehicle.getVehicleLength());
+//			model.addToS2WaitingTime(-1 * vehicle.getCrossingTime());
+//			model.updateTableModel(model.getStatsModel(),1,1, Integer.toString(model.getS2counter()));
+//			model.updateTableModel(model.getStatsModel(),1,2, Float.toString(model.getS2WaitingTime()));
+//			model.updateTableModel(model.getStatsModel(),1,3, Float.toString(model.getS2WaitingLength()));
+//		}
+//		if (segment.equals("3")) {
+//			model.addToS3counter(-1);
+//			model.addToS3WaitingLength(-1 * vehicle.getVehicleLength());
+//			model.addToS3WaitingTime(-1 * vehicle.getCrossingTime());
+//			model.updateTableModel(model.getStatsModel(),2,1, Integer.toString(model.getS3counter()));
+//			model.updateTableModel(model.getStatsModel(),2,2, Float.toString(model.getS3WaitingTime()));
+//			model.updateTableModel(model.getStatsModel(),2,3, Float.toString(model.getS3WaitingLength()));
+//		}
+//		if (segment.equals("4")) {
+//			model.addToS4counter(-1);
+//			model.addToS4WaitingLength(-1 * vehicle.getVehicleLength());
+//			model.addToS4WaitingTime(-1 *vehicle.getCrossingTime());
+//			model.updateTableModel(model.getStatsModel(),3,1, Integer.toString(model.getS4counter()));
+//			model.updateTableModel(model.getStatsModel(),3,2, Float.toString(model.getS4WaitingTime()));
+//			model.updateTableModel(model.getStatsModel(),3,3, Float.toString(model.getS4WaitingLength()));
+//		}
+//	}
 	
 	
 }
