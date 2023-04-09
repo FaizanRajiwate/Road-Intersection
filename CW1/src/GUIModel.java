@@ -103,7 +103,7 @@ public class GUIModel extends Thread implements Subject {
 			obs.update();
 	}
 
-	public synchronized void updateTableModel(DefaultTableModel model, int row, int column, String crossingStatus) {
+	public void updateTableModel(DefaultTableModel model, int row, int column, String crossingStatus) {
 		model.setValueAt(crossingStatus, row, column);
 	}
 
