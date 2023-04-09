@@ -103,135 +103,135 @@ public class GUIModel extends Thread implements Subject {
 			obs.update();
 	}
 
-	public synchronized void updateTableModel(DefaultTableModel model, int row, int column, String crossingStatus) {
+	public void updateTableModel(DefaultTableModel model, int row, int column, String crossingStatus) {
 		model.setValueAt(crossingStatus, row, column);
 	}
 
-	public synchronized int getS1counter() {
+	public int getS1counter() {
 		return s1counter;
 	}
 
-	public synchronized void addToS1counter(int s1counter) {
+	public void addToS1counter(int s1counter) {
 		this.s1counter += s1counter;
 	}
 
-	public synchronized float getS1WaitingTime() {
+	public float getS1WaitingTime() {
 		return s1WaitingTime;
 	}
 
-	public synchronized void addToS1WaitingTime(float s1WaitingTime) {
+	public void addToS1WaitingTime(float s1WaitingTime) {
 		this.s1WaitingTime += s1WaitingTime;
 	}
 
-	public synchronized float getS1CrossTime() {
+	public float getS1CrossTime() {
 		return s1CrossTime;
 	}
 
-	public synchronized void addToS1CrossTime(float s1CrossTime) {
+	public void addToS1CrossTime(float s1CrossTime) {
 		this.s1CrossTime += s1CrossTime;
 	}
 
-	public synchronized float getS1WaitingLength() {
+	public float getS1WaitingLength() {
 		return s1WaitingLength;
 	}
 
-	public synchronized void addToS1WaitingLength(float s1WaitingLength) {
+	public void addToS1WaitingLength(float s1WaitingLength) {
 		this.s1WaitingLength += s1WaitingLength;
 	}
 
-	public synchronized int getS2counter() {
+	public int getS2counter() {
 		return s2counter;
 	}
 
-	public synchronized void addToS2counter(int s2counter) {
+	public void addToS2counter(int s2counter) {
 		this.s2counter += s2counter;
 	}
 
-	public synchronized float getS2WaitingTime() {
+	public float getS2WaitingTime() {
 		return s2WaitingTime;
 	}
 
-	public synchronized void addToS2WaitingTime(float s2WaitingTime) {
+	public void addToS2WaitingTime(float s2WaitingTime) {
 		this.s2WaitingTime = s2WaitingTime;
 	}
 
-	public synchronized float getS2CrossTime() {
+	public float getS2CrossTime() {
 		return s2CrossTime;
 	}
 
-	public synchronized void addToS2CrossTime(float s2CrossTime) {
+	public void addToS2CrossTime(float s2CrossTime) {
 		this.s2CrossTime += s2CrossTime;
 	}
 
-	public synchronized float getS2WaitingLength() {
+	public float getS2WaitingLength() {
 		return s2WaitingLength;
 	}
 
-	public synchronized void addToS2WaitingLength(float s2WaitingLength) {
+	public void addToS2WaitingLength(float s2WaitingLength) {
 		this.s2WaitingLength += s2WaitingLength;
 	}
 
-	public synchronized int getS3counter() {
+	public int getS3counter() {
 		return s3counter;
 	}
 
-	public synchronized void addToS3counter(int s3counter) {
+	public void addToS3counter(int s3counter) {
 		this.s3counter += s3counter;
 	}
 
-	public synchronized float getS3WaitingTime() {
+	public float getS3WaitingTime() {
 		return s3WaitingTime;
 	}
 
-	public synchronized void addToS3WaitingTime(float s3WaitingTime) {
+	public void addToS3WaitingTime(float s3WaitingTime) {
 		this.s3WaitingTime += s3WaitingTime;
 	}
 
-	public synchronized float getS3CrossTime() {
+	public float getS3CrossTime() {
 		return s3CrossTime;
 	}
 
-	public synchronized void addToS3CrossTime(float s3CrossTime) {
+	public void addToS3CrossTime(float s3CrossTime) {
 		this.s3CrossTime += s3CrossTime;
 	}
 
-	public synchronized float getS3WaitingLength() {
+	public float getS3WaitingLength() {
 		return s3WaitingLength;
 	}
 
-	public synchronized void addToS3WaitingLength(float s3WaitingLength) {
+	public void addToS3WaitingLength(float s3WaitingLength) {
 		this.s3WaitingLength += s3WaitingLength;
 	}
 
-	public synchronized int getS4counter() {
+	public int getS4counter() {
 		return s4counter;
 	}
 
-	public synchronized void addToS4counter(int s4counter) {
+	public void addToS4counter(int s4counter) {
 		this.s4counter += s4counter;
 	}
 
-	public synchronized float getS4WaitingTime() {
+	public float getS4WaitingTime() {
 		return s4WaitingTime;
 	}
 
-	public synchronized void addToS4WaitingTime(float s4WaitingTime) {
+	public void addToS4WaitingTime(float s4WaitingTime) {
 		this.s4WaitingTime += s4WaitingTime;
 	}
 
-	public synchronized float getS4CrossTime() {
+	public float getS4CrossTime() {
 		return s4CrossTime;
 	}
 
-	public synchronized void addToS4CrossTime(float s4CrossTime) {
+	public void addToS4CrossTime(float s4CrossTime) {
 		this.s4CrossTime += s4CrossTime;
 	}
 
-	public synchronized float getS4WaitingLength() {
+	public float getS4WaitingLength() {
 		return s4WaitingLength;
 	}
 
-	public synchronized void addToS4WaitingLength(float s4WaitingLength) {
+	public void addToS4WaitingLength(float s4WaitingLength) {
 		this.s4WaitingLength += s4WaitingLength;
 	}
 

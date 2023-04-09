@@ -109,6 +109,7 @@ public class GUIController  {
 					
 				}
 				}.start();
+				model.notifyObservers();
 			// TODO Auto-generated method stub
 			        }		 
 	}
@@ -199,7 +200,7 @@ public class GUIController  {
 	        		JFrame alert = new JFrame();
 					JOptionPane.showMessageDialog(alert, ex);
 	        	}
-			this.model.notifyObservers();
+			//this.model.notifyObservers();
 	}
 
 	private JScrollPane addVehiclePane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
