@@ -25,7 +25,7 @@ public class VehicleRNG extends Thread{
 			
 		}
 		
-		private void rngVehicleCreator(Helper helper) throws PhaseException, NumberFormatException, InaccurateDataException, DuplicateIDException {
+		private synchronized void rngVehicleCreator(Helper helper) throws PhaseException, NumberFormatException, InaccurateDataException, DuplicateIDException {
 			ArrayList<String> vehicleDetails = new ArrayList<String>();
 			vehicleDetails = helper.randomlyGenerateVehicles();
 			helper.evaluateVehicleFile(vehicleDetails, phaseList);
