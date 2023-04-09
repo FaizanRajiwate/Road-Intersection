@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -210,15 +211,11 @@ public class Helper {
 	}
 	
 	public synchronized Scanner readCsvFile(String filename) {
-		try {
-			Scanner csvScanner = new Scanner(new File(filename));
-			csvScanner.useDelimiter(",");
-			csvScanner.nextLine();
-			return csvScanner;
-		}catch (FileNotFoundException e) {
-			System.out.println("The file you've selected does not exist in the src directory.");
-			return null;
-		}
+		InputStream inputFile = Helper.class.getResourceAsStream(filename);
+		Scanner csvScanner = new Scanner(inputFile);
+		csvScanner.useDelimiter(",");
+		csvScanner.nextLine();
+		return csvScanner;
 	}
 	
 	public synchronized boolean findPhase(Vehicles car, LinkedList<Phases> listOfPhases) {

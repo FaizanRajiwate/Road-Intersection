@@ -1,4 +1,3 @@
-
 public class InaccurateDataException extends Exception {
 	/**
 	 * 

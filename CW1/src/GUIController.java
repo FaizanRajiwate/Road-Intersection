@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
-import java.awt.event.WindowAdapter;
+//import java.awt.event.WindowAdapter;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -63,7 +63,7 @@ public class GUIController  {
 		this.model = _model;
 		this.view = _view;
 		this.helper = _helper;
-		this.phaseList = helper.readPhasesFile("phases.csv");
+		this.phaseList = helper.readPhasesFile("/phases.csv");
 		 //Segment Table Variables
 		this.file = ReportFile.getInstance();
 		//GUI Elements;
