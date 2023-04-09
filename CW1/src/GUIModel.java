@@ -235,19 +235,19 @@ public class GUIModel extends Thread implements Subject {
 		this.s4WaitingLength += s4WaitingLength;
 	}
 
-	public float getTotalEmissions() {
+	public synchronized float getTotalEmissions() {
 		return totalEmissions;
 	}
 
-	public void addToTotalEmissions(float totalEmissions) {
+	public synchronized void addToTotalEmissions(float totalEmissions) {
 		this.totalEmissions += totalEmissions;
 	}
 	
-	public float getRunningEmissions() {
+	public synchronized float getRunningEmissions() {
 		return runningEmissions;
 	}
 
-	public void addRunningEmissions(float totalEmissions) {
+	public synchronized void addRunningEmissions(float totalEmissions) {
 		this.runningEmissions += totalEmissions;
 	}
 	
