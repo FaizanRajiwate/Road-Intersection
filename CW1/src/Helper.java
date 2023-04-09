@@ -40,7 +40,7 @@ public class Helper {
 		return false;
 	}	
 	
-	public void evaluateVehicleFile(List<String> vehicleLine, LinkedList<Phases> phaseList) throws InaccurateDataException, DuplicateIDException, NumberFormatException
+	public synchronized void evaluateVehicleFile(List<String> vehicleLine, LinkedList<Phases> phaseList) throws InaccurateDataException, DuplicateIDException, NumberFormatException
 	{
 		String plateNumber = vehicleLine.get(0);
 		String vehicleType = vehicleLine.get(1);
@@ -91,7 +91,7 @@ public class Helper {
 		}
 	}
 	
-	public void checkCarSegment(Vehicles car, GUIModel model) {
+	public synchronized void checkCarSegment(Vehicles car, GUIModel model) {
 		synchronized (this) 
 		{	String carSegment = car.getSegment();
 		if (carSegment.equals("1")) {
@@ -160,7 +160,7 @@ public class Helper {
 		}	
 	}
 	
-	public void updateSegmentTable(GUIModel model) {
+	public synchronized void updateSegmentTable(GUIModel model) {
 		for (int i = 1; i < 5; i ++) {
 			ArrayList<String> rowData = new ArrayList<String>();
 			String segment = Integer.toString(i);
@@ -209,7 +209,7 @@ public class Helper {
 		}
 	}
 	
-	public Scanner readCsvFile(String filename) {
+	public synchronized Scanner readCsvFile(String filename) {
 		try {
 			Scanner csvScanner = new Scanner(new File(filename));
 			csvScanner.useDelimiter(",");
@@ -221,7 +221,7 @@ public class Helper {
 		}
 	}
 	
-	public boolean findPhase(Vehicles car, LinkedList<Phases> listOfPhases) {
+	public synchronized boolean findPhase(Vehicles car, LinkedList<Phases> listOfPhases) {
 		String direction = car.getCrossingDirection();
 		String segment = car.getSegment();
 		if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("1"))) {
@@ -261,7 +261,7 @@ public class Helper {
 		}
 	}
 	
-	public Vehicles createVehicle(List<String> csvFileLine, LinkedList<Phases> phaseList) {
+	public synchronized Vehicles createVehicle(List<String> csvFileLine, LinkedList<Phases> phaseList) {
 		//Extract variables from csv File
 		String plateNumber = csvFileLine.get(0);
 		String vehicleType = csvFileLine.get(1);
@@ -287,7 +287,7 @@ public class Helper {
 		return car;
 	}
 	
-	public Phases createPhase(List<String> csvFileLine) {
+	public synchronized Phases createPhase(List<String> csvFileLine) {
 		//Extract variables from csv File
 		String phaseName = csvFileLine.get(0);
 		float phaseTimer = Float.parseFloat(csvFileLine.get(1));					
@@ -301,7 +301,7 @@ public class Helper {
 		return phase;	
 	}
 	
-	public LinkedList<Phases> readPhasesFile(String filename) {
+	public synchronized LinkedList<Phases> readPhasesFile(String filename) {
 		if(filename == null || filename == "" )
 		{
 			throw new NullPointerException();
@@ -334,7 +334,7 @@ public class Helper {
 		 }
 	}
 	
-	public ArrayList<String> randomlyGenerateVehicles(){
+	public synchronized ArrayList<String> randomlyGenerateVehicles(){
 		ArrayList<String> vehicleDetails = new ArrayList<String>();
 		
 		String plateNumber = generatePlateNumber();
@@ -358,7 +358,7 @@ public class Helper {
 		return vehicleDetails;
 	}
 	
-	private String generatePlateNumber() {
+	private synchronized String generatePlateNumber() {
 		Random random = new Random();
 		int aMax = 90;
 		int aMin = 65;
