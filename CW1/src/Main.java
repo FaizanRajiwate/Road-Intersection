@@ -1,11 +1,5 @@
-import java.io.IOException;
-import java.io.FileWriter;
 import java.util.LinkedList;
-import java.lang.Float;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.awt.event.WindowAdapter;
+import java.lang.Float;;
 
 
 public class Main{	

@@ -1,16 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
-
+import java.awt.event.WindowAdapter;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -52,7 +49,6 @@ public class GUIController  {
 	private JTable statsTable;
 	
 	//Form Fields
-	private JTextField emissionField;
 	private JTextField pNField;
 	private JComboBox<String> vTField;
 	private JTextField cTField;
@@ -79,7 +75,6 @@ public class GUIController  {
 		tablesPanel.add(addStatsPane(phaseList, helper, model, view));
 		
 		//Getting Form Fields
-		emissionField = view.getEmissionField();
 		pNField = view.getpNField();
 		vTField = view.getvTField();
 		cTField = view.getcTField();
