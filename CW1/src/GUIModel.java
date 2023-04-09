@@ -36,6 +36,7 @@ public class GUIModel extends Thread implements Subject {
 	private float s4CrossTime = 0;
 	private float s4WaitingLength = 0;
 	private float totalEmissions = 0;
+	private float runningEmissions = 0;
 
 	public GUIModel() {
 		vehicleModel = createTableModel(vehicleColNames);
@@ -241,5 +242,14 @@ public class GUIModel extends Thread implements Subject {
 	public synchronized void addToTotalEmissions(float totalEmissions) {
 		this.totalEmissions += totalEmissions;
 	}
+	
+	public synchronized float getRunningEmissions() {
+		return runningEmissions;
+	}
+
+	public synchronized void addRunningEmissions(float totalEmissions) {
+		this.runningEmissions += totalEmissions;
+	}
+	
 
 }

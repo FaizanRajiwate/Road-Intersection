@@ -30,7 +30,6 @@ public class GUIController  {
 	private GUIModel model;
 	private GUIView view;
 	private Helper helper;
-	private float totalEmissions; 
 	String[] phaseSegment = {"3","1","4","2","1","3","2","4"};
 	private LinkedList<Phases> phaseList;
 
@@ -70,7 +69,6 @@ public class GUIController  {
 		this.helper = _helper;
 		this.phaseList = helper.readPhasesFile("phases.csv");
 		 //Segment Table Variables
-		totalEmissions = model.getTotalEmissions(); 
 		this.file = ReportFile.getInstance();
 		//GUI Elements;
 		tablesPanel = view.getTablesPanel();
@@ -91,7 +89,6 @@ public class GUIController  {
 		vLField = view.getvLField();
 		sField = view.getsField();
 		
-		view.setEmissionField(Float.toString(totalEmissions));
 		view.addVehicleButtonListener(new AddVehicleListener());
 		view.startButtonListener(new StartButtonListener(model));
 		
@@ -152,6 +149,9 @@ public class GUIController  {
 		rngVehicle.start();
 		JunctionController controller = new JunctionController(phaseList, helper, model);
 		controller.start();
+		while (true) {
+			view.setEmissionField(Float.toString(model.getTotalEmissions()));
+		}
 	}
 	
 	public void addVehicles()
@@ -173,8 +173,8 @@ public class GUIController  {
 	    				throw new InaccurateDataException("The row with " + newVehicleLine.get(0) + "could not be created");
 	    			}           			
 
-	    			totalEmissions += car.getVehicleEmission();
-	    			emissionField.setText(Float.toString(totalEmissions));
+	    			model.addToTotalEmissions(car.getVehicleEmission());
+	    			view.setEmissionField(Float.toString(model.getTotalEmissions()));
 	    			vehicleModel.addRow(newVehicle);            			           			
 	    			pNField.setText("");
 	            	cTField.setText("");
@@ -240,7 +240,7 @@ public class GUIController  {
 							}
 							file.writeToFile(car.getPlateNumber() + " has been read and added to the Queue");
 							vehicleModel.addRow(splitLine);	
-							totalEmissions += car.getVehicleEmission();
+							model.addToTotalEmissions(car.getVehicleEmission());
 							boolean sortedPhase = helper.findPhase(car, phaseList);
 							if (sortedPhase) {
 								model.addNewVehicle(car.getPlateNumber());
@@ -277,6 +277,7 @@ public class GUIController  {
 			vehicleTable.setAutoCreateRowSorter(true);
 			vehicleTable.setModel(vehicleModel);
 			vehiclePane.getViewport().add(view.getvehicleTable()); 
+			view.setEmissionField(Float.toString(model.getTotalEmissions()));
 			return vehiclePane;
 		}
 		

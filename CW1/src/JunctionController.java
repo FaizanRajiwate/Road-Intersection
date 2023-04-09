@@ -3,8 +3,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class JunctionController extends Thread{
 
-	private float waitTime = 0;
-	private float totalEmissions = 0;	
+	private float waitTime = 0;	
 	private LinkedList<Phases> phaseList;
 	private boolean crossingStructureStatus;
 	private GUIModel model;
@@ -47,8 +46,10 @@ public class JunctionController extends Thread{
 							if (phase.getWaitingLength() == 0f) {
 								//check if the phase has a waiting length of 0 if so then this is the first car in the queue otherwise set the vehicle length accordingly
 								currCar.setQueuedDistance(0);
+								waitTime += 0;
 							}else {
 								currCar.setQueuedDistance(phase.getWaitingLength());
+								waitTime += currCar.getCrossingTime();
 							}
 							
 							createdVehicles = model.getVehicleList();
@@ -56,9 +57,9 @@ public class JunctionController extends Thread{
 							System.out.println("This is the " + index + 1 + " vehicle");
 							if (phaseDuration >= currCarTime) {
 								float carEmissions = currCar.calculateEmissions(waitTime);
-								waitTime += currCar.getCrossingTime();
 								phase.updateWaitingLength(currCar.getVehicleLength());
-								this.totalEmissions += carEmissions;
+								phase.updateWaitingTime(currCarTime);
+								model.addRunningEmissions(carEmissions);
 								vehicleCrossing(phase, currCar, index, queuedVehicles, crossedVehicles);
 								completeCrossing();
 								//calculate emissions

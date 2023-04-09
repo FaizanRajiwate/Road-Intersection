@@ -47,6 +47,7 @@ public class VehicleRNG extends Thread{
 			helper.updateSegmentTable(car.getSegment(), model);
 			file.writeToFile(car.getPlateNumber() + " has been created");
 			model.updateModel(vModel, vehicleDetails.toArray());
+			model.addToTotalEmissions(car.getVehicleEmission());
 		}
 		
 		@Override
