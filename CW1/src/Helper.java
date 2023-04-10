@@ -209,7 +209,7 @@ public class Helper {
 		}
 	}
 
-	public synchronized Scanner readCsvFile(String filename) {
+	public Scanner readCsvFile(String filename) {
 		InputStream inputFile = Helper.class.getResourceAsStream(filename);
 		Scanner csvScanner = new Scanner(inputFile);
 		csvScanner.useDelimiter(",");
@@ -221,28 +221,28 @@ public class Helper {
 		String direction = car.getCrossingDirection();
 		String segment = car.getSegment();
 		if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("1"))) {
-			listOfPhases.get(1).getLinkedList().add(car);
+			listOfPhases.get(1).addToQueue(car);
 			return true;
 		} else if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("2"))) {
-			listOfPhases.get(3).getLinkedList().add(car);
+			listOfPhases.get(3).addToQueue(car);
 			return true;
 		} else if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("3"))) {
-			listOfPhases.get(5).getLinkedList().add(car);
+			listOfPhases.get(5).addToQueue(car);
 			return true;
 		} else if (((direction.equals("straight")) || (direction.equals("right"))) && (segment.equals("4"))) {
-			listOfPhases.get(7).getLinkedList().add(car);
+			listOfPhases.get(7).addToQueue(car);
 			return true;
 		} else if ((direction.equals("left") && (segment.equals("1")))) {
-			listOfPhases.get(4).getLinkedList().add(car);
+			listOfPhases.get(4).addToQueue(car);
 			return true;
 		} else if ((direction.equals("left") && (segment.equals("2")))) {
-			listOfPhases.get(6).getLinkedList().add(car);
+			listOfPhases.get(6).addToQueue(car);
 			return true;
 		} else if ((direction.equals("left") && (segment.equals("3")))) {
-			listOfPhases.get(0).getLinkedList().add(car);
+			listOfPhases.get(0).addToQueue(car);
 			return true;
 		} else if ((direction.equals("left") && (segment.equals("4")))) {
-			listOfPhases.get(2).getLinkedList().add(car);
+			listOfPhases.get(2).addToQueue(car);
 			return true;
 		} else {
 			return false;
@@ -275,7 +275,7 @@ public class Helper {
 		return car;
 	}
 
-	public synchronized Phases createPhase(List<String> csvFileLine) {
+	public Phases createPhase(List<String> csvFileLine) {
 		// Extract variables from csv File
 		String phaseName = csvFileLine.get(0);
 		float phaseTimer = Float.parseFloat(csvFileLine.get(1));
@@ -289,7 +289,7 @@ public class Helper {
 		return phase;
 	}
 
-	public synchronized LinkedList<Phases> readPhasesFile(String filename) {
+	public  LinkedList<Phases> readPhasesFile(String filename) {
 		if (filename == null || filename == "") {
 			throw new NullPointerException();
 		}

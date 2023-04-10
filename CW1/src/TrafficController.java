@@ -6,7 +6,6 @@ public class TrafficController {
 
 	public TrafficController() {
 		currentState = TrafficState.RED;
-		advanceState();
 	}
 
 	public enum TrafficState {

@@ -36,6 +36,9 @@ public class JunctionController extends Thread {
 				LinkedList<Vehicles> queuedVehicles = phase.getLinkedList();
 				LinkedList<Vehicles> crossedVehicles = phase.getCrossedLinkedList();
 				float phaseDuration = phase.getPhaseTimer();
+				Thread initialState = advanceTrafficState(controller);
+				initialState.start();
+				initialState.join();
 				file.writeToFile("Entered " + phase.getPhaseName() + ". Advanced Traffic Light to "
 						+ controller.getTrafficState().name());
 				if (controller.isGreen()) {
@@ -69,17 +72,17 @@ public class JunctionController extends Thread {
 									Thread ctrl = advanceTrafficState(controller);
 									ctrl.start();
 									ctrl.join();
-									file.writeToFile(phase.getPhaseName() + " had less than 5 seconds; advanced to 77 "
+									file.writeToFile(phase.getPhaseName() + " had less than 5 seconds; advanced to "
 											+ controller.getTrafficState().name());
 								}
 							} else {
-								file.writeToFile(currCar.getPlateNumber() + " cannot cross due to inadequate time 74");
+								file.writeToFile(currCar.getPlateNumber() + " cannot cross due to inadequate time ");
 								if (controller.isGreen()) {
 									Thread ctrl = advanceTrafficState(controller);
 									ctrl.start();
 									ctrl.join();
 								}
-								file.writeToFile(phase.getPhaseName() + " was advanced to 78"
+								file.writeToFile(phase.getPhaseName() + " was advanced to"
 										+ controller.getTrafficState().name());
 								break;
 							}
@@ -89,7 +92,7 @@ public class JunctionController extends Thread {
 								Thread ctrl = advanceTrafficState(controller);
 								ctrl.start();
 								ctrl.join();
-								file.writeToFile(phase.getPhaseName() + " was advanced to 85"
+								file.writeToFile(phase.getPhaseName() + " was advanced to "
 										+ controller.getTrafficState().name());
 							}
 							break;
@@ -100,18 +103,18 @@ public class JunctionController extends Thread {
 						ctrl.start();
 						ctrl.join();
 						file.writeToFile(
-								phase.getPhaseName() + " was advanced to 92 " + controller.getTrafficState().name());
+								phase.getPhaseName() + " was advanced to " + controller.getTrafficState().name());
 						Thread ctrl2 = advanceTrafficState(controller);
 						ctrl2.start();
 						ctrl2.join();
 						file.writeToFile(
-								phase.getPhaseName() + " was advanced to 94 " + controller.getTrafficState().name());
+								phase.getPhaseName() + " was advanced to " + controller.getTrafficState().name());
 					} else if (controller.isAmber()) {
 						Thread ctrl = advanceTrafficState(controller);
 						ctrl.start();
 						ctrl.join();
 						file.writeToFile(
-								phase.getPhaseName() + " was advanced to 99 " + controller.getTrafficState().name());
+								phase.getPhaseName() + " was advanced to " + controller.getTrafficState().name());
 					}
 				}
 			}
@@ -122,7 +125,6 @@ public class JunctionController extends Thread {
 		return new Thread(() -> {
 			controller.advanceState();
 		});
-
 	}
 
 	private synchronized void vehicleCrossing(Phases phase, Vehicles vehicle, int index,
