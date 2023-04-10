@@ -30,3 +30,15 @@
 /TrafficController.class
 /VehicleRNG.class
 /Vehicles.class
+/ReadingStrategy.class
+/ReadCsvFile.class
+/ReadPhasesFile.class
+/GeneratingStrategy.class
+/GenerateVehicleType.class
+/GenerateCrossingDirection.class
+/RandomNumber.class
+/GenerateCrossingTime.class
+/GenerateEmissions.class
+/GenerateVehicleLength.class
+/GenerateVehicleSegment.class
+/GeneratorObjects/

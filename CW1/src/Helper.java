@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class Helper {
 	
+	private GeneratingStrategy strategy;
+
 	
 	public boolean checkNull(String text) {
 		if(text.trim().length() ==0) {
@@ -389,28 +391,22 @@ public class Helper {
 	}
 	
 	private String generateVehicleType() {
-		String[] vehicleTypes = {"bus", "car", "truck"};
-		Random random = generateRandomSeed();
-		int index = random.nextInt(3);
-		String vehicleType = vehicleTypes[index];
-		return vehicleType;
+		GenerateVehicleType genVehType = new GenerateVehicleType();
+		this.strategy = (GeneratingStrategy) genVehType;
+		return strategy.GenerateObject();
 	}
 	
 	private String generateCrossingDirection() {
-		String[] crossingDirections = {"straight", "left", "right"};
-		Random random = generateRandomSeed();
-		int index = random.nextInt(3);
-		String crossingDirection = crossingDirections[index];
-		return crossingDirection;
+		GenerateCrossingDirection genCrossingDirection = new GenerateCrossingDirection();
+		this.strategy = (GeneratingStrategy) genCrossingDirection;
+		return strategy.GenerateObject();
 	}
 	
 	private String generateCrossingTime() {
+		GenerateCrossingTime genCrossingTime = new GenerateCrossingTime();
+		this.strategy = (GeneratingStrategy) genCrossingTime;
+		return strategy.GenerateObject();
 		
-		Random random = generateRandomSeed();
-		int aMax = 5;
-		int aMin = 1;
-		float crossingTime = aMin + random.nextFloat() * (aMax - aMin);
-		return "" + crossingTime;
 	}
 	
 	private String generateCrossingStatus() {
@@ -419,27 +415,21 @@ public class Helper {
 	}
 	
 	private String generateEmissions() {
-		Random random = generateRandomSeed();
-		int aMax = 50;
-		int aMin = 1;
-		float emissions = aMin + random.nextFloat() * (aMax - aMin);
-		return "" + emissions;
+		GenerateEmissions genEmission = new GenerateEmissions();
+		this.strategy = (GeneratingStrategy) genEmission;
+		return strategy.GenerateObject();
 	}
 	
 	private String generateVehicleLength() {
-		Random random = generateRandomSeed();
-		int aMax = 8;
-		int aMin = 1;
-		float vehicleLength = aMin + random.nextFloat() * (aMax - aMin);
-		return "" + vehicleLength;
+		GenerateVehicleLength genVehicleLength = new GenerateVehicleLength();
+		this.strategy = (GeneratingStrategy) genVehicleLength;
+		return strategy.GenerateObject();
 	}
 	
 	private String generateVehicleSegment() {
-		String[] vehicleSegments = {"1", "2", "3", "4"};
-		Random random = generateRandomSeed();
-		int index = random.nextInt(4);
-		String vehicleType = vehicleSegments[index];
-		return vehicleType;
+		GenerateVehicleSegment genVehicleSegment = new GenerateVehicleSegment();
+		this.strategy = (GeneratingStrategy) genVehicleSegment;
+		return strategy.GenerateObject();
 	}
 	
 	
