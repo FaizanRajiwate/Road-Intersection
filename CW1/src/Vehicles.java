@@ -17,7 +17,6 @@ public class Vehicles extends Thread {
 
 	public void run() { // code to be run as a thread
 		this.crossingStatus = "Crossed";
-		this.notifyAll();
 	}
 
 	public LinkedList<String> getCreatedVehicles() {

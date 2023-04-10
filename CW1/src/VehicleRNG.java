@@ -50,7 +50,7 @@ public class VehicleRNG extends Thread {
 			try {
 				rngVehicleCreator(helper);
 				try {
-					Thread.sleep(random.nextInt(1000) + 1000); // Generate a new vehicle every 1-6 seconds
+					Thread.sleep(random.nextInt(5000) + 1000); // Generate a new vehicle every 1-6 seconds
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

@@ -121,7 +121,6 @@ public class JunctionController extends Thread {
 	private synchronized Thread advanceTrafficState(TrafficController controller) {
 		return new Thread(() -> {
 			controller.advanceState();
-			notifyAll();
 		});
 
 	}
