@@ -1,3 +1,4 @@
+
 //import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -11,109 +12,102 @@ public class Vehicles extends Thread {
 	private float vehicleEmission;
 	private String segment;
 	private float queuedDistance;
-	private LinkedList<String> createdVehicles; 
+	private LinkedList<String> createdVehicles;
 //	private float travelledDistance;
-	
-	public void run()
-	{ // code to be run as a thread	
-		this.crossingStatus = "Crossed";	
+
+	public void run() { // code to be run as a thread
+		this.crossingStatus = "Crossed";
+		this.notifyAll();
 	}
-	
-	
-	public LinkedList<String> getCreatedVehicles(){
+
+	public LinkedList<String> getCreatedVehicles() {
 		return this.createdVehicles;
 	}
-	
+
 	public void setCreatedVehicles() {
 		this.createdVehicles = new LinkedList<String>();
 	}
-	
-	public String getPlateNumber() { 
-		return plateNumber; 
+
+	public String getPlateNumber() {
+		return plateNumber;
 	}
-	 
-	public synchronized void setPlateNumber (String plateNumber) {
+
+	public synchronized void setPlateNumber(String plateNumber) {
 		this.plateNumber = plateNumber;
 	}
-	
-	public String getVehicleType() { 
-		return vehicleType; 
+
+	public String getVehicleType() {
+		return vehicleType;
 	}
-	
-	public synchronized void setVehicleType (String vehicleType) {
+
+	public synchronized void setVehicleType(String vehicleType) {
 		this.vehicleType = vehicleType;
 	}
-	
+
 	public float getCrossingTime() {
 		return crossingTime;
 	}
-	
+
 	public synchronized void setCrossingTime(float crossingTime) {
 		this.crossingTime = crossingTime;
 	}
-	
-	public String getCrossingDirection() { 
-		return crossingDirection; 
+
+	public String getCrossingDirection() {
+		return crossingDirection;
 	}
-	
-	public synchronized void setCrossingDirection (String crossingDirection) {
+
+	public synchronized void setCrossingDirection(String crossingDirection) {
 		this.crossingDirection = crossingDirection;
 	}
-	
-	public String getCrossingStatus(){
+
+	public String getCrossingStatus() {
 		return crossingStatus;
 	}
-	
+
 	public synchronized void setCrossingStatus(String crossingStatus) {
 		this.crossingStatus = crossingStatus;
 	}
-	
+
 	public float getVehicleLength() {
-		return vehicleLength; 
+		return vehicleLength;
 	}
-	
+
 	public synchronized void setVehicleLength(float vehicleLength) {
 		this.vehicleLength = vehicleLength;
 	}
-	
+
 	public float getVehicleEmission() {
 		return vehicleEmission;
 	}
-	
+
 	public synchronized void setVehicleEmission(float vehicleEmission) {
 		this.vehicleEmission = vehicleEmission;
 	}
-	
+
 	public synchronized void setSegment(String segmentNumber) {
 		this.segment = segmentNumber;
 	}
-	
+
 	public void setQueuedDistance(float queuedDistance) {
 		this.queuedDistance = queuedDistance;
 	}
-	
+
 	public float getQueuedDistance() {
 		return this.queuedDistance;
 	}
-		
+
 	public String getSegment() {
 		return segment;
 	}
-	
+
 	public synchronized float calculateEmissions(float waitingTime) {
 		/*
-		while(true) { // when no number available
-			try { wait(); } // consumer enters Waiting state
-			catch (InterruptedException e) {}
-			// it will stay here until notified
-			}
-			System.out.println("Got: " );
-			empty = true; // consumer has consumed the number
-			notifyAll(); // so wake up the producer
-		*/
-		return this.getVehicleEmission() * (waitingTime/60);
+		 * while(true) { // when no number available try { wait(); } // consumer enters
+		 * Waiting state catch (InterruptedException e) {} // it will stay here until
+		 * notified } System.out.println("Got: " ); empty = true; // consumer has
+		 * consumed the number notifyAll(); // so wake up the producer
+		 */
+		return this.getVehicleEmission() * (waitingTime / 60);
 	}
-	
 
 }
-

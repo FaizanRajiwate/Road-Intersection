@@ -15,8 +15,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
-
 public class GUIView extends JFrame implements Observer {
 
 	/**
@@ -27,13 +25,13 @@ public class GUIView extends JFrame implements Observer {
 	private Font font = new Font("Courier", Font.BOLD, 20);
 	private Font formFont = new Font("Courier", Font.BOLD, 15);
 	private JPanel basePanel;
-	
+
 	// table headings
 	private JLabel vehicleLabel;
 	private JLabel phaseLabel;
 	private JLabel segmentLabel;
 	private JPanel labelsPanel;
-	
+
 	// tables
 	private JTable statsTable;
 	private JTable vehicleTable;
@@ -73,13 +71,12 @@ public class GUIView extends JFrame implements Observer {
 	// Empty JLabel to fill space
 	private JLabel emptyLabel;
 	private JLabel emptyLabel2;
-	//Total Emission Display
+	// Total Emission Display
 	private JPanel emissionPanel;
 	private JLabel emissionLabel;;
 	//
 	private JButton startButton;
-	
-	
+
 	public GUIView(GUIModel model) {
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
@@ -88,41 +85,40 @@ public class GUIView extends JFrame implements Observer {
 		labelsPanel = createTableLabelsPanel();
 		basePanel.add(labelsPanel);
 		tablesPanel = createPanel(1, 3, 20, 0);
-		//creating scroll panes for tables
+		// creating scroll panes for tables
 		vehiclePane = createTableScrollPanes();
 		phasePane = createTableScrollPanes();
 		statsPane = createTableScrollPanes();
-		//creating empty table objects
+		// creating empty table objects
 		vehicleTable = new JTable();
 		statsTable = new JTable();
 		phaseTable = new JTable();
-		//adding pane objects to the housing table panel
+		// adding pane objects to the housing table panel
 		tablesPanel.add(vehiclePane);
 		tablesPanel.add(phasePane);
 		tablesPanel.add(statsPane);
-		//add table panel to the base panel object
+		// add table panel to the base panel object
 		basePanel.add(tablesPanel);
-		//empty object to add space between tables and the form elements
+		// empty object to add space between tables and the form elements
 		emptyLabel = addLabels("", font);
 		basePanel.add(emptyLabel);
-		//create panel that houses the form elements
+		// create panel that houses the form elements
 		formPanel = createFormPanel();
 		basePanel.add(formPanel);
-		//Second empty object to add space between form element and the next field
+		// Second empty object to add space between form element and the next field
 		emptyLabel2 = addLabels("", font);
 		basePanel.add(emptyLabel2);
-		//Emission Panel
+		// Emission Panel
 		emissionPanel = addEmissionsPanel();
-		basePanel.add(emissionPanel);	
+		basePanel.add(emissionPanel);
 		startButton = new JButton("Start Simulation");
 		basePanel.add(startButton);
 		this.add(basePanel);
 		this.guiModel = model;
 		guiModel.registerObserver(this);
 		System.out.println("View successfully registered to the model");
-		
+
 	}
-	
 
 	private JPanel createPanel(int rows, int columns, int horizontal, int vertical) {
 		JPanel _panel = new JPanel();
@@ -237,17 +233,18 @@ public class GUIView extends JFrame implements Observer {
 
 		return _panel;
 	}
-	
+
 	private JTextField createTextField() {
 		JTextField _textField = new JTextField();
 		_textField.setBackground(Color.white);
 		_textField.setFont(formFont);
 		return _textField;
 	}
-	
+
 	public JPanel addEmissionsPanel() {
 		JPanel _panel = new JPanel();
-		_panel.setLayout(new FlowLayout());;
+		_panel.setLayout(new FlowLayout());
+		;
 		emissionLabel = addLabels("Total CO2 Emissions", formFont);
 		emissionField = new JTextField("", 6);
 		emissionField.setBackground(Color.white);
@@ -261,42 +258,41 @@ public class GUIView extends JFrame implements Observer {
 		return _panel;
 	}
 
-
 	public void addVehicleButtonListener(ActionListener listener) {
 		addVehicleButton.addActionListener(listener);
 	}
-	
+
 	public void startButtonListener(ActionListener listener) {
 		startButton.addActionListener(listener);
 	}
-	
+
 	public JScrollPane getStatsPane() {
 		return statsPane;
 	}
-	
+
 	public JComboBox<String> getsField() {
 		return sField;
 	}
 
 	public JTable getstatsTable() {
-		
+
 		return statsTable;
 	}
-	
+
 	public JTable getvehicleTable() {
-		
+
 		return vehicleTable;
 	}
-	
+
 	public JTable getphaseTable() {
-		
+
 		return phaseTable;
 	}
 
 	public JScrollPane getVehiclePane() {
 		return vehiclePane;
 	}
-	
+
 	public JScrollPane getPhasePane() {
 		return phasePane;
 	}
@@ -308,7 +304,7 @@ public class GUIView extends JFrame implements Observer {
 	public JTextField getEmissionField() {
 		return emissionField;
 	}
-	
+
 	public void setEmissionField(String labelName) {
 		this.emissionField.setText(labelName);
 	}
@@ -332,11 +328,11 @@ public class GUIView extends JFrame implements Observer {
 	public JTextField getvLField() {
 		return vLField;
 	}
-	
+
 	public JTextField getpNField() {
 		return pNField;
 	}
-	
+
 	public JComboBox<String> getcDField() {
 		return cDField;
 	}
@@ -346,7 +342,7 @@ public class GUIView extends JFrame implements Observer {
 		System.out.println("Success-----The View has been Updated");
 		JOptionPane.showMessageDialog(null, // display count
 				"The View has been Updated");
-		
+
 	}
 
 }

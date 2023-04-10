@@ -242,7 +242,7 @@ public class GUIModel extends Thread implements Subject {
 	public synchronized void addToTotalEmissions(float totalEmissions) {
 		this.totalEmissions += totalEmissions;
 	}
-	
+
 	public synchronized float getRunningEmissions() {
 		return runningEmissions;
 	}
@@ -250,6 +250,5 @@ public class GUIModel extends Thread implements Subject {
 	public synchronized void addRunningEmissions(float totalEmissions) {
 		this.runningEmissions += totalEmissions;
 	}
-	
 
 }
