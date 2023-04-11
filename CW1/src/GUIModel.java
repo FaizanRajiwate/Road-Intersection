@@ -15,10 +15,10 @@ public class GUIModel extends Thread implements Subject {
 	private String[] segmentStatColNames = { "Segment", "No. of Vehicles Waiting", "Waiting Time", "Waiting Length",
 			"Avg. Cross Time" };
 
-	private DefaultTableModel vehicleModel; //model for vehicle table
-	private DefaultTableModel phaseModel; //model for phases table
-	private DefaultTableModel statsModel; //model for segment statistics table
-	private volatile LinkedList<String> createdVehicles; //list to store created vehicles
+	private DefaultTableModel vehicleModel; // model for vehicle table
+	private DefaultTableModel phaseModel; // model for phases table
+	private DefaultTableModel statsModel; // model for segment statistics table
+	private volatile LinkedList<String> createdVehicles; // list to store created vehicles
 
 	private int s1counter = 0;
 	private float s1WaitingTime = 0;
@@ -60,7 +60,7 @@ public class GUIModel extends Thread implements Subject {
 	}
 
 	public synchronized DefaultTableModel createTableModel(String[] columns) {
-		//creates a Table Model
+		// creates a Table Model
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);
 		return model;
@@ -252,6 +252,5 @@ public class GUIModel extends Thread implements Subject {
 	public synchronized void addRunningEmissions(float totalEmissions) {
 		this.runningEmissions += totalEmissions;
 	}
-	
 
 }

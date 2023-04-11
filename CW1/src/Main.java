@@ -124,11 +124,11 @@ public class Main {
 	}
 
 	public static void main(String Args[]) {
-		//There are functions from Stage 1 that were left behind to not break the testing, they aren't used in stage 2
+		// There are functions from Stage 1 that were left behind to not break the
+		// testing, they aren't used in stage 2
 		GUIModel model = new GUIModel();
 		GUIView guiView = new GUIView(model);
 		GUIController controller = new GUIController(model, guiView, new Helper());
-
 
 	}
 }

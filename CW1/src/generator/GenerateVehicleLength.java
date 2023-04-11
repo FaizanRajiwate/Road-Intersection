@@ -2,7 +2,7 @@ package generator;
 
 import java.util.Random;
 
-public class GenerateVehicleLength implements GeneratingStrategy{
+public class GenerateVehicleLength implements GeneratingStrategy {
 
 	@Override
 	public String GenerateObject() {

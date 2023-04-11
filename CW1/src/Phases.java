@@ -71,15 +71,14 @@ public class Phases extends Thread {
 	public synchronized LinkedList<Vehicles> getCrossedLinkedList() {
 		return crossedvehicleQueue;
 	}
-	
+
 	public synchronized void addToQueue(Vehicles vehicle) {
 		this.vehicleQueue.add(vehicle);
 	}
-	
+
 	public synchronized void addToCrossed(Vehicles vehicle) {
 		this.crossedvehicleQueue.add(vehicle);
 	}
-
 
 	public synchronized void removeFromQueue(Vehicles vehicle) {
 		this.vehicleQueue.remove(vehicle);

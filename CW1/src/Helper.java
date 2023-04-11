@@ -20,10 +20,9 @@ import generator.GenerateVehicleType;
 import generator.GeneratingStrategy;
 
 public class Helper {
-	
+
 	private GeneratingStrategy strategy;
 
-	
 	public boolean checkNull(String text) {
 		if (text.trim().length() == 0) {
 			return true;
@@ -303,7 +302,7 @@ public class Helper {
 		return phase;
 	}
 
-	public  LinkedList<Phases> readPhasesFile(String filename) {
+	public LinkedList<Phases> readPhasesFile(String filename) {
 		if (filename == null || filename == "") {
 			throw new NullPointerException();
 		}
@@ -404,7 +403,7 @@ public class Helper {
 		GenerateCrossingTime genCrossingTime = new GenerateCrossingTime();
 		this.strategy = (GeneratingStrategy) genCrossingTime;
 		return strategy.GenerateObject();
-		
+
 	}
 
 	private String generateCrossingStatus() {

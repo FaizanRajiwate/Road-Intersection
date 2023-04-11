@@ -2,7 +2,7 @@
 //the phases should be informed that the color has changed.
 
 public class TrafficController {
-	//traffic Controller 
+	// traffic Controller
 	private TrafficState currentState;
 
 	public TrafficController() {
@@ -10,12 +10,12 @@ public class TrafficController {
 	}
 
 	public enum TrafficState {
-		//list of states Traffic can be in
+		// list of states Traffic can be in
 		RED, AMBER, GREEN
 	}
 
 	public synchronized void advanceState() {
-		//rules for advancing traffic state
+		// rules for advancing traffic state
 		if (currentState == TrafficState.RED) {
 			currentState = TrafficState.GREEN;
 		} else if (currentState == TrafficState.GREEN) {
@@ -26,7 +26,7 @@ public class TrafficController {
 	}
 
 	public boolean isGreen() {
-		//checks if light is green
+		// checks if light is green
 		if (currentState == TrafficState.GREEN) {
 			return true;
 		} else {
@@ -35,7 +35,7 @@ public class TrafficController {
 	}
 
 	public boolean isAmber() {
-		//checks if light is amber
+		// checks if light is amber
 		if (currentState == TrafficState.AMBER) {
 			return true;
 		} else {
@@ -44,7 +44,7 @@ public class TrafficController {
 	}
 
 	public boolean isRed() {
-		//checks if light is red
+		// checks if light is red
 		if (currentState == TrafficState.RED) {
 			return true;
 		} else {
@@ -53,7 +53,7 @@ public class TrafficController {
 	}
 
 	public synchronized TrafficState getTrafficState() {
-		//get's current traffic state
+		// get's current traffic state
 		return currentState;
 	}
 

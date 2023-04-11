@@ -80,7 +80,8 @@ public class GUIView extends JFrame implements Observer {
 	private JButton startButton;
 
 	public GUIView(GUIModel model) {
-		//creates a panel unto the base JFrame, with grid layout adds panels for specific sections
+		// creates a panel unto the base JFrame, with grid layout adds panels for
+		// specific sections
 		this.setTitle("Road Intersection");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -122,31 +123,31 @@ public class GUIView extends JFrame implements Observer {
 		System.out.println("View successfully registered to the model");
 
 	}
-	
 
 	private JPanel createPanel(int rows, int columns, int horizontal, int vertical) {
-		//create a panel using grid layout with the number of rows, columns, horizontal and vertical space
+		// create a panel using grid layout with the number of rows, columns, horizontal
+		// and vertical space
 		JPanel _panel = new JPanel();
 		_panel.setLayout(new GridLayout(rows, columns, horizontal, vertical));
 		return _panel;
 	}
 
 	private JComboBox<String> addComboBox(String[] choices) {
-		//creates a combo box with the string array provided
+		// creates a combo box with the string array provided
 		JComboBox<String> option = new JComboBox<String>(choices);
 		option.setBackground(Color.white);
 		return option;
 	}
 
 	private JLabel addLabels(String labelname, Font font) {
-		//creates a label using the font created, and centers it.
+		// creates a label using the font created, and centers it.
 		JLabel label = new JLabel(labelname, SwingConstants.CENTER);
 		label.setFont(font);
 		return label;
 	}
 
 	private JPanel createTableLabelsPanel() {
-		//creates a panel that just contains the table names.
+		// creates a panel that just contains the table names.
 		vehicleLabel = addLabels("Vehicles", font);
 		phaseLabel = addLabels("Phases", font);
 		segmentLabel = addLabels("Segments", font);
@@ -158,12 +159,12 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	public JScrollPane createTableScrollPanes() {
-		//creates a new scroll pane
+		// creates a new scroll pane
 		return new JScrollPane();
 	}
 
 	private JPanel createFormPanel() {
-		//creates a panel that holds the form for adding new vehicles manually
+		// creates a panel that holds the form for adding new vehicles manually
 		JPanel _panel = createPanel(4, 1, 20, 10);
 		formLabelPanel = createFormLabelPanel();
 		_panel.add(formLabelPanel);
@@ -175,7 +176,8 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	private JPanel createFormLabelPanel() {
-		//panel containing labels for the form fields. will be inserted into the over arching form panel
+		// panel containing labels for the form fields. will be inserted into the over
+		// arching form panel
 		JPanel _panel = createPanel(1, 1, 20, 0); // create panel to hold the labels
 
 		// create the form field labels
@@ -201,7 +203,7 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	private JPanel createFormButtonPanel() {
-		//panel to hold add vehicle button
+		// panel to hold add vehicle button
 		JPanel _panel = createPanel(1, 3, 0, 20);
 		addVehicleButton = createAddVehicleButton("Add Vehicle");
 		JLabel emptyLabel = new JLabel("");
@@ -213,7 +215,7 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	private JButton createAddVehicleButton(String buttonName) {
-		//creates add vehicle button
+		// creates add vehicle button
 		JButton _button = new JButton(buttonName);
 		_button.setLayout(new FlowLayout(FlowLayout.CENTER));
 		return _button;
@@ -221,7 +223,7 @@ public class GUIView extends JFrame implements Observer {
 
 	private JPanel createFormFields() {
 		// text fields
-		//creates form fields to add to that panel;
+		// creates form fields to add to that panel;
 		pNField = createTextField();
 		vTField = addComboBox(vehicleType);
 		cTField = createTextField();
@@ -249,7 +251,7 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	private JTextField createTextField() {
-		//creates textfield objects
+		// creates textfield objects
 		JTextField _textField = new JTextField();
 		_textField.setBackground(Color.white);
 		_textField.setFont(formFont);
@@ -257,7 +259,7 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	public JPanel addEmissionsPanel() {
-		//panel to hold emissions text field.
+		// panel to hold emissions text field.
 		JPanel _panel = new JPanel();
 		_panel.setLayout(new FlowLayout());
 		;
@@ -275,17 +277,17 @@ public class GUIView extends JFrame implements Observer {
 	}
 
 	public void addVehicleButtonListener(ActionListener listener) {
-		//action listener for manually adding vehicles. implemented in controller
+		// action listener for manually adding vehicles. implemented in controller
 		addVehicleButton.addActionListener(listener);
 	}
 
 	public void startButtonListener(ActionListener listener) {
-		//action listener to start simulation. 
+		// action listener to start simulation.
 		startButton.addActionListener(listener);
 	}
-	
+
 	public void mainWindowListener(WindowAdapter window) {
-		//action listener to generate some stats on crossed vehicles. 
+		// action listener to generate some stats on crossed vehicles.
 		this.addWindowListener(window);
 	}
 
@@ -366,9 +368,9 @@ public class GUIView extends JFrame implements Observer {
 		JOptionPane.showMessageDialog(null, // display count
 				"The View has been Updated");
 	}
-	
+
 	public void disableStartSimulation() {
-		//disable start simulation button
+		// disable start simulation button
 		startButton.setEnabled(false);
 	}
 

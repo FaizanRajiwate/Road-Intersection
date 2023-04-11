@@ -27,12 +27,12 @@ public class ReportFile {
 	}
 
 	public synchronized void writeToFile(String message) {
-		LocalDateTime now = LocalDateTime.now();//take current date time
-		String formattedDate = now.format(formatter); //format date time
-		String logMessage = "[" + formattedDate + "] " + message + "\n"; //create string with message
+		LocalDateTime now = LocalDateTime.now();// take current date time
+		String formattedDate = now.format(formatter); // format date time
+		String logMessage = "[" + formattedDate + "] " + message + "\n"; // create string with message
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-			writer.write(logMessage); //write message to file
+			writer.write(logMessage); // write message to file
 		} catch (IOException e) {
 			System.err.println("Error writing to log file: " + e.getMessage());
 		}
