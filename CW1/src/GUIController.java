@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -19,6 +20,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+
+import exceptions.DuplicateIDException;
+import exceptions.InaccurateDataException;
+import exceptions.PhaseException;
 
 public class GUIController {
 	// list of observers
@@ -137,6 +142,8 @@ public class GUIController {
 				}
 			}.start();
 			model.notifyObservers();
+			view.disableStartSimulation();
+			
 		}
 	}
 
@@ -189,16 +196,16 @@ public class GUIController {
 
 			helper.updateSegmentTable(segment, model);
 			file.writeToFile(car.getPlateNumber() + "has been accepted and added to the Queue");
-		} catch (InaccurateDataException ex) {
+		} catch (exceptions.InaccurateDataException ex) {
 			JFrame alert = new JFrame();
 			JOptionPane.showMessageDialog(alert, ex);
 		} catch (NumberFormatException ex) {
 			JFrame alert = new JFrame();
 			JOptionPane.showMessageDialog(alert, ex);
-		} catch (PhaseException ex) {
+		} catch (exceptions.PhaseException ex) {
 			JFrame alert = new JFrame();
 			JOptionPane.showMessageDialog(alert, ex);
-		} catch (DuplicateIDException ex) {
+		} catch (exceptions.DuplicateIDException ex) {
 			JFrame alert = new JFrame();
 			JOptionPane.showMessageDialog(alert, ex);
 		}

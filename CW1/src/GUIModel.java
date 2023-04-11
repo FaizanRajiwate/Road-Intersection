@@ -1,3 +1,4 @@
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -103,8 +104,8 @@ public class GUIModel extends Thread implements Subject {
 			obs.update();
 	}
 
-	public void updateTableModel(DefaultTableModel model, int row, int column, String crossingStatus) {
-		model.setValueAt(crossingStatus, row, column);
+	public void updateTableModel(DefaultTableModel model, int row, int column, String updatedField) {
+		model.setValueAt(updatedField, row, column);
 	}
 
 	public int getS1counter() {

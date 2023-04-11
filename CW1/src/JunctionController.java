@@ -1,3 +1,4 @@
+
 import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 
@@ -58,7 +59,6 @@ public class JunctionController extends Thread {
 
 							createdVehicles = model.getVehicleList();
 							int index = createdVehicles.indexOf(currCar.getPlateNumber());
-							System.out.println("This is the " + index + 1 + " vehicle");
 							if (phaseDuration >= currCarTime) {
 								float carEmissions = currCar.calculateEmissions(waitTime);
 								phase.updateWaitingLength(currCar.getVehicleLength());
@@ -143,7 +143,7 @@ public class JunctionController extends Thread {
 		phase.updateWaitingLength(vehicle.getVehicleLength());
 		this.updateMovingSegmentTable(vehicle);
 		this.model.updateTableModel(vModel, index, 4, vehicle.getCrossingStatus());
-		System.out.println(vehicle.getPlateNumber() + " has crossed");
+		file.writeToFile(vehicle.getPlateNumber() + " has crossed");
 		Thread.sleep((long) (vehicle.getCrossingTime() * 1000));
 	}
 

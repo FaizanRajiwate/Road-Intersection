@@ -1,3 +1,5 @@
+package generator;
+
 import java.util.Random;
 
 public class GenerateEmissions implements GeneratingStrategy {

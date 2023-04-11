@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -7,6 +8,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import exceptions.DuplicateIDException;
+import exceptions.InaccurateDataException;
+import generator.GenerateCrossingDirection;
+import generator.GenerateCrossingTime;
+import generator.GenerateEmissions;
+import generator.GenerateVehicleLength;
+import generator.GenerateVehicleSegment;
+import generator.GenerateVehicleType;
+import generator.GeneratingStrategy;
 
 public class Helper {
 	
@@ -300,7 +311,7 @@ public class Helper {
 			LinkedList<Phases> phaseList = new LinkedList<Phases>();
 			Scanner csvScanner = readCsvFile("phases.csv");
 			if (csvScanner == null) {
-				System.out.println();
+
 				throw new FileNotFoundException("The File you entered cannot be read, check the file");
 			}
 			while (csvScanner.hasNext()) {

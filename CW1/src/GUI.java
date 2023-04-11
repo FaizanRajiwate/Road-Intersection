@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Scanner;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import exceptions.DuplicateIDException;
+import exceptions.InaccurateDataException;
+import exceptions.PhaseException;
+
 import java.util.Vector;
 import java.lang.Float;
 import java.lang.Integer;

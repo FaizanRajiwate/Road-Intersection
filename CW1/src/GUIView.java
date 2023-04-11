@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -342,7 +343,10 @@ public class GUIView extends JFrame implements Observer {
 		System.out.println("Success-----The View has been Updated");
 		JOptionPane.showMessageDialog(null, // display count
 				"The View has been Updated");
-
+	}
+	
+	public void disableStartSimulation() {
+		startButton.setEnabled(false);
 	}
 
 }

@@ -1,3 +1,4 @@
+package exceptions;
 
 public class PhaseException extends Exception {
 	/**

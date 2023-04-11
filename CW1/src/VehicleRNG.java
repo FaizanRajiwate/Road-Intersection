@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import javax.swing.table.DefaultTableModel;
+import exceptions.DuplicateIDException;
+import exceptions.InaccurateDataException;
+import exceptions.PhaseException;
 
 public class VehicleRNG extends Thread {
 
@@ -19,7 +22,6 @@ public class VehicleRNG extends Thread {
 		this.random = new Random();
 		this.model = model;
 		this.vModel = model.getVehicleModel();
-
 	}
 
 	private synchronized void rngVehicleCreator(Helper helper)

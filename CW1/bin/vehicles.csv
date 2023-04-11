@@ -1,0 +1,11 @@
+plate number,type,crossing time (s),direction,crossing status,emission rate (g/min),length (m),segment
+ABC123XZ,car,3,left,not crossed,10,1.2,1
+DEF456WY,bus,3,straight,not crossed,10,1.2,1
+7GHI789UV,truck,4,right,not crossed,10,1.2,1
+DKDK223,car,3,left,not crossed,10,1.2,1
+LPDK223,car,3,left,not crossed,10,1.2,2
+DEF123PZ,car,3,left,not crossed,10,1.2,3
+PEO452AY,bus,3.5,straight,not crossed,10,1.2,3
+JIPO132,truck,4,right,not crossed,10,1.2,3
+AEG150,truck,4,right,not crossed,10,1.2,4
+YOWM643,car,3,straight,not crossed,10,1.2,4
