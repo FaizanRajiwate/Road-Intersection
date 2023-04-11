@@ -42,19 +42,19 @@ public class Phases extends Thread {
 		return phaseName;
 	}
 
-	public synchronized void setPhaseName(String phaseName) {
+	public void setPhaseName(String phaseName) {
 		this.phaseName = phaseName;
 	}
 
-	public synchronized float getPhaseTimer() {
+	public float getPhaseTimer() {
 		return phaseTimer;
 	}
 
-	public synchronized void setPhaseTimer(float phaseTimer) {
+	public void setPhaseTimer(float phaseTimer) {
 		this.phaseTimer = phaseTimer;
 	}
 
-	public synchronized void setLinkedList() {
+	public void setLinkedList() {
 		this.vehicleQueue = new LinkedList<Vehicles>();
 
 	}
@@ -68,7 +68,7 @@ public class Phases extends Thread {
 
 	}
 
-	public LinkedList<Vehicles> getCrossedLinkedList() {
+	public synchronized LinkedList<Vehicles> getCrossedLinkedList() {
 		return crossedvehicleQueue;
 	}
 	

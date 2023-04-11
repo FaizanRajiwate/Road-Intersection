@@ -1,6 +1,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,15 +95,44 @@ public class GUIController {
 		sField = view.getsField();
 
 		view.addVehicleButtonListener(new AddVehicleListener());
-		view.startButtonListener(new StartButtonListener(model));
+		view.startButtonListener(new StartButtonListener());
+		view.mainWindowListener(new MainWindowListener());
 
+	}
+	class MainWindowListener extends WindowAdapter{
+		@Override
+		public void windowClosing(WindowEvent e) {
+			//Window listener to generate simulation crossing report 
+			int totalCrossedVehicles = model.getVehicleList().size();
+			float averageRunningEmissions = model.getRunningEmissions() / model.getVehicleList().size();
+						
+			file.writeToFile("Exiting Simulation.... ");
+			file.writeToFile("Average Emission per Vehicle: " + averageRunningEmissions);
+			file.writeToFile("===========================================================");
+			file.writeToFile("Number of Crossed Vehicles");
+			float waitTime = 0;
+			for (Phases phase: phaseList) {
+				int numberOfCrossedVehicles = phase.getCrossedLinkedList().size();
+				file.writeToFile(phase.getPhaseName() + ", Crossed Vehicles: " + 
+						numberOfCrossedVehicles + ", Average Waiting Time: " + (float) phase.getWaitingTime()/numberOfCrossedVehicles);
+				waitTime += phase.getWaitingTime();
+			}
+			file.writeToFile("===========================================================");
+			file.writeToFile("Average Waiting Time: " + (float) waitTime/ totalCrossedVehicles);
+			
+			JFrame alert = new JFrame();
+			JOptionPane.showMessageDialog(alert, "Exiting Application");
+			
+			System.exit(0);
+		}
+		
 	}
 
 	class AddVehicleListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			//action listener creates a new thread to add vehicles manually
 			new Thread() {
 				public void run() {
 					// time-consuming code to run here
@@ -124,12 +155,10 @@ public class GUIController {
 
 		private GUIModel model;
 
-		public StartButtonListener(GUIModel model) {
-			this.model = model;
-		}
 
-		@Override
+	@Override
 		public void actionPerformed(ActionEvent e) {
+		//executes simulation, randomly generates vehicle. Each in a thread. 
 			new Thread() {
 				public void run() {
 					// time-consuming code to run here
@@ -141,15 +170,16 @@ public class GUIController {
 					});
 				}
 			}.start();
-			model.notifyObservers();
 			view.disableStartSimulation();
 			
 		}
 	}
 
 	public void executeSimulation() {
+		//randomly generates vehicle in its own thread.
 		VehicleRNG rngVehicle = new VehicleRNG(helper, phaseList, model);
 		rngVehicle.start();
+		//executes the intersection simulation to cross vehicles, in its own thread
 		JunctionController controller = new JunctionController(phaseList, helper, model);
 		controller.start();
 		while (true) {
@@ -158,6 +188,7 @@ public class GUIController {
 	}
 
 	public void addVehicles() {
+		//functionality to add vehicles
 		try {
 			String pNEntry = pNField.getText();
 			String vTEntry = vTField.getSelectedItem().toString();
@@ -168,21 +199,24 @@ public class GUIController {
 			String vLEntry = vLField.getText();
 			String sEntry = sField.getSelectedItem().toString();
 			String[] newVehicle = { pNEntry, vTEntry, cTEntry, cDEntry, cSEntry, vEEntry, vLEntry, sEntry };
+			//takes the content of the form and makes a string array out of it
 			List<String> newVehicleLine = Arrays.asList(newVehicle);
+			//creates an object to list from the string array to be evaluated
 			helper.evaluateVehicleFile(newVehicleLine, phaseList);
-			Vehicles car = helper.createVehicle(newVehicleLine, phaseList);
+			Vehicles car = helper.createVehicle(newVehicleLine, phaseList); //creates vehicle
 			if (car == null) {
 				throw new InaccurateDataException("The row with " + newVehicleLine.get(0) + "could not be created");
 			}
 
-			model.addToTotalEmissions(car.getVehicleEmission());
-			view.setEmissionField(Float.toString(model.getTotalEmissions()));
-			vehicleModel.addRow(newVehicle);
+			model.addToTotalEmissions(car.getVehicleEmission()); //add to total emission rating
+			view.setEmissionField(Float.toString(model.getTotalEmissions())); //updates the text field with this
+			vehicleModel.addRow(newVehicle); //adds newly created vehicle to list of created vehicles
 			pNField.setText("");
 			cTField.setText("");
 			vEField.setText("");
 			vLField.setText("");
-			boolean sortedPhase = helper.findPhase(car, phaseList);
+			//empties text fields
+			boolean sortedPhase = helper.findPhase(car, phaseList); //finds the appropriate phase and adds vehicle to that queue
 			if (sortedPhase) {
 				// System.out.println(car.getPlateNumber() + " has been added to the appropriate
 				// phase");
@@ -191,8 +225,8 @@ public class GUIController {
 						+ " could not be sorted, check the segment and direction for format errors. " + car.getSegment()
 						+ ", " + car.getCrossingDirection());
 			}
-			helper.checkCarSegment(car, model);
-			String segment = car.getSegment();
+			helper.checkCarSegment(car, model); //checks the segment the vehicle belongs to and updates variables
+			String segment = car.getSegment(); //gets segment to update the model.
 
 			helper.updateSegmentTable(segment, model);
 			file.writeToFile(car.getPlateNumber() + "has been accepted and added to the Queue");
@@ -213,21 +247,21 @@ public class GUIController {
 	}
 
 	private JScrollPane addVehiclePane(LinkedList<Phases> phaseList, Helper helper, GUIModel model, GUIView view) {
-
+		//fills empty vehicle table object with appropriate vehicle model.
 		while (!Main.blnDoWork) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
 			}
 		}
-
+		
 		vehiclePane = view.getVehiclePane();
 		vehicleModel = model.getVehicleModel();
 		vehicleTable = view.getvehicleTable();
 		synchronized (this) {
 
 			try {
-				Scanner csvScanner = helper.readCsvFile("vehicles.csv");
+				Scanner csvScanner = helper.readCsvFile("vehicles.csv"); 
 				if (csvScanner == null) {
 					throw new FileNotFoundException("The File you entered cannot be found");
 				} else {
@@ -238,7 +272,7 @@ public class GUIController {
 							String line = csvScanner.nextLine();
 							String[] splitLine = line.split(",");
 							List<String> listSplitLine = Arrays.asList(splitLine);
-							helper.evaluateVehicleFile(listSplitLine, phaseList);
+							helper.evaluateVehicleFile(listSplitLine, phaseList); //evaluates line from csv file for validity
 							// populate VehicleJTable
 							Vehicles car = helper.createVehicle(listSplitLine, phaseList);
 
@@ -284,10 +318,10 @@ public class GUIController {
 				System.out.println(e);
 			}
 
-			vehicleTable.setAutoCreateRowSorter(true);
+			vehicleTable.setAutoCreateRowSorter(true); //for sorting by column
 			vehicleTable.setModel(vehicleModel);
-			vehiclePane.getViewport().add(view.getvehicleTable());
-			view.setEmissionField(Float.toString(model.getTotalEmissions()));
+			vehiclePane.getViewport().add(view.getvehicleTable()); //adds table to viewport for the empty pane
+			view.setEmissionField(Float.toString(model.getTotalEmissions())); //updates emission field with total emissions.
 			return vehiclePane;
 		}
 

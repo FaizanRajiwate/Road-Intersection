@@ -124,18 +124,11 @@ public class Main {
 	}
 
 	public static void main(String Args[]) {
-
+		//There are functions from Stage 1 that were left behind to not break the testing, they aren't used in stage 2
 		GUIModel model = new GUIModel();
 		GUIView guiView = new GUIView(model);
-		// guiView.guiModel = model;
 		GUIController controller = new GUIController(model, guiView, new Helper());
-		// GUIController controller = new GUIController(new GUIModel(), new GUIView(),
-		// new Helper());
-		/*
-		 * GUIModel guimodelThread = new GUIModel(); guimodelThread.start(); Vehicles
-		 * vehiclesThread = new Vehicles(); vehiclesThread.start(); Phases phasesThread
-		 * = new Phases(); phasesThread.start();
-		 */
+
 
 	}
 }
